@@ -26,7 +26,7 @@
 <div class="hero-main">
  <span class="badge"><span class="b-ic">&#10022;</span>MY WORKS COLLECTION</span>
  <h1>想看我的作品？<br><span class="hl">都在这一面墙上。</span></h1>
- <p class="desc" id="desc">每一件作品<b>点开即达</b>，封面、名字、链接都已固化在本地——断网也能翻，<span class="mark">封面不依赖任何外链</span>。</p>
+ <br><b>作品均为基于作者业务认知加 AI 虚构的项目。</b></p>
 <div class="stat-line"><span class="num" id="count">0</span><span><b id="countWord">个作品已上架</b>，点击卡片直达</span></div>
  </div>
 <div class="hero-art" aria-hidden="true">
@@ -68,7 +68,7 @@
 </main>
 <div class="tail"></div>
 <div class="toast" id="toast"></div>
-<script>var WORKS=[{name:"库存推演工具",url:"works/01-%E5%BA%93%E5%AD%98%E6%8E%A8%E6%BC%94%E5%B7%A5%E5%85%B7.html",cover:"c1"},{name:"全链条库存推演",url:"works/02-%E5%85%A8%E9%93%BE%E6%9D%A1%E5%BA%93%E5%AD%98%E6%8E%A8%E6%BC%94.html",cover:"c2"},{name:"物流策略",url:"works/03-%E7%89%A9%E6%B5%81%E7%AD%96%E7%95%A5.html",cover:"c3"},{name:"智能补货系统",url:"works/04-%E6%99%BA%E8%83%BD%E8%A1%A5%E8%B4%A7%E7%B3%BB%E7%BB%9F.html",cover:"c4"},{name:"跨境独立站建站",url:"works/05-%E8%B7%A8%E5%A2%83%E7%8B%AC%E7%AB%8B%E7%AB%99%E5%BB%BA%E7%AB%99.html",cover:"c5"}];var STAMP='2026-09-18 18:04';var COVERS={"c1":"assets/covers/cover-c1.webp","c2":"assets/covers/cover-c2.webp","c3":"assets/covers/cover-c3.webp","c4":"assets/covers/cover-c4.webp","c5":"assets/covers/cover-c5.webp"};(function(){var grid=document.getElementById('grid');var list=document.getElementById('list');var countEl=document.getElementById('count');var countWord=document.getElementById('countWord');var stampEl=document.getElementById('stamp');var descEl=document.getElementById('desc');function isLocal(u){return!!u&&!/^(?:https?:)?\/\//i.test(u)&&!/^mailto:/i.test(u);}
+<script>var WORKS=[{name:"库存推演工具",url:"works/01-%E5%BA%93%E5%AD%98%E6%8E%A8%E6%BC%94%E5%B7%A5%E5%85%B7.html",cover:"c1"},{name:"全链条库存",url:"works/02-%E5%85%A8%E9%93%BE%E6%9D%A1%E5%BA%93%E5%AD%98%E6%8E%A8%E6%BC%94.html",cover:"c2"},{name:"物流策略",url:"works/03-%E7%89%A9%E6%B5%81%E7%AD%96%E7%95%A5.html",cover:"c3"},{name:"智能补货系统",url:"works/04-%E6%99%BA%E8%83%BD%E8%A1%A5%E8%B4%A7%E7%B3%BB%E7%BB%9F.html",cover:"c4"},{name:"跨境独立站建站",url:"works/05-%E8%B7%A8%E5%A2%83%E7%8B%AC%E7%AB%8B%E7%AB%99%E5%BB%BA%E7%AB%99.html",cover:"c5"}];var STAMP='2026-09-18 18:04';var COVERS={"c1":"assets/covers/cover-c1.webp","c2":"assets/covers/cover-c2.webp","c3":"assets/covers/cover-c3.webp","c4":"assets/covers/cover-c4.webp","c5":"assets/covers/cover-c5.webp"};(function(){var grid=document.getElementById('grid');var list=document.getElementById('list');var countEl=document.getElementById('count');var countWord=document.getElementById('countWord');var stampEl=document.getElementById('stamp');var descEl=document.getElementById('desc');function isLocal(u){return!!u&&!/^(?:https?:)?\/\//i.test(u)&&!/^mailto:/i.test(u);}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function coverSrc(key){if(!key)return null;if(/^https?:/.test(key))return key;return COVERS[key]||null;}
 function showToast(msg,isErr){var t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(isErr?' err':'');clearTimeout(showToast._t);showToast._t=setTimeout(function(){t.className='toast'+(isErr?' err':'');},2400);}
@@ -92,7 +92,7 @@ function rowHTML(w){var src=coverSrc(w.cover);var initial=esc(String(w.name||'�
 +'</div></div>';}
 function go(url){if(!url){showToast('该作品暂无链接');return;}
 window.open(url,'_blank','noopener,noreferrer');}
-function render(){var allLocal=WORKS.length>0&&WORKS.every(function(w){return isLocal(w.url);});countEl.textContent=WORKS.length;countWord.textContent=WORKS.length+' 个作品已上架';stampEl.textContent='快照 '+STAMP+' · 共 '+WORKS.length+' 件';if(descEl){descEl.innerHTML=allLocal?'每一件作品<b>点开即达</b>，<span class="mark">作品页和封面都已打包在本地</span>——断网、换机器都能完整翻看，全程不联网。':'每一件作品<b>点开即达</b>，封面、名字、链接都已固化在本地——断网也能翻，<span class="mark">封面不依赖任何外链</span>。';}
+function render(){var allLocal=WORKS.length>0&&WORKS.every(function(w){return isLocal(w.url);});countEl.textContent=WORKS.length;countWord.textContent=WORKS.length+' 个作品已上架';stampEl.textContent='快照 '+STAMP+' · 共 '+WORKS.length+' 件';if(descEl){descEl.innerHTML=allLocal?'每一件作品<b>点开即达</b>，<span class="mark">作品页和封面都已打包在本地</span>——断网、换机器都能完整翻看，全程不联网。<br><b>作品均为基于作者业务认知加 AI 虚构的项目。</b>':'每一件作品<b>点开即达</b>，封面、名字、链接都已固化在本地——断网也能翻，<span class="mark">封面不依赖任何外链</span>。<br><b>作品均为基于作者业务认知加 AI 虚构的项目。</b>';}
 grid.innerHTML=WORKS.map(cardHTML).join('');list.innerHTML=WORKS.map(rowHTML).join('');}
 document.addEventListener('click',function(e){var t=e.target;var copyBtn=t.closest?t.closest('.copy'):null;if(copyBtn){e.preventDefault();e.stopPropagation();copyText(copyBtn.getAttribute('data-url'));return;}
 var cBtn=t.closest?t.closest('[data-copy]'):null;if(cBtn){copyText(cBtn.getAttribute('data-copy'));return;}
