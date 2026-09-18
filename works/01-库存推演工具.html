@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html data-page-node-id="nQpbj0m4SAbOrk6u1lSyW2" lang="zh-CN">
+<head data-page-node-id="zgQlissxZBs3x5VFGiN5mG">
+<meta data-page-node-id="vaM0ngaK0WHu0vAXHIsdA8" charset="UTF-8">
+<meta data-page-node-id="EO4YxuuiSnzgJeJ94jUXEX" content="width=device-width, initial-scale=1.0" name="viewport">
+<title data-page-node-id="I4OhXPxYH6vMBX0N0HllT5" data-pnid-children="0MIBhRjTHlJVuUFdNBCztC">库存推演工具 · 可视化版</title>
+<style data-page-node-id="LCVPQXkwZzHuYXsDUxLcZg" data-pnid-children="bFZavLB1IfPsagKgA0LbnS">
+  :root {
+    --bg: #f3f5f9;
+    --card: #ffffff;
+    --border: #e4e8f0;
+    --text: #1f2937;
+    --text-2: #6b7280;
+    --primary: #2563eb;
+    --primary-soft: #eff4ff;
+    --red: #e5484d;
+    --red-soft: #fef0f0;
+    --green: #30a46c;
+    --green-soft: #eefaf4;
+    --amber: #b45309;
+    --amber-soft: #fef7ec;
+    --radius: 12px;
+    --shadow: 0 1px 3px rgba(15, 23, 42, .06), 0 4px 16px rgba(15, 23, 42, .05);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                 "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.6;
+  }
+  .app { max-width: 1280px; margin: 0 auto; padding: 20px 20px 48px; }
+  header { display: flex; align-items: center; gap: 14px; padding: 8px 4px 18px; flex-wrap: wrap; }
+  header .logo {
+    width: 42px; height: 42px; border-radius: 11px; flex: 0 0 auto;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, .3);
+  }
+  header h1 { font-size: 20px; font-weight: 700; letter-spacing: .2px; }
+  header .sub { color: var(--text-2); font-size: 12.5px; margin-top: 2px; }
+  header .actions { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .layout { display: grid; grid-template-columns: 400px 1fr; gap: 16px; align-items: start; }
+  @media (max-width: 980px) { .layout { grid-template-columns: 1fr; } }
+
+  .panel {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  .panel-head {
+    padding: 12px 16px; border-bottom: 1px solid var(--border);
+    font-weight: 600; font-size: 14.5px; display: flex; align-items: center; gap: 8px;
+    background: #fafbfe;
+  }
+  .panel-body { padding: 14px 16px; }
+
+  /* ---------- 按钮 ---------- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+    border: 1px solid var(--border); background: #fff; color: var(--text);
+    padding: 7px 14px; border-radius: 9px; font-size: 13px; font-weight: 500;
+    transition: all .15s; white-space: nowrap;
+  }
+  .btn:hover { border-color: #c7d2fe; background: var(--primary-soft); }
+  .btn.primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .btn.primary:hover { background: #1d4ed8; }
+  .btn.danger-soft:hover { border-color: #fecaca; background: var(--red-soft); color: var(--red); }
+  .btn:active { transform: translateY(1px); }
+  .btn.sm { padding: 4px 9px; font-size: 12px; border-radius: 7px; }
+
+  /* ---------- 表单 ---------- */
+  .field { margin-bottom: 14px; }
+  .field > label { display: block; font-size: 12.5px; color: var(--text-2); margin-bottom: 6px; font-weight: 500; }
+  .field > label b { color: var(--text); }
+  .input-wrap { position: relative; }
+  input[type="number"], input[type="text"] {
+    width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 9px;
+    font-size: 14px; color: var(--text); background: #fff; outline: none; transition: border .15s, box-shadow .15s;
+  }
+  input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, .12); }
+  input::placeholder { color: #b0b7c3; }
+  .unit { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: var(--text-2); font-size: 12px; pointer-events: none; }
+  input[type="number"] { -moz-appearance: textfield; }
+  input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+
+  .total-bar {
+    margin-top: 10px; display: flex; justify-content: space-between; align-items: center;
+    background: var(--primary-soft); border: 1px dashed #bcd1ff; border-radius: 10px;
+    padding: 9px 12px; font-size: 13px;
+  }
+  .total-bar .num { font-weight: 700; color: var(--primary); font-size: 16px; }
+  .total-bar .neg { color: var(--red); }
+  .warn { color: var(--red); font-size: 12px; margin-top: 6px; display: none; }
+  .warn.show { display: block; }
+
+  /* ---------- 周数据表 ---------- */
+  .wk-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .wk-head label { font-size: 12.5px; color: var(--text-2); font-weight: 500; }
+  .wk-controls { display: flex; gap: 6px; align-items: center; }
+  .wk-controls input { width: 62px; padding: 4px 8px; }
+  table.wks { width: 100%; border-collapse: collapse; }
+  table.wks th {
+    font-size: 12px; color: var(--text-2); font-weight: 600; text-align: left;
+    padding: 6px 4px; border-bottom: 1px solid var(--border); white-space: nowrap;
+  }
+  table.wks th.wk-col { width: 52px; }
+  table.wks td { padding: 5px 4px; border-bottom: 1px solid #f0f2f7; vertical-align: middle; }
+  table.wks tr:last-child td { border-bottom: none; }
+  table.wks .wk-name { font-size: 12.5px; color: var(--text-2); font-weight: 600; white-space: nowrap; }
+  table.wks input[type="number"] { padding: 5px 8px; font-size: 13px; }
+  .del-row {
+    cursor: pointer; border: none; background: none; color: #c3c9d4; font-size: 16px;
+    line-height: 1; padding: 2px 5px; border-radius: 6px; transition: all .15s;
+  }
+  .del-row:hover { color: var(--red); background: var(--red-soft); }
+
+  .formula-note {
+    margin-top: 12px; background: #fafbfe; border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 12px; font-size: 12px; color: var(--text-2);
+  }
+  .formula-note code {
+    background: #fff; border: 1px solid var(--border); padding: 1px 6px; border-radius: 5px;
+    font-family: Consolas, "Courier New", monospace; font-size: 11.5px; color: var(--text);
+  }
+
+  /* ---------- 结果区 ---------- */
+  .result-panel { position: relative; }
+  .empty-state {
+    padding: 48px 20px; text-align: center; color: var(--text-2);
+  }
+  .empty-state .icon { font-size: 40px; margin-bottom: 8px; }
+  .empty-state p { font-size: 13px; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; padding: 14px 16px; }
+  .card {
+    border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; background: #fff;
+  }
+  .card .k { font-size: 12px; color: var(--text-2); }
+  .card .v { font-size: 18px; font-weight: 700; margin-top: 2px; font-variant-numeric: tabular-nums; }
+  .card .v.red { color: var(--red); }
+  .card .v.green { color: var(--green); }
+  .card .v.amber { color: var(--amber); }
+  .card .v.blue { color: var(--primary); }
+  .card .s { font-size: 11px; color: var(--text-2); margin-top: 1px; }
+
+  .table-wrap { overflow-x: auto; padding: 0 16px 6px; }
+  table.res { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 720px; }
+  table.res th {
+    text-align: right; padding: 7px 10px; font-size: 12px; color: var(--text-2);
+    border-bottom: 1px solid var(--border); white-space: nowrap; font-weight: 600;
+  }
+  table.res th:first-child, table.res td:first-child { text-align: left; }
+  table.res td { text-align: right; padding: 7px 10px; border-bottom: 1px solid #f0f2f7; font-variant-numeric: tabular-nums; }
+  table.res tr.hl { background: var(--red-soft); }
+  table.res tr.hl td:first-child { border-left: 3px solid var(--red); }
+  table.res tr.wk0 td { color: var(--text-2); background: #fafbfe; }
+  table.res .neg { color: var(--green); font-weight: 600; }
+  table.res .pos { color: var(--red); font-weight: 700; }
+  table.res .zero { color: var(--text-2); }
+
+  .badge {
+    display: inline-block; padding: 1px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; white-space: nowrap;
+  }
+  .badge.need { background: var(--red-soft); color: var(--red); }
+  .badge.enough { background: var(--green-soft); color: var(--green); }
+  .badge.just { background: var(--amber-soft); color: var(--amber); }
+  .badge.init { background: #eef1f6; color: var(--text-2); }
+
+  .charts { padding: 10px 16px 18px; }
+  .chart-box { margin-top: 14px; }
+  .chart-box h3 { font-size: 13px; color: var(--text); margin-bottom: 6px; font-weight: 600; }
+  .chart-box .legend { display: flex; gap: 14px; font-size: 12px; color: var(--text-2); margin-bottom: 4px; }
+  .chart-box .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+  .chart-box svg { width: 100%; height: auto; display: block; }
+
+  .foot { text-align: center; color: #a5adbb; font-size: 12px; margin-top: 20px; }
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: #1f2937; color: #fff; padding: 9px 18px; border-radius: 10px; font-size: 13px;
+    opacity: 0; pointer-events: none; transition: all .25s; z-index: 99; box-shadow: 0 6px 20px rgba(0,0,0,.2);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body data-page-node-id="92dYlwItdUTOP096wwZenJ">
+<div data-page-node-id="tPlwEglTlGag6A73rXUTYN" class="app">
+  <header data-page-node-id="MvFakulbXRrsjUeKjs7Fo2">
+    <div data-page-node-id="yCAIUIega9BIqPG7GbgMzt" class="logo"><!--pnid:ekl5dkOOR8j8AsI7BntPoX-->📦</div>
+    <div data-page-node-id="U8439FLMjMh6hpatLnpLcS">
+      <h1 data-page-node-id="dj0DWHylnoxUkoSKEAzl10"><!--pnid:ubE9mqxEXve1wZCynwwfWn-->库存推演工具</h1>
+      <div data-page-node-id="Nwfu3djS2ixG6GgANlz8IK" class="sub"><!--pnid:oF07c8YFrg9AxSHpJSPwhw-->基于供需平衡算法，推演未来 N 周库存变化 · 与 Python 版同算法</div>
+    </div>
+    <div data-page-node-id="GWsFGTpwwq572kB5J3VLOg" class="actions">
+      <button data-page-node-id="iZj59ao8qNNlRFWS8qmj8m" class="btn" id="btnDemo"><!--pnid:MEGkxYRb65wuj3y79Tsh22-->✨ 载入示例</button>
+      <button data-page-node-id="QO7vvor2PQIswJSC0JzUis" class="btn" id="btnReset"><!--pnid:L65CwS7RUof00ZnkaOuU6G-->🔄 清空</button>
+      <button data-page-node-id="fdDzDZTzQxKqlotIciRjuM" class="btn" id="btnImport"><!--pnid:yOoTfDTesP8DwjE8HsXdyG-->📥 导入CSV</button>
+      <button data-page-node-id="tHzHXgqhRKaresWFJ2aUgw" class="btn primary" id="btnExport"><!--pnid:brOZFsrKPTAXvGH1sfRZ21-->📤 导出CSV</button>
+      <input data-page-node-id="NRsIOwQpliKDYYAVmtCsLR" accept=".csv,text/csv" id="fileInput" type="file" style="display:none">
+    </div>
+  </header>
+
+  <div data-page-node-id="DJkrkVNQ7Svaq2wt8hQKC0" class="layout">
+    <!--pnid:8UEToW7d5U2x6rg2LfLeEO--><!-- ================= 输入区 ================= -->
+    <section data-page-node-id="BHXcc1qXtPGDQbUlTdEzCh" class="panel">
+      <div data-page-node-id="TwordAvtIrcsDztziW9Zqa" class="panel-head"><!--pnid:5DUOYUfZm9oaRCLrTvpVnL-->① 期初国内可用库存</div>
+      <div data-page-node-id="CnY7HnSgvWwV2EpMdkEWGS" class="panel-body">
+        <div data-page-node-id="m9mM80QY1s5HcVrmpEzejp" class="grid-2">
+          <div data-page-node-id="UPMpkmhfJhJL6TPqCaoFlD" class="field">
+            <label data-page-node-id="tzouqbHVxqmipEwLvy3bQX"><!--pnid:Zf1zBr5pJWY84VDgsJUMky-->本地仓在库库存 <b data-page-node-id="ZKuQfdUylHwowHudAQoQYr"><!--pnid:gr72ndNip9qUcxn2zQZYQZ-->(件)</b></label>
+            <div data-page-node-id="7psVCQMLc0xSMhuAxN9G0f" class="input-wrap"><input data-page-node-id="VZEV2WslEL6hzeFf2qSoxa" id="inStock" min="0" step="1" type="number" value="1000"><span data-page-node-id="RXHo1V4pp8e7AWJif4uAKX" class="unit"><!--pnid:gVv3g3MKxAQMKJpItHQbmB-->件</span></div>
+          </div>
+          <div data-page-node-id="kboYb7cMQcgiayasEI5aRp" class="field">
+            <label data-page-node-id="H0KtlFBeqV1SKFs3StAvXU"><!--pnid:So9FldNkOK8KR6Bfk8ONI5-->本地仓采购在途 <b data-page-node-id="0XeaiD0cSGu9YDtvf5irsz"><!--pnid:pYlxFRWDvGMWKtoPEkvWDf-->(件)</b></label>
+            <div data-page-node-id="bC3HqST8PxzGKuPCJvgwo2" class="input-wrap"><input data-page-node-id="z3RAC8NK70wP4DOacaXben" id="inTransit" min="0" step="1" type="number" value="200"><span data-page-node-id="RUtIjdPPhypSAlaMONTg32" class="unit"><!--pnid:gSwCMXj1qxYddXlN2Sv20H-->件</span></div>
+          </div>
+          <div data-page-node-id="qyNR6G7lH3u39cAiQVUaiY" class="field">
+            <label data-page-node-id="Mf9j5EAkrgByapBddxHATh"><!--pnid:H2VR6PFTqZszdw4aDQI9W4-->国内供应库在库 <b data-page-node-id="IXBsZTzuaCmma15Cn0WL2J"><!--pnid:OTGn5Xx8Jmpf9dJqmGcGHf-->(件)</b></label>
+            <div data-page-node-id="49hCX1mJKXgRH0ePu2Kcj8" class="input-wrap"><input data-page-node-id="eJKkNsyfy42YZ68YjB0n4b" id="domestic" min="0" step="1" type="number" value="300"><span data-page-node-id="fP0zEPTv2MbFe2jTbryhLJ" class="unit"><!--pnid:LUeRd6GzY5FtHmU79n1iQ0-->件</span></div>
+          </div>
+          <div data-page-node-id="oE0O0QFpz0LgM62eyotJir" class="field">
+            <label data-page-node-id="gm4vSqJFjeRQ81apXL1x9M"><!--pnid:kqK3aFbeyenog2SVk84Eqm-->海外供应商在库 <b data-page-node-id="MwIrhtDs8veo1NG7uibRAA"><!--pnid:6QlRLU8nowKQwOnXHZ0B4a-->(件)</b></label>
+            <div data-page-node-id="IlTZF3tzvjBDBuCMiPZHOQ" class="input-wrap"><input data-page-node-id="sU642Z84doG1lZ4uqjl8Ii" id="overseas" min="0" step="1" type="number" value="0"><span data-page-node-id="AFth4QjR3eyYDiDklTwE8Q" class="unit"><!--pnid:2lEtNnwGrQbymIA2aVLTc4-->件</span></div>
+          </div>
+        </div>
+        <div data-page-node-id="0n7SuELlRCFQKWg0jhpyIG" class="total-bar">
+          <span data-page-node-id="SyLkdXYNzfnK8RXxstSSf3"><!--pnid:xu2IFDh7S1JqF13aQLAdCW-->期初国内可用库存合计</span>
+          <span data-page-node-id="mifotANMjx5SmSEo5HawBd" class="num" id="initialTotal"><!--pnid:KVXHuNo4jSOnfLGBfmspoB-->1,500</span>
+        </div>
+        <div data-page-node-id="44Vw6fbNFbauZna2YSk81w" class="warn" id="initialWarn"><!--pnid:u2gLHnEPUwHb4fWjnvvlUW-->⚠️ 期初可用库存为负数，请检查输入</div>
+      </div>
+
+      <div data-page-node-id="zffqXH4l6fi9nuGnfNwg9b" class="panel-head"><!--pnid:R7242CKHMfNFB3Dp06Zp7I-->② 未来周数据</div>
+      <div data-page-node-id="qFYqYjPAj1DH3tYKEZ9F3B" class="panel-body">
+        <div data-page-node-id="5ZCBvuOTCQo4TNbYfqAsjd" class="wk-head">
+          <label data-page-node-id="Aew8b1PKYywJrl5u9WsGnI"><!--pnid:tK4VdZwHThiDn8eWPYa9pX-->在制转在库量 / 预计发货量（可随时增删）</label>
+          <div data-page-node-id="q8HsxpSTKKXG1JtRmmSKFN" class="wk-controls">
+            <input data-page-node-id="zw3QRSJdKrMp06W5aOakiD" id="addN" max="99" min="1" step="1" title="添加几周" type="number" value="1">
+            <button data-page-node-id="Rg1RGa6lU8mOlIUHk5f9Gc" class="btn sm" id="btnAdd"><!--pnid:sJ3THeEswreoYzelV26TzG-->+ 添加 N 周</button>
+          </div>
+        </div>
+        <table data-page-node-id="D36IdOFUuZjYgCqvse8SJE" class="wks">
+          <thead data-page-node-id="6UNFibLS0v8ZulyCUhP27P">
+            <tr data-page-node-id="Al6oxwgmCR8bN2UaM0Bsu2">
+              <th data-page-node-id="0rIaSWr8gd2OxryFKdtOJt" class="wk-col"><!--pnid:6H1fQa03KoViTD9fqOPJIU-->周期</th>
+              <th data-page-node-id="MkvfyrVVpNXNCWOgHghyh5"><!--pnid:gm1qUwzb0r2CdKop7kkrEt-->在制转在库量</th>
+              <th data-page-node-id="UawbUW7cAwv6xdxQpXe4WN"><!--pnid:ZoxQRjdrmMjXoFTZRIytlL-->发货量</th>
+              <th data-page-node-id="RWk5hYKpMFmRW89o8pmgmH" style="width:30px"></th>
+            </tr>
+          </thead>
+          <tbody data-page-node-id="RWIFeYrkwpcYSeK6lLv1JE" id="wkBody"></tbody>
+        </table>
+
+        <div data-page-node-id="ERERPTwdWmf1rx5gMFf9dU" class="formula-note">
+          <b data-page-node-id="5x2K6y2Nks3UV0WL2yx4Jg"><!--pnid:nCEPvxVrmoCxh0SQR3FxNe-->算法说明</b><br data-page-node-id="b7yvsq5l3ksyQVlJAmNAuk">
+          <code data-page-node-id="O4M8gvQMSesXjBGtEnMYB7"><!--pnid:Yf6oStS6a2nKFxTnEkxgK9-->采购需求(N)</code><!--pnid:w2rN2jcS0zaYd1W4DGykDF--> = <code data-page-node-id="lwGIHn66dH0G2gvRrdjzfY"><!--pnid:sVDoKykJ2x8obJHiAC8nlp-->发货量(N)</code><!--pnid:qlwxlctOaqQm78beo4LUKd--> − ( <code data-page-node-id="OrjQbEyn7Y3CZ6RYs62FT2"><!--pnid:2QCPEKlgyUnoMCrYvzSvW3-->结存库存(N-1)</code><!--pnid:APiHWcU3ppyGdhB5P2Izzl--> + <code data-page-node-id="zgr1IQYECRTVw76CojHSDw"><!--pnid:JqbmMluPuRfPTiwctts7zo-->在制转在库量(N)</code><!--pnid:PWagsc0LFwak7qLtByeygz--> )<br data-page-node-id="r2v3FuoDiCibBvglMSXaIS">
+          <code data-page-node-id="zlKULue3x57YVHJyYUmz5l"><!--pnid:htK5pKzdjSOSPfr6aEO8Kx-->结存库存(N)</code><!--pnid:yy2TNWyzWYbGNEMqH5F5bO--> = min(0, 采购需求(N)) · <code data-page-node-id="shyDwjP801Njtr1U8rohmA"><!--pnid:IiPSRqDZh3JPRXL357c99m-->WK(0)结存库存</code><!--pnid:JR88OO5j0xajj3gyVRyG2k--> = −期初可用库存<br data-page-node-id="kj8IsmvFfH3ufWIgsDU30e"><!--pnid:yLdva3fOLhwD4VykZgUHkA-->
+          采购需求为<b data-page-node-id="54ZMexhBljHL6qsM7BJXwu"><!--pnid:tcQC2sPCkGDRyH6VCsAb8W-->正</b><!--pnid:AH1hsUkgq9wTKCQfe3Ur4b--> → 需采购；为<b data-page-node-id="fVvVyxh1Oqj5KbbEamMB9B"><!--pnid:kX3iJDUG16uvumDki7M8bu-->负</b><!--pnid:E3EwEPAOf8zVPtnIbWa9r3--> → 库存充足（负号即富余量）。
+        </div>
+      </div>
+    </section>
+
+    <!--pnid:tmIjJgNPDAqvayLNkPkqWE--><!-- ================= 结果区 ================= -->
+    <section data-page-node-id="JvvMoZnX8fNdBEldMbjcWs" class="panel result-panel">
+      <div data-page-node-id="EWSSzNcRi2MdrYX9fW9Lhg" class="panel-head"><!--pnid:fYER2Q0gA1xbbwrakFoPB3-->③ 推演结果</div>
+      <div data-page-node-id="Ms1VFJ9x56kVtzLyTCxsOO" class="empty-state" id="emptyBox">
+        <div data-page-node-id="8J2cnGQfKk04vUegCqtb8j" class="icon"><!--pnid:WMg6Yaf9cCkA4gnMUihztJ-->📊</div>
+        <p data-page-node-id="j1XrVhuMia2yKMGwJUb0SO"><!--pnid:7bfdx3XVgw2Thx2gjHEo8Y-->请在左侧填写期初库存与未来周数据，<br data-page-node-id="UNUu8XkYZN10bZPKgXemOE"><!--pnid:bBl162y4kTEG2UCXkN4MpE-->输入自动实时计算推演结果。</p>
+      </div>
+      <div data-page-node-id="lEsbVngn0SxY9Bqx7jPrGA" id="resultBox" style="display:none">
+        <div data-page-node-id="R7ZCpNYBy3ErrFR0Qlece5" class="cards" id="summaryCards"></div>
+        <div data-page-node-id="ad4eUhhP3TUpyl1jrTaRME" class="table-wrap">
+          <table data-page-node-id="XnQKtawHzgWq0cx6vwpCRV" class="res" id="resTable"></table>
+        </div>
+        <div data-page-node-id="R9s5DdSN3aetLACRGF8YKX" class="charts">
+          <div data-page-node-id="XrurzGN0B0OKeyuaPH4SiM" class="chart-box">
+            <h3 data-page-node-id="FXtcjgWqz3BWvDrysC4coy"><!--pnid:GIs4fioAqzYsa9WUC6eQJz-->周度供需对比</h3>
+            <div data-page-node-id="rozRyLLDCiQKpMbbo6pyEK" class="legend">
+              <span data-page-node-id="UZR8FUQGadQYlodNLfxirP"><i data-page-node-id="2WLRyrl2LJanGsHz0SLE8B" style="background:#2563eb"></i><!--pnid:FJdRwCYUa0hdMlI3W7CYxK-->本期供给</span>
+              <span data-page-node-id="LdiBrhkGzYVEhA24NXfN9y"><i data-page-node-id="Waog7OJVyYvGlIINGE2tpU" style="background:#f97316"></i><!--pnid:Ns9pLyT1aQUOfaDAjyR2hS-->本期需求(发货量)</span>
+              <span data-page-node-id="3881X8QkQxZ7ta9yxjjSbR" style="margin-left:auto; color:#9aa3b2"><!--pnid:BXR97iu0LSm7FroYH3KLUH-->柱高超过供给 = 缺口，需采购</span>
+            </div>
+            <div data-page-node-id="uuw3cq8Y7hxOOgqmw12TKA" id="chartSupply"></div>
+          </div>
+          <div data-page-node-id="dnxXA7YaBmCMM5jQyQSnYU" class="chart-box">
+            <h3 data-page-node-id="kgPWQ11XZ6PK86N0rPlZKt"><!--pnid:eiMu9fqqTwR9fiMTsfGHf3-->库存水位（周初可用库存）</h3>
+            <div data-page-node-id="gwaKXOq5BdHxywHablA28A" id="chartStock"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div data-page-node-id="VxlX0nY2dQlbTOQSYjWysr" class="foot"><!--pnid:Mpxvo5xxCJD3xJJs0nBd0q-->库存推演工具 · 可视化版 — 数据仅保存在本地浏览器，不会上传</div>
+</div>
+
+<div data-page-node-id="lo5ONVnhfDeTX6HHXcyLpp" class="toast" id="toast"></div>
+
+<script data-page-node-id="0ib4tmu3kgEHUgnrbRclaj" data-pnid-children="ufmz97et7quZDuMbFgUDlh">
+"use strict";
+
+/* ============================================================
+ * 核心算法（与 Python 版 inventory_projection.py 完全一致）
+ * ============================================================ */
+function project(initialAvailable, weeks) {
+  // weeks: [{ wip, shipment }]
+  const results = [];
+  let prevEnding = -initialAvailable; // WK(0) 结存库存 = -期初可用库存
+  for (let i = 0; i < weeks.length; i++) {
+    const wip = weeks[i].wip;
+    const shipment = weeks[i].shipment;
+    const availableStart = -prevEnding;                 // 周初实际可用库存
+    const supply = availableStart + wip;                // 本期供给
+    const purchaseNeed = shipment - supply;             // 采购需求
+    const endingInventory = Math.min(0, purchaseNeed);  // 结存库存 = min(0, 采购需求)
+    results.push({
+      week: i + 1, wip, shipment, availableStart, supply,
+      purchaseNeed, endingInventory,
+      status: purchaseNeed > 0 ? 'need' : purchaseNeed < 0 ? 'enough' : 'just',
+    });
+    prevEnding = endingInventory;
+  }
+  return results;
+}
+
+/* ============================================================
+ * 状态 & 渲染
+ * ============================================================ */
+const $ = (id) => document.getElementById(id);
+const STORE_KEY = 'inventory-proj-state-v1';
+
+const wkBody = $('wkBody');
+const emptyBox = $('emptyBox');
+const resultBox = $('resultBox');
+const toastEl = $('toast');
+
+let toastTimer = null;
+function toast(msg) {
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2200);
+}
+
+function fmt(x) { // 千分位，取整；统一处理负零
+  const r = Math.round(x) + 0; // (+0) 把 -0 规整为 0
+  return r.toLocaleString('zh-CN');
+}
+function fmtSigned(x) {
+  const r = Math.round(x) + 0;
+  return r.toLocaleString('zh-CN');
+}
+
+function getInitial() {
+  const v = (id) => parseFloat($(id).value) || 0;
+  return v('inStock') + v('inTransit') + v('domestic') + v('overseas');
+}
+
+function getWeeks() {
+  const weeks = [];
+  wkBody.querySelectorAll('tr').forEach(tr => {
+    const wip = parseFloat(tr.querySelector('.wip').value) || 0;
+    const ship = parseFloat(tr.querySelector('.ship').value) || 0;
+    weeks.push({ wip, shipment: ship });
+  });
+  return weeks;
+}
+
+function addRow(wip = 0, shipment = 0) {
+  const n = wkBody.children.length + 1;
+  const tr = document.createElement('tr');
+  tr.innerHTML =
+    '<td class="wk-name">WK(' + n + ')</td>' +
+    '<td><input type="number" class="wip" value="' + wip + '" min="0" step="1" placeholder="0"></td>' +
+    '<td><input type="number" class="ship" value="' + shipment + '" min="0" step="1" placeholder="0"></td>' +
+    '<td><button class="del-row" title="删除本周">✕</button></td>';
+  tr.querySelector('.del-row').addEventListener('click', () => {
+    tr.remove();
+    renumber();
+    saveState();
+    render();
+  });
+  wkBody.appendChild(tr);
+  return tr;
+}
+
+function renumber() {
+  [...wkBody.children].forEach((tr, i) => {
+    tr.querySelector('.wk-name').textContent = 'WK(' + (i + 1) + ')';
+  });
+}
+
+function addNWeeks(n) {
+  for (let i = 0; i < n; i++) addRow();
+  renumber();
+  saveState();
+  render();
+}
+
+function render() {
+  const initial = getInitial();
+  $('initialTotal').textContent = fmt(initial);
+  $('initialTotal').classList.toggle('neg', initial < 0);
+  $('initialWarn').classList.toggle('show', initial < 0);
+
+  const weeks = getWeeks();
+  if (weeks.length === 0) {
+    emptyBox.style.display = '';
+    resultBox.style.display = 'none';
+    return;
+  }
+  emptyBox.style.display = 'none';
+  resultBox.style.display = '';
+
+  const results = project(initial, weeks);
+  renderTable(initial, results);
+  renderCards(results);
+  renderCharts(initial, results);
+}
+
+/* ============================================================
+ * 结果表
+ * ============================================================ */
+const STATUS_MAP = {
+  need:   ['需采购', 'badge need'],
+  enough: ['充足',   'badge enough'],
+  just:   ['刚好',   'badge just'],
+};
+
+function renderTable(initial, results) {
+  const heads = ['周期', '在制转在库', '发货量', '周初可用', '本期供给', '采购需求', '结存库存', '状态'];
+  let html = '<tr>' + heads.map(h => '<th>' + h + '</th>').join('') + '</tr>';
+
+  // WK(0) 期初行
+  html += '<tr class="wk0"><td>WK(0)</td><td>—</td><td>—</td><td>' + fmt(initial) +
+          '</td><td>—</td><td>—</td><td>' + fmtSigned(-initial) + '</td>' +
+          '<td><span class="badge init">期初</span></td></tr>';
+
+  for (const r of results) {
+    const need = r.purchaseNeed > 0;
+    const surplus = r.purchaseNeed < 0;
+    const cls = need ? 'pos' : surplus ? 'neg' : 'zero';
+    const [txt, badge] = STATUS_MAP[r.status];
+    html += '<tr class="' + (need ? 'hl' : '') + '">' +
+      '<td>WK(' + r.week + ')</td>' +
+      '<td>' + fmt(r.wip) + '</td>' +
+      '<td>' + fmt(r.shipment) + '</td>' +
+      '<td>' + fmt(r.availableStart) + '</td>' +
+      '<td>' + fmt(r.supply) + '</td>' +
+      '<td class="' + cls + '">' + fmtSigned(r.purchaseNeed) + '</td>' +
+      '<td class="' + cls + '">' + fmtSigned(r.endingInventory) + '</td>' +
+      '<td><span class="' + badge + '">' + txt + '</span></td></tr>';
+  }
+  $('resTable').innerHTML = html;
+}
+
+/* ============================================================
+ * 汇总卡片
+ * ============================================================ */
+function renderCards(results) {
+  const n = results.length;
+  const totalShip = results.reduce((s, r) => s + r.shipment, 0);
+  const totalWip = results.reduce((s, r) => s + r.wip, 0);
+  const totalPurchase = results.reduce((s, r) => s + Math.max(0, r.purchaseNeed), 0);
+  const needWeeks = results.filter(r => r.purchaseNeed > 0).length;
+  const maxShortage = Math.max(0, ...results.map(r => r.purchaseNeed));
+  const maxSurplus = Math.max(0, ...results.map(r => -r.endingInventory));
+  const final = results[n - 1].endingInventory;
+
+  const cards = [
+    { k: '推演周数',        v: n,               cls: 'blue',  s: '未来 N 周' },
+    { k: '总采购需求',      v: fmt(totalPurchase), cls: totalPurchase > 0 ? 'red' : 'green',
+      s: '需提前安排采购' },
+    { k: '需采购周数',      v: needWeeks + ' / ' + n, cls: needWeeks > 0 ? 'red' : 'green',
+      s: '需采购周占比' },
+    { k: '最大单周缺口',    v: fmt(maxShortage), cls: maxShortage > 0 ? 'red' : 'green',
+      s: '缺口最大的周' },
+    { k: '最大单周富余',    v: fmt(maxSurplus), cls: 'green', s: '富余最大的周' },
+    { k: '期末结存库存',    v: fmtSigned(final),
+      cls: final < 0 ? 'green' : 'amber',
+      s: final < 0 ? (Math.abs(final) + ' 单位富余') : '库存用尽' },
+  ];
+  $('summaryCards').innerHTML = cards.map(c =>
+    '<div class="card"><div class="k">' + c.k + '</div>' +
+    '<div class="v ' + c.cls + '">' + c.v + '</div>' +
+    '<div class="s">' + c.s + '</div></div>'
+  ).join('');
+}
+
+/* ============================================================
+ * SVG 图表
+ * ============================================================ */
+const SVG_W = 720, SVG_H = 300, M = { t: 18, r: 16, b: 40, l: 52 };
+
+function niceMax(v) {
+  if (v <= 0) return 1;
+  const p = Math.pow(10, Math.floor(Math.log10(v)));
+  const n = v / p;
+  let m;
+  if (n <= 1) m = 1; else if (n <= 2) m = 2; else if (n <= 2.5) m = 2.5;
+  else if (n <= 5) m = 5; else m = 10;
+  return m * p;
+}
+
+function yTicks(max) {
+  const step = niceMax(max / 4);
+  const ticks = [];
+  for (let v = 0; v <= max + 1e-9; v += step) ticks.push(v);
+  return { step, ticks };
+}
+
+function axes(cw, ch, max, ticks, unitLabel) {
+  let s = '';
+  for (const t of ticks) {
+    const y = ch - (t / max) * ch;
+    s += '<line x1="' + M.l + '" y1="' + y + '" x2="' + (M.l + cw) + '" y2="' + y +
+         '" stroke="#e8ecf3" stroke-width="1"/>';
+    s += '<text x="' + (M.l - 8) + '" y="' + (y + 4) + '" text-anchor="end" font-size="11" fill="#9aa3b2">' +
+         fmt(t) + '</text>';
+  }
+  // 轴底线
+  s += '<line x1="' + M.l + '" y1="' + ch + '" x2="' + (M.l + cw) + '" y2="' + ch +
+       '" stroke="#d4dae6" stroke-width="1.2"/>';
+  return s;
+}
+
+function xLabels(cw, count, labels) {
+  let s = '';
+  const slot = cw / count;
+  labels.forEach((lb, i) => {
+    const x = M.l + slot * i + slot / 2;
+    s += '<text x="' + x + '" y="' + (SVG_H - M.b + 20) + '" text-anchor="middle" font-size="11" fill="#6b7280">' +
+         lb + '</text>';
+  });
+  return s;
+}
+
+/* ---- 图表 1：周度供需对比 ---- */
+function chartSupply(results) {
+  const cw = SVG_W - M.l - M.r;
+  const ch = SVG_H - M.t - M.b;
+  const count = results.length;
+  const maxV = niceMax(Math.max(...results.map(r => Math.max(r.supply, r.shipment))));
+  const { ticks } = yTicks(maxV);
+  const slot = cw / count;
+  const bw = Math.min(26, slot * 0.32);
+
+  let s = '<svg viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" role="img">';
+  s += axes(cw, ch, maxV, ticks);
+  s += xLabels(cw, count, results.map(r => 'WK' + r.week));
+
+  results.forEach((r, i) => {
+    const cx = M.l + slot * i + slot / 2;
+    const hS = (r.supply / maxV) * ch;
+    const hD = (r.shipment / maxV) * ch;
+    const yS = ch - hS, yD = ch - hD;
+    // 供给柱
+    s += '<rect x="' + (cx - bw - 2) + '" y="' + yS + '" width="' + bw + '" height="' + Math.max(1, hS) +
+         '" fill="#2563eb" rx="3"><title>WK' + r.week + ' 供给：' + fmt(r.supply) + '</title></rect>';
+    // 需求柱
+    s += '<rect x="' + (cx + 2) + '" y="' + yD + '" width="' + bw + '" height="' + Math.max(1, hD) +
+         '" fill="#f97316" rx="3"><title>WK' + r.week + ' 需求：' + fmt(r.shipment) + '</title></rect>';
+    // 柱顶数值
+    if (hS > 18) s += '<text x="' + (cx - bw - 2 + bw / 2) + '" y="' + (yS - 5) +
+                      '" text-anchor="middle" font-size="10.5" fill="#2563eb">' + fmt(r.supply) + '</text>';
+    if (hD > 18) s += '<text x="' + (cx + 2 + bw / 2) + '" y="' + (yD - 5) +
+                      '" text-anchor="middle" font-size="10.5" fill="#f97316">' + fmt(r.shipment) + '</text>';
+    // 缺口标记
+    if (r.purchaseNeed > 0) {
+      s += '<text x="' + cx + '" y="' + (ch + 16) + '" text-anchor="middle" font-size="10.5" fill="#e5484d">' +
+           '▲缺口 ' + fmt(r.purchaseNeed) + '</text>';
+    }
+  });
+  s += '</svg>';
+  $('chartSupply').innerHTML = s;
+}
+
+/* ---- 图表 2：库存水位（周初可用） ---- */
+function chartStock(initial, results) {
+  const cw = SVG_W - M.l - M.r;
+  const ch = SVG_H - M.t - M.b;
+  const count = results.length;
+  // 数据点：WK(0) 期初 = initial，之后每周的周初可用
+  const pts = [initial, ...results.map(r => r.availableStart)];
+  const maxV = niceMax(Math.max(...pts));
+  const { ticks } = yTicks(maxV);
+  const slot = cw / count;
+  const px = (i) => M.l + (i * slot) + slot / 2;
+
+  let s = '<svg viewBox="0 0 ' + SVG_W + ' ' + SVG_H + '" role="img">';
+  s += axes(cw, ch, maxV, ticks);
+  // X 轴标签：WK(0)...WK(N)
+  const labels = pts.map((_, i) => 'WK' + i);
+  s += xLabels(cw, count, labels);
+
+  // 面积填充
+  let area = 'M ' + px(0) + ' ' + (ch - (pts[0] / maxV) * ch);
+  let line = area;
+  for (let i = 1; i < pts.length; i++) {
+    const x = px(i), y = ch - (pts[i] / maxV) * ch;
+    line += ' L ' + x + ' ' + y;
+    area += ' L ' + x + ' ' + y;
+  }
+  area += ' L ' + px(pts.length - 1) + ' ' + ch + ' L ' + px(0) + ' ' + ch + ' Z';
+  s += '<path d="' + area + '" fill="rgba(37,99,235,.10)" stroke="none"/>';
+  s += '<path d="' + line + '" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
+
+  // 数据点
+  pts.forEach((v, i) => {
+    const x = px(i), y = ch - (v / maxV) * ch;
+    const last = i === pts.length - 1;
+    const dotColor = (v === 0 && !last) ? '#e5484d' : '#2563eb';
+    s += '<circle cx="' + x + '" cy="' + y + '" r="4.5" fill="#fff" stroke="' + dotColor +
+         '" stroke-width="2.5"><title>WK' + i + ' 周初可用：' + fmt(v) + '</title></circle>';
+    // 数值
+    s += '<text x="' + x + '" y="' + (y - 9) + '" text-anchor="middle" font-size="10.5" fill="#6b7280">' +
+         fmt(v) + '</text>';
+  });
+
+  // 零轴警示
+  const zeroY = ch - 0;
+  s += '<line x1="' + M.l + '" y1="' + zeroY + '" x2="' + (M.l + cw) + '" y2="' + zeroY +
+       '" stroke="#e5484d" stroke-width="1" stroke-dasharray="4 3" opacity=".55"/>';
+  s += '</svg>';
+  $('chartStock').innerHTML = s;
+}
+
+function renderCharts(initial, results) {
+  chartSupply(results);
+  chartStock(initial, results);
+}
+
+/* ============================================================
+ * 示例 / 清空 / 记忆
+ * ============================================================ */
+function loadDemo() {
+  $('inStock').value = 1500; $('inTransit').value = 0;
+  $('domestic').value = 0;    $('overseas').value = 0;
+  wkBody.innerHTML = '';
+  const data = [
+    [200, 800], [300, 1000], [0, 600], [500, 1200], [100, 400], [0, 300],
+  ];
+  data.forEach(d => addRow(d[0], d[1]));
+  renumber();
+  saveState();
+  render();
+  toast('已载入 6 周示例数据');
+}
+
+function resetAll() {
+  ['inStock', 'inTransit', 'domestic', 'overseas'].forEach(id => $(id).value = 0);
+  wkBody.innerHTML = '';
+  saveState();
+  render();
+  toast('已清空');
+}
+
+function saveState() {
+  try {
+    const state = {
+      init: { inStock: $('inStock').value, inTransit: $('inTransit').value,
+              domestic: $('domestic').value, overseas: $('overseas').value },
+      weeks: getWeeks(),
+    };
+    localStorage.setItem(STORE_KEY, JSON.stringify(state));
+  } catch (e) { /* 隐私模式等场景忽略 */ }
+}
+
+function restoreState() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (!raw) return false;
+    const state = JSON.parse(raw);
+    if (state.init) {
+      $('inStock').value = state.init.inStock || 0;
+      $('inTransit').value = state.init.inTransit || 0;
+      $('domestic').value = state.init.domestic || 0;
+      $('overseas').value = state.init.overseas || 0;
+    }
+    wkBody.innerHTML = '';
+    (state.weeks || []).forEach(w => addRow(w.wip || 0, w.shipment || 0));
+    renumber();
+    return true;
+  } catch (e) { return false; }
+}
+
+/* ============================================================
+ * CSV 导入 / 导出（与 Python 版格式互通）
+ * ============================================================ */
+function exportCSV() {
+  const initial = getInitial();
+  const weeks = getWeeks();
+  if (weeks.length === 0) { toast('没有周数据可导出'); return; }
+  const results = project(initial, weeks);
+  const n0 = (x) => (x === 0 ? '0' : String(Math.round(x)));
+
+  let csv = '\ufeff周期,在制转在库量,发货量,周初可用库存,本期供给,采购需求,结存库存\n';
+  csv += 'WK(0),,,' + n0(initial) + ',,,' + n0(-initial) + '\n';
+  results.forEach(r => {
+    csv += 'WK(' + r.week + '),' + n0(r.wip) + ',' + n0(r.shipment) + ',' +
+           n0(r.availableStart) + ',' + n0(r.supply) + ',' +
+           n0(r.purchaseNeed) + ',' + n0(r.endingInventory) + '\n';
+  });
+
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '库存推演结果.csv';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast('已导出 库存推演结果.csv');
+}
+
+function parseCSVText(text) {
+  const lines = text.split(/\r?\n/).filter(l => l.trim() !== '');
+  if (lines.length === 0) return { initial: 0, weeks: [] };
+  const head = lines[0].split(',').map(h => h.trim());
+  const idx = (aliases) => {
+    for (const a of aliases) {
+      const i = head.indexOf(a);
+      if (i >= 0) return i;
+    }
+    return -1;
+  };
+  const iPeriod = idx(['period', '周期', 'wk', 'WK']);
+  const iWip = idx(['wip', 'wip_transfer', '在制转在库', '在制转在库量']);
+  const iShip = idx(['shipment', 'ship', '发货', '发货量']);
+  const iInit = idx(['initial', '期初', '期初国内可用库存', 'available']);
+  if (iPeriod < 0 && iInit < 0) return null;
+
+  let initial = 0;
+  const weeks = [];
+  for (let i = 1; i < lines.length; i++) {
+    const cells = lines[i].split(',');
+    const get = (i2) => (i2 >= 0 && i2 < cells.length ? cells[i2].trim() : '');
+    const period = get(iPeriod).toUpperCase();
+    if (period === 'WK(0)' || period === 'INITIAL' || period === '期初' || iPeriod < 0) {
+      const v = parseFloat(get(iInit) || get(iShip));
+      if (!isNaN(v)) initial = v;
+      if (iPeriod < 0) continue; // 无周期列时仅读取期初
+      continue;
+    }
+    if (period === '') continue;
+    const wip = parseFloat(get(iWip));
+    const ship = parseFloat(get(iShip));
+    if (iWip < 0 && iShip < 0) continue;
+    weeks.push({ wip: isNaN(wip) ? 0 : wip, shipment: isNaN(ship) ? 0 : ship });
+  }
+  return { initial, weeks };
+}
+
+function decodeCSV(buffer) {
+  // 优先 UTF-8，乱码则回退 GBK（Excel 中文导出常见）
+  const utf8 = new TextDecoder('utf-8').decode(buffer);
+  if (!utf8.includes('\uFFFD')) return utf8;
+  try {
+    return new TextDecoder('gbk').decode(buffer);
+  } catch (e) {
+    return utf8;
+  }
+}
+
+function importCSV(file) {
+  const reader = new FileReader();
+  reader.onload = () => {
+    const text = decodeCSV(reader.result);
+    const data = parseCSVText(text);
+    if (!data) { toast('无法识别的 CSV 格式'); return; }
+    if (data.weeks.length === 0) { toast('CSV 中没有周数据'); return; }
+
+    // 期初库存：CSV 有期初则覆盖，否则保留当前输入
+    if (data.initial > 0) {
+      $('inStock').value = data.initial;
+      $('inTransit').value = 0; $('domestic').value = 0; $('overseas').value = 0;
+    }
+    wkBody.innerHTML = '';
+    data.weeks.forEach(w => addRow(w.wip, w.shipment));
+    renumber();
+    saveState();
+    render();
+    toast('导入成功：' + data.weeks.length + ' 周数据');
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+/* ============================================================
+ * 事件绑定 & 启动
+ * ============================================================ */
+$('btnDemo').addEventListener('click', loadDemo);
+$('btnReset').addEventListener('click', resetAll);
+$('btnAdd').addEventListener('click', () => {
+  const n = Math.min(99, Math.max(1, parseInt($('addN').value) || 1));
+  addNWeeks(n);
+});
+$('btnImport').addEventListener('click', () => $('fileInput').click());
+$('btnExport').addEventListener('click', exportCSV);
+$('fileInput').addEventListener('change', (e) => {
+  if (e.target.files && e.target.files[0]) importCSV(e.target.files[0]);
+  e.target.value = '';
+});
+
+// 输入即重算（实时）
+document.addEventListener('input', (e) => {
+  if (e.target.matches('#wkBody input, #inStock, #inTransit, #domestic, #overseas')) {
+    renumber();
+    saveState();
+    render();
+  }
+});
+
+// 默认首行已存在
+if (!restoreState()) {
+  addRow(200, 800);
+  addRow(300, 1000);
+  addRow(0, 600);
+  addRow(500, 1200);
+  addRow(100, 400);
+  addRow(0, 300);
+}
+renumber();
+render();
+</script>
+</body>
+</html>

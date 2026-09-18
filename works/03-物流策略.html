@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html data-page-node-id="BGVtXSXchBc4J9TYUd2v6i" lang="zh-CN">
+<head data-page-node-id="iaN4zXZSgwWNAiclvvoDv1">
+<meta data-page-node-id="xPhSCbDEGBer5kEgwn7zna" charset="UTF-8">
+<meta data-page-node-id="BZh6mVjHzbvf4wwKpZyuVY" content="width=device-width, initial-scale=1.0" name="viewport">
+<title data-page-node-id="QLpdrgxVTnQVbCGV7t7emj" data-pnid-children="G8BXw0lFGibMDQcVuLCepd">补货物流算法工具</title>
+<style data-page-node-id="yRiQXzw6sGUVFX3nkWBbIc" data-pnid-children="V2QTXTekpRnCWRNZCmnGYC">
+:root{
+  --bg:#f5f6f8; --panel:#ffffff; --line:#e3e6ec; --line2:#eef1f5;
+  --text:#1c2430; --text2:#5b6675; --text3:#8c96a5;
+  --blue:#2563eb; --blue-bg:#eef4ff; --blue-line:#c7dbfe;
+  --red:#d92b2b; --red-bg:#fdeeee; --red-line:#f6cfcf;
+  --green:#12885a; --green-bg:#e9f7f0;
+  --amber:#b06f00; --amber-bg:#fff6e6;
+  --purple:#7048e8; --purple-bg:#f2edff;
+  --radius:10px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-size:13px; line-height:1.6;
+}
+.wrap{max-width:1560px;margin:0 auto;padding:20px 22px 80px}
+
+h1{font-size:20px;margin:0 0 4px;font-weight:600;letter-spacing:-.2px}
+.sub{color:var(--text3);font-size:12px;margin-bottom:18px}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin-bottom:14px}
+.card > h2{font-size:14px;margin:0 0 12px;font-weight:600;display:flex;align-items:center;gap:8px}
+.card > h2 .num{
+  width:20px;height:20px;border-radius:5px;background:var(--blue);color:#fff;
+  display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex:none;
+}
+
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:1100px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.grid{grid-template-columns:1fr!important}}
+
+label.f{display:block;font-size:12px;color:var(--text2);margin-bottom:4px;font-weight:500}
+input[type=text],input[type=date],input[type=number],select{
+  width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:7px;
+  font-size:13px;background:#fff;color:var(--text);font-family:inherit;
+}
+input:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-bg)}
+input[type=number]{font-variant-numeric:tabular-nums}
+
+button{
+  padding:7px 14px;border-radius:7px;border:1px solid var(--blue);background:var(--blue);color:#fff;
+  font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;transition:.15s;
+}
+button:hover{filter:brightness(1.08)}
+button.ghost{background:#fff;color:var(--text2);border-color:var(--line)}
+button.ghost:hover{background:var(--line2);color:var(--text)}
+button.mini{padding:3px 8px;font-size:11px;border-radius:5px}
+button.danger{background:#fff;color:var(--red);border-color:var(--red-line)}
+
+table{border-collapse:collapse;width:100%;font-size:12px}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center;vertical-align:middle}
+th{background:#fafbfc;font-weight:600;color:var(--text2);font-size:11.5px;white-space:nowrap}
+td{white-space:nowrap}
+td.l,th.l{text-align:left}
+tr:hover td{background:#fafcff}
+
+.tblwrap{overflow-x:auto;border-radius:8px;border:1px solid var(--line)}
+.tblwrap table{border:none}
+.tblwrap th,.tblwrap td{border-width:0 1px 1px 0}
+.tblwrap th:last-child,.tblwrap td:last-child{border-right:none}
+.tblwrap tr:last-child td{border-bottom:none}
+
+.scroll-x{overflow-x:auto;padding-bottom:4px}
+
+.badge{display:inline-block;padding:1px 7px;border-radius:20px;font-size:11px;font-weight:500;line-height:1.7}
+.b-none{background:#f1f3f6;color:var(--text3)}
+.b-warn{background:var(--amber-bg);color:var(--amber)}
+.b-emg{background:var(--red-bg);color:var(--red)}
+
+.hl-emg{background:var(--red-bg)!important;color:var(--red)!important}
+
+.muted{color:var(--text3)}
+.small{font-size:11.5px}
+.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:11.5px;font-variant-numeric:tabular-nums}
+
+.note{
+  background:var(--amber-bg);border:1px solid #ffe0b2;border-left:3px solid var(--amber);
+  padding:9px 12px;border-radius:7px;font-size:12px;color:#7a4d00;margin-top:10px;
+}
+.tip{background:var(--blue-bg);border:1px solid var(--blue-line);padding:8px 12px;border-radius:7px;font-size:12px;color:#1e40af;margin-top:10px}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 13px}
+.stat .k{font-size:11.5px;color:var(--text3);margin-bottom:3px}
+.stat .v{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.3px}
+.stat .v.accent{color:var(--blue)}
+.stat .v.emg{color:var(--red)}
+
+details{border:1px solid var(--line);border-radius:8px;background:#fff;margin-bottom:10px}
+details>summary{
+  padding:10px 14px;cursor:pointer;font-weight:600;font-size:13px;list-style:none;
+  display:flex;align-items:center;gap:8px;user-select:none;
+}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"\25B8";color:var(--text3);transition:.2s;font-size:12px}
+details[open]>summary::before{transform:rotate(90deg)}
+details>.body{padding:0 14px 14px;border-top:1px solid var(--line2)}
+
+.formula{background:#fafbfc;border:1px solid var(--line);border-radius:7px;padding:8px 11px;font-size:12px;margin:8px 0}
+.formula code{background:#eef1f5;padding:1px 5px;border-radius:4px;font-family:ui-monospace,Consolas,monospace;font-size:11.5px}
+
+.rowline{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
+.rowline>*{flex:none}
+.grow{flex:1 1 120px!important;min-width:110px}
+.hide{display:none!important}
+.tag-new{background:#fff3cd;color:#8a6100;font-size:10px;padding:1px 5px;border-radius:4px;margin-left:5px;font-weight:600}
+
+/* ---- 工具背景区块 ---- */
+.bg-intro .body{padding-top:12px}
+.bg-intro .body p{margin:0 0 9px}
+.bg-intro .body p:last-child{margin-bottom:0}
+.chain{
+  background:var(--blue-bg);border:1px solid var(--blue-line);border-left:3px solid var(--blue);
+  border-radius:7px;padding:8px 12px;font-size:12.5px;color:#1e40af;font-weight:500;margin:0 0 9px;
+}
+.bg-out{
+  background:#fafbfc;border:1px solid var(--line);border-radius:7px;padding:8px 12px;margin-top:11px;
+}
+.bg-out b{color:var(--blue)}
+</style>
+</head>
+<body data-page-node-id="FVvCXL7S447r2AsDc4KCy1">
+<div data-page-node-id="qFW4W8bS3zZERpPpdSO4FI" class="wrap">
+
+<h1 data-page-node-id="88QcSsXcVAeefm2KhRuTVc"><!--pnid:7ND6UhU1XSaljp4xUGphtR-->补货物流算法工具</h1>
+<div data-page-node-id="5wqJesGWqQosr1kjkMZyYB" class="sub"><!--pnid:Fy7I1Chcr5VZZvuqiTP9cx-->销售周期 → 按成本优先级选物流方式 → 倒推最晚发货日　｜　核心：发货月自洽校验（枚举验证法）</div>
+
+<!--pnid:pu9hzSQz1f5jrimnsdo6dw--><!-- ========== 工具背景 ========== -->
+<details data-page-node-id="wBAt7t2BCenJ7mzDqrQuXj" class="bg-intro" open>
+  <summary data-page-node-id="ibgUHpWGzWrhACaPBpm0kd"><!--pnid:pJjr6xc4OQaIciOgUm5nQD-->工具背景</summary>
+  <div data-page-node-id="0bpGO5SUbLEI1UeV37zaQZ" class="body">
+    <p data-page-node-id="3uClVzNxVvAFlmvUHeYKk7"><!--pnid:jqdtCB89KkhBu3rML3kJHT-->跨境补货中，同一批货有多种物流方式可选（海运慢但便宜、空运快但贵），且时效会随发货月份波动。业务目标很明确：<b data-page-node-id="L9LYvmgpfOVv6WtUoQKEAi"><!--pnid:7XLO8sYT0lPkphOZdBck6Y-->在保证按时到货、不断货的前提下，选出成本最优的物流方式</b><!--pnid:nBX7lS1rsFNoVYxrvtCfMo-->。</p>
+    <p data-page-node-id="2NaGpTL7ZGoHdnGUbtDuta"><!--pnid:NdpPTHqvs1Gz5WVkRUREAW-->难点在于存在循环依赖——</p>
+    <div data-page-node-id="oXZwASf0dIsJDBjr4bSiPZ" class="chain"><!--pnid:xJYivrfHhEuPYLHgTH3FQa-->发货日决定发货月　→　发货月决定时效　→　时效又反过来决定发货日</div>
+    <p data-page-node-id="o3sJLgn3g3bT1lzZrS5fYv"><!--pnid:Pnt2XS2r0KnjMSPSo6cVZc-->本工具采用「<b data-page-node-id="nGk2Brh5GelM1VOjXul9Wx"><!--pnid:lS4S4wQJNw9MdOwGLYClx6-->枚举验证法</b><!--pnid:spLMKXAyaOOn1tIZPutYTX-->」破解：逐个假设发货月份、倒推发货日、再回验是否落回该月，取最晚的自洽解。无解则跳过该物流、尝试更快的下一档；<b data-page-node-id="FuISLwq5i1g68fOZ0zn6yL"><!--pnid:J3V1kOHxPRrVrHLdp2Ltxy-->所有物流都匹配不上，标记为「无法送达」</b><!--pnid:9ugEGfa3uCVZ0uXEQtHfE9-->。</p>
+    <p data-page-node-id="FeNcG5VYxoKVOf1j2PSH0k" class="bg-out"><b data-page-node-id="XjvsfOXmDtHp4l6p2nmbgM"><!--pnid:BS8UNmHD9MAm83bREafJ21-->输出：</b><!--pnid:3aaxM4rJ12Id1wg7mMKJr1-->每个销售周期的<b data-page-node-id="jJpMeIeQbHTvvStootZHmv"><!--pnid:DYLwfksY11MOgY9Bl4SalS-->最佳物流方式与最晚发货日</b><!--pnid:DhxVGF1p5JH7PnvNzb0SMf-->。</p>
+  </div>
+</details>
+
+<!--pnid:y8tBEOnn6t2mW8kAhuL6f4--><!-- ========== 基础参数 ========== -->
+<div data-page-node-id="GVsDjri5xZbQtSzjPbHXXM" class="card">
+  <h2 data-page-node-id="KS4EKvvZrixErk22ELFbRS"><span data-page-node-id="QxAdEDWgSCHOMR7oLadJPH" class="num"><!--pnid:FWUjwOJQ3QjrHy0YvGXVlg-->1</span><!--pnid:IgmdH553Qf3oH8o4UGpyqc-->基础参数</h2>
+  <div data-page-node-id="f0yeLEj98S20BUqDuk9NZ2" class="grid g3">
+    <div data-page-node-id="wW6kOdHvczqIEJS2iodVIX">
+      <label data-page-node-id="VGUoVSNVRXWwN4NiZblYye" class="f"><!--pnid:ogik41jx5XSftz9xiyiFkK-->当前日期 current_date</label>
+      <input data-page-node-id="UVZmSKLSxV61TBRj4lwf9Z" id="curDate" type="date" value="2025-03-08">
+    </div>
+    <div data-page-node-id="detj4HCdd0VdxhvegFlbSk">
+      <label data-page-node-id="7toQlBjN0I0dW7QXLszPNh" class="f"><!--pnid:Mpb9wamVa2U5MVzV2eFtiF-->销售周期起始日（第 1 周期开始日）</label>
+      <input data-page-node-id="9c1nGoR24tlNkbGTPnrYza" id="cycleStart" type="date" value="2025-03-08">
+    </div>
+    <div data-page-node-id="12ApfbgcwFTrV2bEtZJiXN">
+      <label data-page-node-id="cezBxA1oxHbnqDitMYlAnJ" class="f"><!--pnid:YETUBRc7QPrjXwCMht7tuk-->销售周期数</label>
+      <input data-page-node-id="4dEK12Dok1JHgRMLg0kgm9" id="cycleCount" max="60" min="1" type="number" value="11">
+    </div>
+    <div data-page-node-id="v0QLlNYYSlkSApiCDe7Ex2" style="display:none">
+      <label data-page-node-id="YrGNgaEJWctu7xppOKp6Vs" class="f"><!--pnid:0i6cu0OObgpV35BiuS9h6H-->每周期天数</label>
+      <input data-page-node-id="MAe93FSdjdOOcMerVmnB0v" id="cycleDays" max="31" min="1" type="number" value="7">
+    </div>
+  </div>
+  <!--pnid:Qh9rJiolM1DVQKF9DYQk1w--><!-- 到货日口径说明：按需隐藏 -->
+  <div data-page-node-id="actz2M3lXRgJjvlRl8YUVr" class="tip" style="display:none">
+    <b data-page-node-id="K3Jhl48kRYN09UJpI1095d"><!--pnid:BhKgRIaPDiVZm297aMTChn-->到货日口径：</b><!--pnid:2mZIOXXyVmZ0iKMgFGnl9I-->每个销售周期的<b data-page-node-id="CZj7S6BJn5ngQgcZ9BOkCb"><!--pnid:iJLC4eDJJke1kjFwRpoghf-->开始日 = 该周期库存最晚到位日 need_by</b><!--pnid:TjG5cDLddjQzBRC6zdhOoA-->。<br data-page-node-id="wkroq6tS4BJuqc9LTOUyx5">
+    <b data-page-node-id="VcK4YJl7i1dA7Fnx02BHOo"><!--pnid:h1enLgn7RCqISx8klceBm9-->所有周期一律进入算法</b><!--pnid:3k9JNy0tEBQ0zfgAnWU6by-->（不设「已有库存」豁免）：按 cost_rank 升序匹配物流方式，能匹配上即给出最晚发货日；<b data-page-node-id="3GRxje1om89qDV4EjbMY7B"><!--pnid:pvvSBAIpD1KA349undxmYS-->任何物流都匹配不上，标记为「无法送达」</b><!--pnid:BEDWXQ89HCw7eGzJCGJg4b-->。
+  </div>
+</div>
+
+<!--pnid:4wrc0QHyLxBImMvqfUWtFA--><!-- ========== 物流方式 ========== -->
+<div data-page-node-id="jErRQrC5rIZmioBbw9I8cf" class="card">
+  <h2 data-page-node-id="yAmwqxQZlkf04hnzZcx369"><span data-page-node-id="reKg5YzpMAo38sWXD07Tig" class="num"><!--pnid:RtD5hqirp9lUCTX40NE10A-->2</span><!--pnid:dMO02sQUBwdXJmoBEkpZJz-->物流方式与时效配置表<span data-page-node-id="Rorwp5Zlbyl5wHUefTfKvP" class="tag-new"><!--pnid:fWFcRRwvUaYpruxHHrRKtf-->核心</span></h2>
+  <div data-page-node-id="RjtK7YnxS1BFeAvhRaMm5X" class="sub" style="margin:-6px 0 12px"><!--pnid:c8hU9JFSImprdnusHpiSOO-->
+    每个物流方式由三个字段描述：<b data-page-node-id="hYqTzPiuthrl9k1uuRzJC2"><!--pnid:MmW0nAGQoSfoEV3uLVTZvI-->name</b><!--pnid:EkYmCzrOZfw4OIulFXCpad-->（名称）、<b data-page-node-id="bNlkCT990gZSj17iE95JzD"><!--pnid:TdUnXVb0B5qwyUWsJvkuPP-->cost_rank</b><!--pnid:lAI3aqbVrABTpkNYj2NESd-->（成本优先级，<b data-page-node-id="mseJTqu2wkczHF1hbk0ksi"><!--pnid:okepvhhz8xEOwK758vImJk-->数值越小越便宜、越优先选用</b><!--pnid:KExXywly7bzwW9ryjnfzF3-->）、<b data-page-node-id="8qoVOTK5KW2RIuEVWl567h"><!--pnid:glWNPIcNkEmaLLprhTkDPm-->lead</b><!--pnid:bJ9L5mE9MlD34m1vQFLe37-->（时效）。<br data-page-node-id="QQhN36BLtQDWgUNBdoBFN9">
+    <code data-page-node-id="XiQe386ygGdB3xIZ48D4NI"><!--pnid:adzimz9AB0EJFqIOW6PBOC-->lead</code><!--pnid:sZul9nOtWGo9ykzIrYHnDJ--> 填<b data-page-node-id="XQzsejZVAwWfBW2oGSx2gf"><!--pnid:okwdJDCumI5MZC9op3ASov-->单个整数</b><!--pnid:MB52DFR6FLkKTEzLQUAgxB-->表示固定时效（如空运恒为 14 天，不分月份）；填<b data-page-node-id="ImWrpdnUH63pkNDmuCo4Xp"><!--pnid:wVQdb7JTEblQKpliqcVIyf-->按月值</b><!--pnid:PAdY6kCI21Q2FHG8e3yhGI-->表示按月时效，<b data-page-node-id="6vkdLJ7pfyYgSz0TRDrYEI"><!--pnid:AdQzFJp9lXJaBNdKLPCIsj-->月份 key 指「发货月」而非「到货月」</b><!--pnid:dx9IEjpJ6k6UoqZblUXgAP-->。
+  </div>
+  <div data-page-node-id="qf1Rg5DZDnqAFXYWHOGZyQ" class="tblwrap">
+    <table data-page-node-id="6n5SKqOYyBjdmkM0Yv4iKp" id="logiTable">
+      <thead data-page-node-id="POHBe6l48AqNC9YYptElOg">
+        <tr data-page-node-id="MkVVudrCNrZ5y2q4g2SXvo">
+          <th data-page-node-id="3ImK5TkqYS9u4ramfNhkgN" class="l" style="min-width:120px"><!--pnid:H7aWXORw7aVbUjpxeWSIYy-->物流名称</th>
+          <th data-page-node-id="de0DtlIVsrco4ciFwtuHrT" style="width:110px"><!--pnid:0JjgLiPBlTJpRN8ANqtsLl-->cost_rank ↑</th>
+          <th data-page-node-id="GWwLKNl0ltKmlVYDNTG2J4" style="width:130px"><!--pnid:8AAXJIxEu93VwbHgnNiCu0-->时效类型</th>
+          <th data-page-node-id="EER9HybCTIObk8Qawso2SL" class="l"><!--pnid:oFDaqwxQGWol4thKcpM0V8-->lead 配置</th>
+          <th data-page-node-id="oA9iCsnn6l4JKYSZBATcgu" style="width:52px"></th>
+        </tr>
+      </thead>
+      <tbody data-page-node-id="ITjVGtZqJmpcvOMe6jGOgG" id="logiTbody"></tbody>
+    </table>
+  </div>
+  <div data-page-node-id="Ry7Aa3VX2H5PsDHOt4pc4Z" class="rowline" style="margin-top:10px">
+    <button data-page-node-id="ZnMEH5CUbM4YkEi4LnQcDW" class="ghost" onclick="addLogi()"><!--pnid:dsbtWcJ3mrq76dGYWDFAOr-->+ 添加物流方式</button>
+    <button data-page-node-id="NFXEoqHqYZdzsyTXy24jiH" class="ghost" onclick="resetToDefault()"><!--pnid:RNLFvXsnR1O4ohMi4JdGPM-->恢复示例数据（海运 / 空运）</button>
+  </div>
+  <!--pnid:h1xaSdVkGEnhcrJqHdZhyl--><!-- 示例说明：按需隐藏 -->
+  <div data-page-node-id="TZ6JdPsRTDIOwlSBvGC4eM" class="note" style="display:none">
+    <b data-page-node-id="xqOBqOFjTfsuz8t11HJ1cY"><!--pnid:x36wEGzDqT5AIQbY9sT32S-->示例：</b><code data-page-node-id="xej23lcvfeAoktiXFmYQFJ"><!--pnid:fDQoQA9BONzGCPnJcvt7SO-->LOGISTICS = [ {"name":"海运", "cost_rank":1, "lead":{3:42, 4:42, 5:49}}, {"name":"空运", "cost_rank":2, "lead":14} ]</code><br data-page-node-id="RX19vUnYErhASSP4RWfr56"><!--pnid:1AaoNuwPG5lRJAPPMZxy7v-->
+    海运最便宜（rank=1）故<b data-page-node-id="r5JjPjqxTTyq2NrkX7gWQj"><!--pnid:Juk4AheynkkCtByjqv4KXX-->优先尝试</b><!--pnid:8R6lVxo5iP7n3dx0c5rd7s-->；只有海运赶不上时才降级用更贵的空运。算法<b data-page-node-id="tUXKvcsMkMwCCLn0IcoBMh"><!--pnid:VyBSMIAIVXFfXFMwEKCaLS-->不是</b><!--pnid:ry0m0AEXrkXSCVbvnWMZtQ-->按时效快慢排序。
+  </div>
+</div>
+
+<!--pnid:9kDIWu8sd3jUJKpKMXva9O--><!-- ========== 销售周期 ========== -->
+<div data-page-node-id="pVzE4fUzBrtGi3u18VSiVN" class="card">
+  <h2 data-page-node-id="Ug1xoAzmrG1po4gfFO0BPD"><span data-page-node-id="IJEq5aDLYEi8uoBaYXbN06" class="num"><!--pnid:Csa9ZWy6mgiw8OoUv4roG1-->3</span><!--pnid:bKFGwS7zPmpsF0I0isEDga-->销售周期表</h2>
+  <div data-page-node-id="hFb9YzzelOqmelhteIbDRz" class="sub" style="margin:-6px 0 12px"><!--pnid:ukF5cEyOJTnrhCyZCzDVpr-->由【基础参数】自动生成。<b data-page-node-id="OwT7m50jHqYOD2SRvW4v6x"><!--pnid:PRHzMeLboBMOymsjay6ADo-->只用到「开始日」（= 到货日）</b><!--pnid:BWOxrfsO0ebaNrAWKFyhoK-->，结束日仅用于展示。</div>
+  <div data-page-node-id="D4yqKicPE3TBZijM4jUmrB" class="tblwrap">
+    <table data-page-node-id="yGCMhGlY6jRzqMOh9eliAi" id="cycleTable">
+      <thead data-page-node-id="NVuCFcXoIfgkKkRCSSdWSg">
+        <tr data-page-node-id="NA6MyUBnBy66QSY0JpAU9J">
+          <th data-page-node-id="3WaFFf08QizPNX2ZmvFE97" style="width:80px"><!--pnid:SqkXfmmRqjNHFd3FqubpZb-->周期 #</th>
+          <th data-page-node-id="NRHpOLG2l117ol0kmOp2op" style="width:140px"><!--pnid:OudB13VSU8QjcWaa6sZyQh-->开始日=到货日</th>
+          <th data-page-node-id="xPYnmzHAF5tD9vm6vTyAia" style="width:140px"><!--pnid:k5h0qS6A4S76HAVF5cuO1l-->结束日</th>
+          <th data-page-node-id="8OzPtXj0l2RUfKs4nxvoWU" style="width:130px"><!--pnid:k21i4KbOnJZl3HJTrfcsVg-->起点相对当前</th>
+        </tr>
+      </thead>
+      <tbody data-page-node-id="n1t6CqVLIdvsGMQfH17dWJ" id="cycleTbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!--pnid:VMPSW8DuquZTLPNrLDwe7G--><!-- ========== 执行 ========== -->
+<div data-page-node-id="7Qtcqkzvo70hAx54iuyiuy" class="card" style="border-color:var(--blue-line); background:linear-gradient(#fbfdff,#fff)">
+  <div data-page-node-id="8dEZGlh1ss0oj9Kf6oh4Mn" class="rowline" style="justify-content:space-between">
+    <div data-page-node-id="FIRJkIOtnLGs8FsmKXHcdT" class="small muted"><!--pnid:krCb2052qNAcf6w1DeIzNQ-->算法：① 按 cost_rank 升序排序物流方式 → ② 逐个 calc_ship_date 自洽校验 → ③ 取第一个可行方案</div>
+    <div data-page-node-id="6NsFyVlNYBkfYs55xVEQzV" class="rowline">
+      <button data-page-node-id="UaRPfjMdlBDebdrN6LK4LJ" onclick="runAll()"><!--pnid:jlo74Ey7EaiPaq94mqg5zw-->&#9654; 执行计算</button>
+      <button data-page-node-id="9ideDpMvIqI6PLWXYeWLXD" class="ghost" onclick="exportJSON()"><!--pnid:p0HhvoKzgpl0aajuWsPtWX-->导出 JSON</button>
+      <button data-page-node-id="Pu1Y8BpWH5WBJWlnUEW1xX" class="ghost" onclick="window.print()"><!--pnid:ORHksYN0FeC8ui55OELArQ-->打印 / 存 PDF</button>
+    </div>
+  </div>
+  <div data-page-node-id="K4LnokG0JnK2lLDj8QKbJF" id="errBox"></div>
+</div>
+
+<!--pnid:ChAG1UJqxquLpnKrgnDDMK--><!-- ========== 结果 1：主结果表 ========== -->
+<details data-page-node-id="gFPBneQtvuC6VeYBCapp2E" open>
+  <summary data-page-node-id="2Z2uy0YXGk2KHhADE8yaZd"><!--pnid:hXod8cZGxAfFBJZ3bETvQL-->① 每个销售周期的物流方式与最晚发货日（主结果）</summary>
+  <div data-page-node-id="vJ5BPYf4MNK1bjy5o4fB2U" class="body">
+    <div data-page-node-id="0jarnKYzbLmnXlvt435IOE" class="formula">
+      <b data-page-node-id="Z3H9a9iJOi8b82SlIYlJtx"><!--pnid:Gnka5U9XO3s45jiUyGzuug-->决策流程：</b><!--pnid:LPerFAelBNYFzCBQZNqmgI-->对每个周期取其开始日作为 <code data-page-node-id="T9PXAVQ1DDlyVQQjIbjj8c"><!--pnid:UO2qL1fyL6VLfbW7DLKsO1-->need_by</code><!--pnid:qdzH5FHdL0Iixdm1hoBLTN-->，按 <b data-page-node-id="LLHPn8RKzHsKEIhwBQ9Zgf"><!--pnid:h59D3ZEsVTO7i4LsebjINP-->cost_rank 升序</b><!--pnid:DjD2gjjiXymwDlpFJOwDp4-->（越便宜越靠前）依次调用
+      <code data-page-node-id="bKSUdPL93PVAXYSwqTV04t"><!--pnid:u3J836IPI4nap9wIEdRHky-->calc_ship_date(need_by, lead)</code><!--pnid:W8y9y5FSJM1b3U8aDka4JN-->；只要算出 <code data-page-node-id="epekYz02clFjgjPEPhhnY5"><!--pnid:3sRcMO8otNG7bb15TOo2gV-->ship</code><!--pnid:UZrowrjy66o9z9xrZlouWy--> 且 <code data-page-node-id="sHzrLqcvUWFtmYpgKILMOl"><!--pnid:WkruBP2M3M7WmXOyP6QkBV-->ship ≥ current_date</code><!--pnid:BspintGxovMbdrrqLthQPq-->，即<b data-page-node-id="K5liWGlpnNXdOgw1FsO4eo"><!--pnid:dsrSO4eMJXmqaXQHjROjay-->采用该方式并跳出</b><!--pnid:3NrxcYiZ3aFSjSQgmIDErB-->；
+      若全部物流都不满足，则标记 <b data-page-node-id="VCkkA6JJU67Iv3hc0Hw9a8"><!--pnid:8h26l9bvNniJrPWI3F4UMx-->「无法送达」</b><!--pnid:iUDrDKRSN1bFTXmTdFhhKq-->。
+    </div>
+    <div data-page-node-id="ZYzG3MX6vKLMzUJVyKhTP3" class="stats" id="r1Stats"></div>
+    <div data-page-node-id="qW7BpstGdesevKn6IEfbWi" class="scroll-x">
+      <table data-page-node-id="BrEkvf5URlT0drEhoPemFQ" id="r1Table">
+        <thead data-page-node-id="895i28PbzG12EfrlhvDX1J">
+          <tr data-page-node-id="m6TqXCkSt9UzL9SwjtvTlc">
+            <th data-page-node-id="HkJDrKPoBrGyTXChHC98Fj" style="width:70px"><!--pnid:K7EIim4j6FNoQqq4xNo3zQ-->周期 #</th>
+            <th data-page-node-id="986ZkOginJYKIUNlKbMBno" class="l" style="min-width:130px"><!--pnid:HkT9v5r9AFaDDAGmsRi04L-->销售区间</th>
+            <th data-page-node-id="vOrtL6yGAhcvBT6FW0L5io" style="min-width:130px"><!--pnid:hHAFybsIJ1P6qryikup3Uf-->到货日 need_by</th>
+            <th data-page-node-id="PRwCvnBQsH4XU6eqmhGKWh" style="min-width:120px"><!--pnid:ytYHYSuJCRQT3N7QnXhtsq-->物流方式</th>
+            <th data-page-node-id="Vt5N2SRoPcS46Tva4iJPIJ" style="min-width:140px"><!--pnid:XQsB07nI69XpIDhMuCsLHg-->最晚发货日 ship_date</th>
+            <th data-page-node-id="JTO8ZsSGbyTJf8uMceLW6S" class="l" style="min-width:210px"><!--pnid:R0OtNNfJdrptGxemd6srXm-->判定依据</th>
+          </tr>
+        </thead>
+        <tbody data-page-node-id="l5XwkmyKgjHlBRdCUFFn8S" id="r1Body"></tbody>
+      </table>
+    </div>
+  </div>
+</details>
+
+<!--pnid:Z41kXvKpOQTlsxlsfoPMz1--><!-- ========== 结果 2：自洽校验明细 ========== -->
+<details data-page-node-id="I0ImKcRrbgiSRwXkxeqfYp">
+  <summary data-page-node-id="8pZlCdku1Pxa3qLU2zyaQH"><!--pnid:FsWLbtpbkMIJMyFgRboso7-->② 自洽校验明细（枚举验证法）</summary>
+  <div data-page-node-id="ibWHJbiRXNtxa3Jdfqsx6l" class="body">
+    <div data-page-node-id="ZzdE1C5R243G8dlB9e7h2j" class="formula">
+      <b data-page-node-id="ozXitUmBcHtZ4C6qNDwelM"><!--pnid:3Drzlj7U2t0y5R0TM6glcu-->为什么需要枚举：</b><!--pnid:Mk8WYtpVDet1TtptybHGMG-->发货日决定月份 → 月份决定时效 → 时效又决定发货日，形成<b data-page-node-id="nO0s6tEpLfBEGxqQFkLN1v"><!--pnid:IqWCH8irq8PcPDaXZc6YE8-->循环依赖</b><!--pnid:Jtzm4l0zlrgIh3Zv3gL9kU-->。<br data-page-node-id="YKn4micSncG4MHeXBPs6mD"><!--pnid:1SZJjR3abjrQXuNmDkc2bD-->
+      解法：对每个候选发货月 <code data-page-node-id="8GLcjs9Fp708t7Qy1YenC7"><!--pnid:KAFJ80YmFCTXLDBBmOJTi3-->m</code><!--pnid:lApWYhIuVtN2Mg0Vn1Qjpe-->，假设时效为 <code data-page-node-id="84uReTci3RjNM4DJOLwEQU"><!--pnid:x3ot5GWxUsTZ3aU6YJVORE-->lead(m)</code><!--pnid:SUYIIt2pg1jKJ63MKwVIMR-->，倒推 <code data-page-node-id="pu90JFUkipRz3dqKzhlvaM"><!--pnid:mmYvGliaCatIvoqq8gnPCE-->ship = need_by − lead(m)</code><!--pnid:pQhJOXCLuMIT8OfsKNa2X8-->，
+      再验证 <code data-page-node-id="7UJFT3whd79qb4FUVprywr"><!--pnid:OT5CivQ1pkaw6dqxdLPhzp-->ship</code><!--pnid:2foPlY8GOKcLKLbdary1Xw--> 是否<b data-page-node-id="WJeiNGghEzrMJnrEPC0OK3"><!--pnid:NRTS26oG3xlFfu5RiwvBTz-->真的落在 m 月</b><!--pnid:JscflzRlhCJt80VNEtBdq9-->。<b data-page-node-id="RRQsWKTjfEDnArDEboD6lK"><!--pnid:XC2xdIkLCmusdu6f5tBgl4-->落得回去，才是自洽解</b><!--pnid:7fOjNCdyhD79uDA5WRNliU-->；多个自洽解取<b data-page-node-id="TWGO71XdNOAiLPzE7zlKxi"><!--pnid:SQCAVWERFDgKIYtolFz6QA-->最晚</b><!--pnid:4lzSHgNHeSqedGyh9hhyeG-->的（资金占用最少）；无自洽解返回 <code data-page-node-id="F8ba9gCZ3KrBBdO6DOMEJP"><!--pnid:KuMSTCMtCmxSXIgCkvJbLn-->null</code><!--pnid:SMQgyc6kXGrHLcseFDfOlZ-->，跳过该物流。
+    </div>
+    <div data-page-node-id="YngCakoofcbaBV5XZPP7TV" class="scroll-x">
+      <table data-page-node-id="wWGThNk48FAYTw411bVyJQ" id="r2Table">
+        <thead data-page-node-id="4Bp2blLybbzQS8obkh2yuW">
+          <tr data-page-node-id="1tJvttWWMkUB3BiTOUsPC9">
+            <th data-page-node-id="3so9ApMf4DQC9oKSS00PsJ" style="width:70px"><!--pnid:s1vz155o4g2pryH8TKHgzc-->周期 #</th>
+            <th data-page-node-id="r5HycrViaAHXiWcfFEjLnr" class="l" style="min-width:130px"><!--pnid:uRja8el5fnt47Au9JhYGX4-->到货日 need_by</th>
+            <th data-page-node-id="mKBZJ50wMtlufrqJg4PvF9" class="l" style="min-width:130px"><!--pnid:Mb738ljnZNJEQn0w5OMB2W-->物流方式（按 cost_rank 逐个尝试）</th>
+            <th data-page-node-id="KpSLPmEtjj0Fz5bGqeioOS" style="width:110px"><!--pnid:9wwbCSnDrkNNYFQfalOHFy-->假设发货月 m</th>
+            <th data-page-node-id="Zi9yvtp9ccn2fp43Ax76b2" style="width:90px"><!--pnid:rFjxA9P2kgSUe5FKqnSi6i-->时效 lead(m)</th>
+            <th data-page-node-id="G3mVZn7N21grLjdtDxLJOZ" style="width:120px"><!--pnid:1Nq7yr1WAYv3lTwwXVFzOl-->候选发货日</th>
+            <th data-page-node-id="NkhKM6Ak1xqvW059JTlpXP" style="width:130px"><!--pnid:byCiIJrZtdBmmJbE0FFu0D-->是否落在 m 月</th>
+            <th data-page-node-id="8BjnQWXojIoYN5LVlFVwcQ" class="l" style="min-width:130px"><!--pnid:NSvUIECi2BkJSPXOFo2AcJ-->判定</th>
+          </tr>
+        </thead>
+        <tbody data-page-node-id="Cn33tOdeNQHDTgGYGvjarD" id="r2Body"></tbody>
+      </table>
+    </div>
+    <div data-page-node-id="Oj8754BJou3pTxCQnQ86Tk" id="r2Note"></div>
+  </div>
+</details>
+
+<!--pnid:yQP64O9lywEYbRjoowuY3W--><!-- ========== 结果 3：按物流汇总 ========== -->
+<details data-page-node-id="vQyimecJTxjRZ5w25TQtn9" open>
+  <summary data-page-node-id="yUWoVGihibAckFMHBxetcH"><!--pnid:FJLT4LG6SCaifKwkBozYQz-->③ 按物流方式汇总</summary>
+  <div data-page-node-id="nmAg0XhqvA1KrjUmdj9sKM" class="body">
+    <div data-page-node-id="0ES3VjvzvvcOLJd3XYtBcz" class="scroll-x">
+      <table data-page-node-id="qQvjwzHnUOJ28CYLsfAILR" id="r3Table">
+        <thead data-page-node-id="mrHCXOwUok73PoLwuYCbGT">
+          <tr data-page-node-id="bjnQqHbdXIoFIcpfFoLM0I">
+            <th data-page-node-id="J8PCzza4eVSH5ViLlmxKQQ" class="l" style="min-width:130px"><!--pnid:Bfw5UUMRUsZmqQziQspFrX-->物流方式</th>
+            <th data-page-node-id="iHo1HCPNMh641exci7Phgs" style="width:110px"><!--pnid:fU3A0TBoqDpEcrRe1Ur5kO-->cost_rank</th>
+            <th data-page-node-id="4ADmWrIhEtseIX3ATEI34c" style="width:120px"><!--pnid:BwIfGBSQpdaJx3rRdInXdK-->时效配置</th>
+            <th data-page-node-id="IXhKUQkYLgsktHHhXStjXD" style="width:110px"><!--pnid:YHd0xZvTIbXQSFCjsT2SED-->承接周期数</th>
+            <th data-page-node-id="KWbfmdXBv8XPUUkZeTVU8F" class="l" style="min-width:320px"><!--pnid:g7p6XoSyuuukiWsRZnal3N-->承接的周期</th>
+          </tr>
+        </thead>
+        <tbody data-page-node-id="7EAWmID9kYCDWv8aDSArep" id="r3Body"></tbody>
+      </table>
+    </div>
+    <div data-page-node-id="iaYsw3jsaLluirC780EHLz" id="r3Note"></div>
+  </div>
+</details>
+
+<!--pnid:35lEQhaC6Silk6MLbFh3OY--><!-- ========== 结果 4：最晚发货日汇总 ========== -->
+<details data-page-node-id="hWrgvk6bT6GFTdDaHmJISL">
+  <summary data-page-node-id="YZaHcuPVBB2Go07GQQoAsA"><!--pnid:gnFJu6Iqck1GDCcSB06NDs-->④ 最晚发货日汇总（同日合并）</summary>
+  <div data-page-node-id="yMSTYuQ0UVHUn52ZXGlfg9" class="body">
+    <div data-page-node-id="Nbf0vQiZqPsuzLJ05Jc1xj" class="scroll-x">
+      <table data-page-node-id="jUbpqSukNVQoTrITJmQ6qh" id="r4Table">
+        <thead data-page-node-id="oVl1syg4sZiXOgNfRRamt8">
+          <tr data-page-node-id="dmFHIxBcoEhRIEtgjzbPmP">
+            <th data-page-node-id="WUwfRrjkOd6MGLlaNJh1SG" class="l" style="min-width:160px"><!--pnid:6d6x6UGPkMkZhDSRRtVahS-->最晚发货日</th>
+            <th data-page-node-id="Dz57RcgC0VOmDeq9T26K62" class="l" style="min-width:120px"><!--pnid:yB806YQOoNfAR3YoQKejlE-->物流方式</th>
+            <th data-page-node-id="1IGXrArb3wZUpI9lAMOUjR" class="l" style="min-width:260px"><!--pnid:EJc8tbV0DPvYfx4nRWfCn0-->服务的销售周期</th>
+            <th data-page-node-id="HeYHsdj2xZzPuU5m38r6i6" style="width:110px"><!--pnid:Qx4B92rMEVfsRJo9U4Aldl-->周期数</th>
+          </tr>
+        </thead>
+        <tbody data-page-node-id="bCfqX2j4HoJ1ZPYTTrP24i" id="r4Body"></tbody>
+      </table>
+    </div>
+  </div>
+</details>
+
+</div>
+
+<script data-page-node-id="3SUOZdeH9yQn0gWJkB1vQF" data-pnid-children="s7V0CUxLu84LMKIp5dqtKB">
+/* ============================================================
+   工具函数
+   ============================================================ */
+const MS = 86400000;
+const $ = id => document.getElementById(id);
+
+function parseD(s){
+  if(!s) return null;
+  const [y,m,d] = s.split('-').map(Number);
+  const t = new Date(y, m-1, d);
+  t.setHours(0,0,0,0);
+  return t;
+}
+function fmt(d){
+  if(!d) return '';
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const dd = String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${dd}`;
+}
+function fmtMD(d){ return d ? fmt(d).slice(5) : ''; }
+function addDays(d,n){ const t=new Date(d.getTime()); t.setDate(t.getDate()+n); t.setHours(0,0,0,0); return t; }
+function diffDays(a,b){ return Math.round((b.getTime()-a.getTime())/MS); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+/* ============================================================
+   状态
+   ============================================================ */
+const PALETTE_TINT = ['#eef4ff','#f2edff','#e6f7f4','#fdeef5','#fff1e7','#eef0ff','#e8f6ef'];
+const PALETTE_TEXT = ['#2563eb','#7048e8','#0d9488','#db2777','#ea580c','#4f46e5','#059669'];
+
+let state = {
+  // 物流方式：{id, name, costRank, leadType:'fixed'|'monthly', fixed, monthly:{'M':days}}
+  logistics:[],
+  cycles:[],        // [{idx, no, start, end}]
+  result:null
+};
+
+let uid = 0;
+function newId(){ return 'l'+(++uid)+'_'+Date.now().toString(36); }
+
+/* ------------------------------------------------------------
+   默认示例数据（复现设计文档 4.1 / 8 节）
+   ------------------------------------------------------------ */
+function resetToDefault(){
+  state.logistics = [
+    {id:newId(), name:'海运', costRank:1, mode:'monthly', fixed:14, monthly:{'3':42,'4':42,'5':49}},
+    {id:newId(), name:'空运', costRank:2, mode:'fixed',   fixed:14, monthly:{'3':14,'4':14,'5':14}}
+  ];
+  renderLogiTable();
+  renderCycles();
+  runAll();
+}
+
+/* 供快速演示「海运赶不上 → 空运兜底」的月份键集合 */
+function monthKeysInUse(){
+  const keys = new Set();
+  state.logistics.forEach(l=>Object.keys(l.monthly||{}).forEach(k=>keys.add(k)));
+  return [...keys].sort((a,b)=>Number(a)-Number(b));
+}
+
+/* ============================================================
+   物流方式 UI
+   ============================================================ */
+function renderLogiTable(){
+  $('logiTbody').innerHTML = state.logistics.map(l=>{
+    const mk = monthKeysInUse();
+    let leadCells = '';
+    if(l.mode === 'fixed'){
+      leadCells = `<input type="number" min="0" value="${l.fixed}" style="width:76px;padding:4px 6px;text-align:center"
+                     onchange="setFixed('${l.id}',this.value)"> <span class="small muted">天（固定）</span>`;
+    } else {
+      leadCells = mk.map(m=>`
+        <span style="display:inline-flex;align-items:center;gap:3px;margin:0 8px 4px 0">
+          <b class="small">${m}月发货</b>
+          <input type="number" min="0" value="${l.monthly[m]===undefined?'':l.monthly[m]}"
+                 style="width:64px;padding:3px 5px;text-align:center"
+                 onchange="setMonthly('${l.id}','${m}',this.value)">
+          <span class="small muted">天</span>
+        </span>`).join('');
+      leadCells += `<button class="mini ghost" onclick="addMonthKey()">+ 添加月份</button>`;
+    }
+    return `<tr>
+      <td class="l"><input type="text" value="${esc(l.name)}" style="width:104px;padding:4px 7px"
+             onchange="renameLogi('${l.id}',this.value)"></td>
+      <td><input type="number" min="0" value="${l.costRank}" style="width:70px;padding:4px 6px;text-align:center"
+             onchange="setRank('${l.id}',this.value)"></td>
+      <td>
+        <select onchange="setMode('${l.id}',this.value)" style="padding:4px 6px">
+          <option value="monthly"${l.mode==='monthly'?' selected':''}>按月时效</option>
+          <option value="fixed"${l.mode==='fixed'?' selected':''}>固定时效</option>
+        </select>
+      </td>
+      <td class="l">${leadCells}</td>
+      <td><button class="mini danger" onclick="delLogi('${l.id}')">删</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function addMonthKey(){
+  const mk = monthKeysInUse();
+  let nm = 1;
+  while(mk.includes(String(nm))) nm++;
+  if(nm > 12) return alert('已覆盖 12 个月');
+  state.logistics.forEach(l=>{ if(l.mode==='monthly' && l.monthly[String(nm)]===undefined) l.monthly[String(nm)] = l.fixed || 14; });
+  renderLogiTable(); runAll();
+}
+function addLogi(){
+  state.logistics.push({id:newId(), name:'新物流方式', costRank:(state.logistics.length+1), mode:'fixed', fixed:14, monthly:{}});
+  renderLogiTable(); runAll();
+}
+function delLogi(id){
+  if(state.logistics.length<=1) return alert('至少保留一个物流方式');
+  state.logistics = state.logistics.filter(l=>l.id!==id);
+  renderLogiTable(); runAll();
+}
+function findLogi(id){ return state.logistics.find(l=>l.id===id); }
+function renameLogi(id,v){ const l=findLogi(id); if(l){ l.name=v||l.name; renderLogiTable(); } }
+function setRank(id,v){ const l=findLogi(id); if(l){ l.costRank=Number(v)||0; runAll(); } }
+function setMode(id,v){ const l=findLogi(id); if(l){ l.mode=v; renderLogiTable(); runAll(); } }
+function setFixed(id,v){ const l=findLogi(id); if(l){ l.fixed=Number(v)||0; runAll(); } }
+function setMonthly(id,mk,v){
+  const l=findLogi(id);
+  if(l){ if(v==='') delete l.monthly[mk]; else l.monthly[mk]=Number(v)||0; runAll(); }
+}
+
+/* ============================================================
+   销售周期
+   ============================================================ */
+function buildCycles(){
+  const start = parseD($('cycleStart').value) || new Date();
+  const n = Math.max(1, Math.min(60, Number($('cycleCount').value)||11));
+  const days = Math.max(1, Math.min(31, Number($('cycleDays').value)||7));
+
+  const list = [];
+  for(let i=0;i<n;i++){
+    const s = addDays(start, i*days);
+    const e = addDays(s, days-1);
+    /* 所有周期一律进入算法匹配，不设「已有库存」豁免 */
+    list.push({ idx:i, no:i+1, start:s, end:e });
+  }
+  state.cycles = list;
+}
+function renderCycles(){
+  buildCycles();
+  const cur = parseD($('curDate').value);
+  $('cycleTbody').innerHTML = state.cycles.map(c=>{
+    const d = cur ? diffDays(cur, c.start) : 0;
+    let rel;
+    if(d === 0) rel = '<span class="badge b-warn">= 当前日期</span>';
+    else if(d < 0) rel = `<span class="badge b-none">早于当前 ${-d} 天</span>`;
+    else rel = `<span class="small muted">+${d} 天</span>`;
+    return `<tr>
+      <td class="mono">${c.no}</td>
+      <td class="mono">${fmt(c.start)}</td>
+      <td class="mono muted">${fmt(c.end)}</td>
+      <td>${rel}</td>
+    </tr>`;
+  }).join('');
+}
+
+/* ============================================================
+   核心算法（严格对齐设计文档第 5 / 6 / 7 节）
+   ============================================================ */
+
+/**
+ * calc_ship_date —— 固定时效直接倒推；按月时效做自洽校验，返回最晚发货日。
+ * @param {Date} needBy 库存最晚到位日
+ * @param {object} lead  物流的 lead 配置 {mode, fixed, monthly}
+ * @returns {{ship:Date|null, trials:Array, isFixed:boolean, candidates:Array}}
+ */
+function calcShipDate(needBy, lead){
+  const trials = [];
+
+  /* --- 固定时效 --- */
+  if(lead.mode === 'fixed' || !lead.monthly || Object.keys(lead.monthly).length === 0){
+    const days = Number(lead.fixed) || 0;
+    const ship = addDays(needBy, -days);
+    return {
+      ship, isFixed:true, candidates:[ship],
+      trials:[{ month:'—', days, ship, landed:null, note:'固定时效，无需自洽校验' }]
+    };
+  }
+
+  /* --- 按月时效：枚举验证法 --- */
+  const candidates = [];
+  Object.keys(lead.monthly).sort((a,b)=>Number(a)-Number(b)).forEach(mk=>{
+    const days = Number(lead.monthly[mk]) || 0;
+    const ship = addDays(needBy, -days);
+    const landed = (ship.getMonth()+1) === Number(mk);
+    trials.push({ month:Number(mk), days, ship, landed, note: landed ? '自洽 → 采纳' : `不在此月，丢弃` });
+    if(landed) candidates.push(ship);
+  });
+
+  let ship = null;
+  if(candidates.length){
+    /* 多个自洽解 → 取最晚发货日（资金占用最少） */
+    ship = candidates.reduce((a,b)=> a.getTime() >= b.getTime() ? a : b);
+  }
+  return { ship, isFixed:false, candidates, trials };
+}
+
+/**
+ * recommend —— 按 cost_rank 升序依次尝试，返回第一个可行方案。
+ * @returns {{name:string, ship:Date|null, undeliverable:boolean, logi:object|null, detail:Array}}
+ */
+function recommend(needBy, current){
+  const ordered = state.logistics.slice().sort((a,b)=>{
+    if(a.costRank !== b.costRank) return a.costRank - b.costRank;
+    return a.name.localeCompare(b.name, 'zh');
+  });
+
+  const detail = [];
+  for(const l of ordered){
+    const r = calcShipDate(needBy, l);
+    const ok = r.ship !== null && (!current || diffDays(current, r.ship) >= 0);
+    detail.push({ logi:l, res:r, ok, reason:
+      r.ship === null ? '无自洽解'
+      : (current && diffDays(current, r.ship) < 0) ? '发货日早于当前日期'
+      : '可行，采用' });
+    if(ok){
+      return { name:l.name, ship:r.ship, undeliverable:false, logi:l, detail };
+    }
+  }
+  return { name:'无法送达', ship:null, undeliverable:true, logi:null, detail };
+}
+
+/* ============================================================
+   主流程
+   ============================================================ */
+function runAll(){
+  $('errBox').innerHTML = '';
+  try{
+    if(!state.logistics.length) throw new Error('请至少配置一个物流方式');
+    buildCycles();
+
+    const current = parseD($('curDate').value);
+    const rows = state.cycles.map(c=>{
+      const rec = recommend(c.start, current);
+      return { cycle:c, name:rec.name, ship:rec.ship, undeliverable:rec.undeliverable, logi:rec.logi, detail:rec.detail };
+    });
+
+    state.result = { rows, current };
+    renderR1(); renderR2(); renderR3(); renderR4(); renderStats();
+  }catch(e){
+    $('errBox').innerHTML = `<div class="note" style="background:var(--red-bg);border-color:var(--red-line);border-left-color:var(--red);color:#a11">计算失败：${esc(e.message)}</div>`;
+    console.error(e);
+  }
+}
+
+/* 物流 → 配色 */
+function logiColor(logi){
+  const ordered = state.logistics.slice().sort((a,b)=>a.costRank-b.costRank);
+  const i = Math.max(0, ordered.findIndex(l=>l.id===logi.id)) % PALETTE_TINT.length;
+  return {tint:PALETTE_TINT[i], text:PALETTE_TEXT[i]};
+}
+function logiBadge(logi){
+  const c = logiColor(logi);
+  return `<span class="badge" style="background:${c.tint};color:${c.text}">${esc(logi.name)}</span>`;
+}
+
+/* ============================================================
+   渲染 ①  主结果
+   ============================================================ */
+function renderR1(){
+  const R = state.result;
+  $('r1Body').innerHTML = R.rows.map(row=>{
+    const c = row.cycle;
+    const range = `<span class="mono small">${fmtMD(c.start)} ~ ${fmtMD(c.end)}</span>`;
+
+    if(row.undeliverable){
+      const why = row.detail.map(d=>`${esc(d.logi.name)}：${esc(d.reason)}`).join('；');
+      return `<tr class="hl-emg">
+        <td class="mono">${c.no}</td>
+        <td class="l">${range}</td>
+        <td class="mono">${fmt(c.start)}</td>
+        <td><span class="badge b-emg">无法送达</span></td>
+        <td class="muted">—</td>
+        <td class="l small">${why || '无可用物流方式'} —— 全部物流均无法在到货日前完成发运</td>
+      </tr>`;
+    }
+    const cd = logiColor(row.logi);
+    const prev = row.detail.filter(d=>!d.ok).map(d=>`${esc(d.logi.name)}：${esc(d.reason)}`).join('；');
+    return `<tr>
+      <td class="mono">${c.no}</td>
+      <td class="l">${range}</td>
+      <td class="mono">${fmt(c.start)}</td>
+      <td>${logiBadge(row.logi)}</td>
+      <td class="mono" style="background:${cd.tint};color:${cd.text};font-weight:600">${fmt(row.ship)}</td>
+      <td class="l small muted">rank ${row.logi.costRank}${prev ? ' · 前序不可行（'+prev+'），改本方式' : ' · cost_rank 最优且可行'}</td>
+    </tr>`;
+  }).join('');
+}
+
+/* ============================================================
+   渲染 统计卡
+   ============================================================ */
+function renderStats(){
+  const R = state.result;
+  const total = R.rows.length;
+  const na = R.rows.filter(r=>r.undeliverable).length;
+  const need = total - na;
+  const byMode = new Map();
+  R.rows.forEach(r=>{ if(!r.undeliverable && r.logi) byMode.set(r.name, (byMode.get(r.name)||0)+1); });
+  const modeTxt = [...byMode.entries()].map(([k,v])=>`${esc(k)} ${v}`).join(' · ') || '—';
+
+  $('r1Stats').innerHTML = `
+    <div class="stat"><div class="k">销售周期总数</div><div class="v">${total}</div></div>
+    <div class="stat"><div class="k">已匹配物流方式</div><div class="v accent">${need}</div></div>
+    <div class="stat"><div class="k">无法送达周期</div><div class="v${na?' emg':''}">${na}</div></div>
+    <div class="stat" style="grid-column:span 2"><div class="k">各物流承接周期数</div><div class="v" style="font-size:14px;font-weight:500">${modeTxt}</div></div>`;
+}
+
+/* ============================================================
+   渲染 ②  自洽校验明细
+   ============================================================ */
+function renderR2(){
+  const R = state.result;
+  let rows = '';
+  let anyTrials = false;
+
+  R.rows.forEach(row=>{
+    const c = row.cycle;
+    row.detail.forEach(d=>{
+      const cd = logiColor(d.logi);
+      const logiCell = `<span class="badge" style="background:${cd.tint};color:${cd.text}">${esc(d.logi.name)}</span>
+        <span class="small muted">rank ${d.logi.costRank}</span>`;
+      const reasonCell = d.res.isFixed
+        ? `<span class="badge b-none">固定时效</span> <span class="small muted">${fmtMD(d.res.trials[0].ship)}（${d.res.trials[0].days} 天）</span>
+           ${d.ok ? '' : `<span class="small" style="color:var(--red)"> · ${esc(d.reason)}</span>`}`
+        : `${d.ok?'<span class="badge b-warn">自洽</span>':'<span class="badge b-none">无自洽解</span>'}
+           <span class="small muted">${esc(d.reason)}</span>`;
+
+      const n = d.res.trials.length;
+      d.res.trials.forEach((t,ti)=>{
+        anyTrials = true;
+        const nClass = ti===0 ? 'l' : 'l muted small';
+        const firstCols = ti===0
+          ? `<td rowspan="${n}" class="mono">${c.no}</td>
+             <td rowspan="${n}" class="mono">${fmt(c.start)}</td>
+             <td rowspan="${n}" class="l">${logiCell}</td>`
+          : '';
+        const landCell = t.landed === null
+          ? `<td class="muted">—</td><td class="l">${reasonCell}</td>`
+          : (t.landed
+              ? `<td style="color:var(--green)">&#10004; 落在 ${t.month} 月</td><td class="l">&#10004; ${esc(t.note)}</td>`
+              : `<td style="color:var(--red)">&#10008; 落在 ${t.ship.getMonth()+1} 月</td><td class="l">&#10008; ${esc(t.note)}</td>`);
+
+        rows += `<tr>${firstCols}
+          <td class="mono">${t.month} 月</td>
+          <td class="mono">${t.days} 天</td>
+          <td class="mono">${fmt(t.ship)}</td>
+          ${landCell}
+        </tr>`;
+      });
+    });
+  });
+
+  if(!anyTrials){
+    $('r2Body').innerHTML = '<tr><td colspan="8" class="muted">没有可展示的校验项</td></tr>';
+  } else {
+    $('r2Body').innerHTML = rows;
+  }
+
+  /* 小结：每个物流被判定的汇总 */
+  let note = `<div class="formula" style="margin-top:12px"><b>各周期尝试链（cost_rank 升序）</b>
+    <table style="margin-top:8px">
+      <thead><tr><th style="width:70px">周期</th><th class="l">尝试顺序与结果</th><th class="l" style="min-width:200px">最终采用</th></tr></thead><tbody>`;
+  R.rows.forEach(row=>{
+    const chain = row.detail.map(d=>{
+      const mark = d.ok ? '&#10004;' : (d.res.ship===null ? '无自洽解' : '发货日已过期');
+      return `<span class="badge" style="background:${logiColor(d.logi).tint};color:${logiColor(d.logi).text}">${esc(d.logi.name)}</span> <span class="small">${mark}</span>`;
+    }).join(' <span class="muted">&rarr;</span> ');
+    const finalCell = row.undeliverable
+      ? '<span class="badge b-emg">无法送达</span> <span class="small muted">全部物流均不可行</span>'
+      : `${logiBadge(row.logi)} <span class="mono">${fmt(row.ship)}</span>`;
+    note += `<tr><td class="mono">${row.cycle.no}</td><td class="l">${chain || '-'}</td>
+      <td class="l">${finalCell}</td></tr>`;
+  });
+  note += `</tbody></table></div>`;
+  $('r2Note').innerHTML = note;
+}
+
+/* ============================================================
+   渲染 ③  按物流汇总
+   ============================================================ */
+function renderR3(){
+  const R = state.result;
+  const ordered = state.logistics.slice().sort((a,b)=>a.costRank-b.costRank);
+
+  $('r3Body').innerHTML = ordered.map(l=>{
+    const mine = R.rows.filter(r=>!r.undeliverable && r.logi && r.logi.id===l.id);
+    const cd = logiColor(l);
+    const daysTxt = l.mode==='fixed'
+      ? `${l.fixed} 天（固定）`
+      : Object.keys(l.monthly).sort((a,b)=>Number(a)-Number(b)).map(m=>`${m}月 ${l.monthly[m]}天`).join(' / ') || '—';
+    const list = mine.length
+      ? mine.map(r=>`<span class="mono small">#${r.cycle.no} → ${fmtMD(r.ship)}</span>`).join('　')
+      : '<span class="muted small">—</span>';
+    return `<tr>
+      <td class="l"><span class="badge" style="background:${cd.tint};color:${cd.text}">${esc(l.name)}</span></td>
+      <td class="mono">${l.costRank}</td>
+      <td class="small">${daysTxt}</td>
+      <td class="mono" style="font-weight:600">${mine.length}</td>
+      <td class="l">${list}</td>
+    </tr>`;
+  }).join('');
+
+  const na = R.rows.filter(r=>r.undeliverable);
+  let note = `<div class="formula" style="margin-top:12px"><b>结论</b><ul style="margin:6px 0 0;padding-left:20px">`;
+  ordered.forEach(l=>{
+    const n = R.rows.filter(r=>!r.undeliverable && r.logi && r.logi.id===l.id).length;
+    if(n) note += `<li><b>${esc(l.name)}</b>（cost_rank ${l.costRank}）：承接 ${n} 个周期的补货发运。</li>`;
+  });
+  if(na.length) note += `<li style="color:var(--red)">周期 ${na.map(r=>r.cycle.no).join('、')}：<b>无法送达</b>——全部物流方式都匹配不上（无自洽解，或倒推发货日已早于当前日期），需人工介入。</li>`;
+  note += `</ul></div>`;
+  $('r3Note').innerHTML = note;
+}
+
+/* ============================================================
+   渲染 ④  最晚发货日汇总
+   ============================================================ */
+function renderR4(){
+  const R = state.result;
+  const map = new Map();
+  R.rows.forEach(r=>{
+    if(r.undeliverable || !r.ship) return;
+    const k = fmt(r.ship) + '|' + r.logi.id;
+    if(!map.has(k)) map.set(k, {date:r.ship, logi:r.logi, cycles:[]});
+    map.get(k).cycles.push(r.cycle.no);
+  });
+  const list = [...map.values()].sort((a,b)=>a.date - b.date);
+  if(!list.length){ $('r4Body').innerHTML = '<tr><td colspan="4" class="muted">无发货任务</td></tr>'; return; }
+  $('r4Body').innerHTML = list.map(x=>{
+    const cd = logiColor(x.logi);
+    return `<tr>
+      <td class="l mono" style="font-weight:600">${fmt(x.date)}</td>
+      <td class="l"><span class="badge" style="background:${cd.tint};color:${cd.text}">${esc(x.logi.name)}</span></td>
+      <td class="l mono small">#${x.cycles.join('、#')}</td>
+      <td class="mono">${x.cycles.length}</td>
+    </tr>`;
+  }).join('');
+}
+
+/* ============================================================
+   导出
+   ============================================================ */
+function exportJSON(){
+  const R = state.result;
+  const out = {
+    参数:{
+      当前日期:$('curDate').value,
+      周期起始日:$('cycleStart').value,
+      周期数:Number($('cycleCount').value),
+      每周期天数:Number($('cycleDays').value)
+    },
+    物流配置: state.logistics.map(l=>({
+      名称:l.name, cost_rank:l.costRank,
+      时效: l.mode==='fixed' ? l.fixed : {...l.monthly}
+    })),
+    计算结果: R ? R.rows.map(r=>({
+      周期:r.cycle.no,
+      销售区间: fmtMD(r.cycle.start)+' ~ '+fmtMD(r.cycle.end),
+      到货日: fmt(r.cycle.start),
+      物流方式: r.undeliverable ? '无法送达' : r.name,
+      最晚发货日: r.ship ? fmt(r.ship) : null,
+      无法送达: r.undeliverable
+    })) : []
+  };
+  const blob = new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '补货物流算法_'+Date.now()+'.json';
+  a.click();
+}
+
+/* ============================================================
+   初始化 & 事件
+   ============================================================ */
+resetToDefault();
+
+['curDate','cycleStart','cycleCount','cycleDays'].forEach(id=>{
+  $(id).addEventListener('change', ()=>{ renderCycles(); runAll(); });
+});
+</script>
+</body>
+</html>
