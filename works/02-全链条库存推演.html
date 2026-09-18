@@ -4,1146 +4,147 @@
 <meta data-page-node-id="EvqCLNJBqqrbQYUiOoSmWy" charset="UTF-8">
 <meta data-page-node-id="j3Y1KpiRu6AKnPzynN3I2g" content="width=device-width, initial-scale=1" name="viewport">
 <title data-page-node-id="JNXkyQJkspwzJZ9qVn9ohz" data-pnid-children="Q4BcqU1M3k9k5icgvBCdPp">SKU 全链路库存可视化 · 跨境电商</title>
-<style data-page-node-id="H77KAiCzLsnWF3Au5xYOej" data-pnid-children="sf2zTHpNlN2zcXJFBob2Mk">
-  :root{
-    --bg:#eaeff5;
-    --surface:#ffffff;
-    --ink:#12212f;
-    --ink-2:#5a6b7d;
-    --ink-3:#8b9aab;
-    --line:#dde5ee;
-    --line-2:#eef3f8;
-    --brand:#14456b;
-    --ok:#2f9e6f;
-    --warn:#c2761a;
-    --c-wip:#c2761a;
-    --c-transit:#1d6fa5;
-    --c-avail:#2f9e6f;
-    --c-rsv:#7b8794;
-    --shadow-1:0 1px 2px rgba(18,33,47,.05), 0 6px 16px rgba(18,33,47,.06);
-    --shadow-2:0 12px 30px rgba(18,33,47,.13);
-    --radius:16px;
-    --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0;padding:0}
-  body{
-    background:var(--bg);color:var(--ink);
-    font-family:system-ui,-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
-    font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:1660px;margin:0 auto;padding:22px 24px 34px}
-
-  /* ---------- Top bar ---------- */
-  .topbar{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;
-    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
-    padding:16px 20px;box-shadow:var(--shadow-1)}
-  .brand{display:flex;gap:14px;align-items:center;min-width:420px}
-  .mark{width:44px;height:44px;border-radius:12px;background:var(--brand);display:flex;align-items:center;
-    justify-content:center;flex:none}
-  .mark svg{width:26px;height:26px;fill:none;stroke:#fff;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-  h1{margin:0;font-size:19px;font-weight:650;letter-spacing:.2px}
-  .brand p{margin:3px 0 0;font-size:12.5px;color:var(--ink-3);letter-spacing:.1px}
-  .sku-chip{display:inline-flex;align-items:center;gap:6px;background:#f3f7fb;border:1px solid var(--line);
-    border-radius:8px;padding:1px 8px;font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}
-  .controls{display:flex;flex-wrap:wrap;gap:11px;align-items:center}
-  .seg{display:flex;background:#eef2f7;border:1px solid var(--line);border-radius:11px;padding:3px}
-  .seg button{border:0;background:transparent;font:inherit;font-size:13px;font-weight:600;color:var(--ink-2);
-    padding:7px 15px;border-radius:8px;cursor:pointer;transition:.18s}
-  .seg button:hover{color:var(--ink)}
-  .seg button.on{background:var(--surface);color:var(--brand);box-shadow:0 1px 3px rgba(18,33,47,.12)}
-  .seg.small button{padding:5px 12px;font-size:12.5px}
-  .btn{border:1px solid var(--line);background:var(--surface);font:inherit;font-size:13px;font-weight:600;
-    color:var(--ink);padding:8px 15px;border-radius:10px;cursor:pointer;transition:.18s}
-  .btn:hover{border-color:#c3d2e2;background:#fafcfe}
-  .btn.ghost{color:var(--ink-2)}
-  .speed{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2);border:1px solid var(--line);
-    border-radius:10px;padding:6px 12px;background:var(--surface)}
-  input[type=range]{-webkit-appearance:none;appearance:none;width:92px;height:4px;border-radius:2px;
-    background:linear-gradient(90deg,var(--brand) 0%,var(--brand) var(--p,30%),#dde5ee var(--p,30%),#dde5ee 100%);outline:none}
-  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;
-    background:#fff;border:2px solid var(--brand);cursor:pointer;box-shadow:0 1px 3px rgba(18,33,47,.25)}
-  input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--brand);cursor:pointer}
-  #speedVal{font-family:var(--mono);font-size:12px;min-width:34px;color:var(--ink)}
-
-  /* ---------- KPI ---------- */
-  .kpis{display:grid;grid-template-columns:minmax(300px,1.75fr) repeat(4,minmax(0,1fr));gap:14px;margin-top:14px}
-  .kpi{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;
-    box-shadow:var(--shadow-1);position:relative;overflow:hidden}
-  .kpi .accent{position:absolute;left:0;top:0;bottom:0;width:3px}
-  .kpi .k-label{font-size:12px;color:var(--ink-3);letter-spacing:.3px;display:flex;align-items:center;gap:6px}
-  .kpi .k-val{font-size:25px;font-weight:660;margin-top:4px;font-variant-numeric:tabular-nums;letter-spacing:-.4px}
-  .kpi .k-val small{font-size:12.5px;font-weight:500;color:var(--ink-3);margin-left:3px}
-  .kpi .k-note{font-size:11.5px;color:var(--ink-3);margin-top:2px}
-  .kpi .dotm{width:8px;height:8px;border-radius:2px;display:inline-block}
-  .kpi.total{padding-right:20px}
-  .kpi.total .k-val{font-size:31px}
-  .stackbar{display:flex;height:12px;border-radius:6px;overflow:hidden;background:#eef2f7;margin:12px 0 10px}
-  .stackbar i{display:block;transition:width .5s cubic-bezier(.2,.8,.2,1)}
-  .stacklegend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:11.5px;color:var(--ink-2)}
-  .stacklegend span{display:inline-flex;align-items:center;gap:6px}
-  .stacklegend i{width:8px;height:8px;border-radius:2px;display:inline-block}
-  .stacklegend b{font-weight:650;color:var(--ink);font-variant-numeric:tabular-nums}
-  .kpi.flash{animation:flash .55s ease}
-  @keyframes flash{0%{background:#f3f7fb}100%{background:var(--surface)}}
-
-  /* ---------- Board ---------- */
-  .board{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
-    box-shadow:var(--shadow-1);padding:14px 16px 4px;overflow:hidden}
-  .board-head{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;
-    padding:2px 4px 10px;border-bottom:1px dashed var(--line);font-size:12.5px;color:var(--ink-2)}
-  .board-head b{color:var(--ink);font-family:var(--mono);font-size:12px}
-  .board-head .hint{color:var(--ink-3);font-size:11.5px}
-  .dot-live{width:7px;height:7px;border-radius:50%;background:var(--ok);display:inline-block;margin-right:7px;
-    box-shadow:0 0 0 0 rgba(47,158,111,.55);animation:pulse 2s infinite}
-  .dot-live.paused{background:var(--ink-3);animation:none;box-shadow:none}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(47,158,111,.5)}70%{box-shadow:0 0 0 7px rgba(47,158,111,0)}100%{box-shadow:0 0 0 0 rgba(47,158,111,0)}}
-  svg#flow{display:block;width:100%;height:auto;margin-top:4px}
-
-  .rail{fill:none;stroke:#e3eaf2;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
-  .rail-dash{fill:none;stroke:#fff;stroke-opacity:.9;stroke-width:3.5;stroke-linecap:round;
-    stroke-dasharray:3 24;animation:flow 1.15s linear infinite}
-  @keyframes flow{to{stroke-dashoffset:-27}}
-
-  .st{cursor:pointer}
-  .st-inner{transition:transform .3s cubic-bezier(.2,.8,.2,1);transform-origin:0 0}
-  .st:hover .st-inner{transform:translateY(-3px)}
-  .st-card{fill:#fff;stroke:var(--line);stroke-width:1.2;filter:url(#cardShadow);transition:stroke .3s,fill .3s}
-  .st:hover .st-card{stroke:#b9cadc;filter:url(#cardShadowHover)}
-  .st.is-active .st-card{stroke:var(--brand);stroke-width:2}
-  .st.is-selected .sel-ring{opacity:1}
-  .sel-ring{fill:none;stroke:var(--brand);stroke-width:2;stroke-dasharray:7 6;opacity:0;transition:opacity .28s ease}
-  .divider{stroke:#eef3f8;stroke-width:1}
-  .st-idx{font-size:10px;font-weight:700;fill:#b9cadc;font-family:var(--mono)}
-  .st.is-active .st-idx{fill:var(--brand)}
-  .st-title{font-size:15px;font-weight:650;fill:var(--ink);text-anchor:middle;letter-spacing:.2px}
-  .st.leg .st-title{font-size:12.5px}
-  .st-sub{font-size:10.5px;fill:var(--ink-3);text-anchor:middle;letter-spacing:.2px}
-  .kind-chip text{font-size:9.5px;font-weight:650;letter-spacing:.3px}
-  .kind-chip rect{opacity:.95}
-  .total-chip text{font-size:10.5px;font-weight:700;fill:var(--ink);font-variant-numeric:tabular-nums}
-  .total-chip rect{fill:#f5f8fb;stroke:#e4ecf4;stroke-width:1}
-  .main-qty{text-anchor:middle;font-size:10.5px;fill:var(--ink-3);letter-spacing:.3px}
-  .main-qty .n{font-size:19px;font-weight:700;fill:var(--ink);font-variant-numeric:tabular-nums}
-  .main-qty .u{font-size:10px;fill:var(--ink-3);font-weight:500}
-  .g4-l{font-size:9.5px;fill:#8b9aab;text-anchor:middle;letter-spacing:.2px}
-  .g4-v{font-size:13px;font-weight:700;fill:var(--ink);text-anchor:middle;font-variant-numeric:tabular-nums}
-  .g4-v.zero{fill:#c9d3dd;font-weight:500}
-  .g4-u{font-size:8.5px;fill:#a9b7c4}
-  .ent-line{font-size:9.5px;fill:var(--ink-3);text-anchor:middle;letter-spacing:.1px}
-  .bar-track{fill:#eef2f7}
-  .leg-fill{fill:var(--c-transit)}
-  .leg-meta{font-size:9.5px;fill:var(--ink-3);text-anchor:middle}
-  .leg-note{font-size:9px;fill:#a9b7c4;text-anchor:middle}
-  .port-sub{font-size:10px;fill:var(--ink-2);text-anchor:middle;font-variant-numeric:tabular-nums}
-  .ico path{fill:none;stroke:#8fa3b6;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:stroke .3s}
-  .st.is-active .ico path{stroke:var(--brand)}
-  .chip text{font-size:9px;fill:#7c8a9c;text-anchor:middle;font-weight:650}
-  .chip rect{fill:#eef2f7}
-
-  .marker rect{fill:#1d6fa5;stroke:#fff;stroke-width:1.6}
-  .marker .stripe{fill:rgba(255,255,255,.55);stroke:none}
-
-  .lg text{font-size:11px;fill:var(--ink-2);letter-spacing:.2px}
-  .lg .lg-t{font-size:11.5px;font-weight:650;fill:var(--ink)}
-  .lg .lg-s{font-size:9.5px;fill:#a9b7c4}
-  .lg-box{fill:#fff;stroke:#e0e8f0;stroke-width:1}
-  .lg-bar{fill:#eef2f7}
-  .lg-bar-f{fill:#1d6fa5}
-
-  /* ---------- Panels ---------- */
-  .panels{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1.15fr) minmax(0,1fr);gap:14px;margin-top:14px}
-  .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
-    box-shadow:var(--shadow-1);padding:16px 18px;display:flex;flex-direction:column;min-height:330px}
-  .panel h2{margin:0 0 12px;font-size:13px;font-weight:650;letter-spacing:.4px;
-    display:flex;align-items:center;justify-content:space-between;gap:10px}
-  .panel h2 .tag{font-size:11px;font-weight:600;color:var(--brand);background:#eaf1f8;padding:2px 9px;border-radius:20px;
-    white-space:nowrap}
-  .panel h2 .filters{display:flex;gap:6px}
-  .panel h2 .filters button{border:1px solid var(--line);background:#fff;font:inherit;font-size:11px;
-    font-weight:600;color:var(--ink-2);padding:3px 9px;border-radius:7px;cursor:pointer}
-  .panel h2 .filters button.on{background:var(--brand);border-color:var(--brand);color:#fff}
-
-  .stage-head{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:4px}
-  .stage-head .n{font-size:17px;font-weight:660}
-  .stage-head .kind{font-size:10.5px;font-weight:650;padding:1px 8px;border-radius:20px}
-  .k-node{background:#e8f0f7;color:#1d6fa5}
-  .k-leg{background:#faf1e4;color:#b5731c}
-  .k-port{background:#e6f4f2;color:#0e8f7d}
-  .stage-desc{font-size:12.3px;color:var(--ink-2);line-height:1.65;margin:0 0 12px}
-
-  .ents{display:flex;flex-direction:column;gap:9px;overflow:auto;max-height:430px;padding-right:2px}
-  .ent{border:1px solid var(--line);border-radius:12px;padding:11px 12px;cursor:pointer;transition:.2s;background:#fff}
-  .ent:hover{border-color:#b9cadc;background:#fbfdff}
-  .ent.on{border-color:var(--brand);box-shadow:0 0 0 2px rgba(20,69,107,.09)}
-  .ent-h{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
-  .ent-h .n{font-size:13.5px;font-weight:650}
-  .ent-h .r{font-size:10.5px;font-weight:650;color:var(--brand);background:#eaf1f8;padding:1px 7px;border-radius:20px}
-  .ent-h .c{font-size:11px;color:var(--ink-3);margin-left:auto;white-space:nowrap}
-  .ent-f{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:9px 0 8px}
-  .ent-f .c1{text-align:center}
-  .ent-f .c1 .l{font-size:10px;color:var(--ink-3)}
-  .ent-f .c1 .v{font-size:14px;font-weight:680;font-variant-numeric:tabular-nums;margin-top:1px}
-  .ent-f .c1 .v.z{color:#c9d3dd;font-weight:500}
-  .ent-bar{display:flex;height:7px;border-radius:4px;overflow:hidden;background:#eef2f7}
-  .ent-bar i{display:block}
-  .ent-ft{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);margin-top:7px}
-  .ent-ft b{color:var(--ink);font-weight:650;font-variant-numeric:tabular-nums}
-
-  ul.docs{margin:0;padding:0;list-style:none;overflow:auto;max-height:430px;display:flex;flex-direction:column;gap:6px}
-  ul.docs li{border:1px solid var(--line);border-radius:11px;padding:9px 11px;cursor:pointer;transition:.18s;
-    display:grid;grid-template-columns:1fr auto;gap:4px 10px;background:#fff}
-  ul.docs li:hover{border-color:#b9cadc;background:#fbfdff}
-  ul.docs li.on{border-color:var(--brand);box-shadow:0 0 0 2px rgba(20,69,107,.09);background:#fbfdff}
-  ul.docs li .r1{display:flex;align-items:center;gap:7px;flex-wrap:wrap;min-width:0}
-  .dt{font-size:10px;font-weight:650;color:var(--ink-2);background:#f1f5f9;padding:1px 7px;border-radius:6px;white-space:nowrap}
-  .dn{font-family:var(--mono);font-size:11.5px;font-weight:650;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .dq{font-size:12px;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap}
-  ul.docs li .r2{grid-column:1/-1;display:flex;align-items:center;gap:9px;font-size:11px;color:var(--ink-3);flex-wrap:wrap}
-  .ds{font-size:10.5px;font-weight:650;padding:1px 8px;border-radius:20px;white-space:nowrap}
-  .s-ok{background:#e9f4ee;color:#2f9e6f}
-  .s-run{background:#e8f0f7;color:#1d6fa5}
-  .s-wait{background:#faf1e4;color:#b5731c}
-  .s-lock{background:#f1f5f9;color:#7b8794}
-  .party{color:var(--ink-2)}
-
-  .docbox{border:1px solid var(--line);border-radius:12px;padding:12px 13px;background:#fbfdff;margin-bottom:12px}
-  .docbox .h{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .docbox .no{font-family:var(--mono);font-size:13.5px;font-weight:700}
-  .docbox dl{display:grid;grid-template-columns:auto 1fr auto 1fr;gap:6px 12px;margin:11px 0 0;font-size:11.8px}
-  .docbox dt{color:var(--ink-3);white-space:nowrap}
-  .docbox dd{margin:0;font-weight:550;white-space:nowrap}
-  table.lines{width:100%;border-collapse:collapse;font-size:12px}
-  table.lines th{background:#f2f6fa;color:var(--ink-2);font-weight:650;font-size:11px;text-align:left;
-    padding:7px 9px;border-bottom:1px solid var(--line)}
-  table.lines th.r,table.lines td.r{text-align:right}
-  table.lines td{padding:7px 9px;border-bottom:1px solid var(--line-2);font-variant-numeric:tabular-nums}
-  table.lines tr.cur{background:#fff9ec}
-  table.lines tr.cur td:first-child{box-shadow:inset 3px 0 0 var(--c-wip)}
-  .cur-tag{font-size:9.5px;font-weight:650;color:#b5731c;background:#faf1e4;padding:1px 6px;border-radius:20px;margin-left:6px}
-  table.lines tfoot td{font-weight:700;border-bottom:0;padding-top:9px}
-  .empty{color:var(--ink-3);font-size:12.5px;text-align:center;padding:36px 10px;line-height:1.8}
-  .doc-sum{display:flex;gap:14px;font-size:11.5px;color:var(--ink-3);margin-bottom:10px;flex-wrap:wrap}
-  .doc-sum b{color:var(--ink)}
-
-  /* ---------- Matrix ---------- */
-  .matrix{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
-    box-shadow:var(--shadow-1);padding:16px 18px 18px}
-  .matrix h2{margin:0 0 4px;font-size:13px;font-weight:650;letter-spacing:.4px;display:flex;
-    align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-  .matrix .sub{font-size:11.5px;color:var(--ink-3);margin:0 0 13px}
-  .defs{display:flex;flex-wrap:wrap;gap:10px 22px;padding:11px 14px;background:#f7fafd;border:1px solid var(--line);
-    border-radius:11px;margin-bottom:14px;font-size:11.5px;color:var(--ink-3);line-height:1.6}
-  .defs span{display:inline-flex;gap:7px;align-items:baseline}
-  .defs b{color:var(--ink);font-weight:650;white-space:nowrap}
-  .mtab{width:100%;border-collapse:collapse;font-size:12.5px;table-layout:fixed}
-  .mtab th{background:#eef4fb;color:#12212f;font-weight:650;font-size:12.5px;text-align:left;
-    padding:11px 14px;border:1px solid #e3e9f0;letter-spacing:.3px}
-  .mtab td{padding:9px 14px;border:1px solid #e6ecf3;vertical-align:middle}
-  .mtab th.c,.mtab td.c{text-align:center}
-  .mtab .stg{font-weight:600}
-  .mtab .stg small{font-weight:400;color:var(--ink-3);margin-left:4px}
-  .mtab tr{cursor:pointer;transition:.16s}
-  .mtab tbody tr:hover td{background:#f7fafd}
-  .mtab tbody tr.on td{background:#f1f7fc}
-  .mtab tbody tr.on .stg{color:var(--brand)}
-  .prop{display:flex;flex-direction:column;align-items:center;gap:1px;line-height:1.25}
-  .prop .m{font-size:15px;font-weight:700}
-  .prop .q{font-size:10.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
-  .m-main{color:#12212f}
-  .m-minor{color:#a9b7c4}
-  .m-none{color:#d7dee6;font-weight:400}
-  .mtab tfoot td{background:#f7fafd;font-weight:700}
-
-  .foot{margin-top:16px;font-size:11.5px;color:var(--ink-3);text-align:center;letter-spacing:.2px}
-
-  @media (max-width:1400px){
-    .kpis{grid-template-columns:minmax(280px,1.6fr) repeat(2,minmax(0,1fr))}
-    .panels{grid-template-columns:1fr 1fr}
-    .panel:nth-child(3){grid-column:span 2}
-  }
-  @media (max-width:820px){
-    .wrap{padding:14px 12px 26px}
-    .kpis{grid-template-columns:1fr 1fr}
-    .kpi.total{grid-column:span 2}
-    .panels{grid-template-columns:1fr}
-    .panel:nth-child(3){grid-column:span 1}
-    h1{font-size:17px}
-    .mtab{font-size:11.5px}
-    .mtab th,.mtab td{padding:7px 8px}
-  }
-</style>
+<style data-page-node-id="H77KAiCzLsnWF3Au5xYOej" data-pnid-children="sf2zTHpNlN2zcXJFBob2Mk">:root{--bg:#eaeff5;--surface:#ffffff;--ink:#12212f;--ink-2:#5a6b7d;--ink-3:#8b9aab;--line:#dde5ee;--line-2:#eef3f8;--brand:#14456b;--ok:#2f9e6f;--warn:#c2761a;--c-wip:#c2761a;--c-transit:#1d6fa5;--c-avail:#2f9e6f;--c-rsv:#7b8794;--shadow-1:0 1px 2px rgba(18,33,47,.05),0 6px 16px rgba(18,33,47,.06);--shadow-2:0 12px 30px rgba(18,33,47,.13);--radius:16px;--mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace}*{box-sizing:border-box}html,body{margin:0;padding:0}body{background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}.wrap{max-width:1660px;margin:0 auto;padding:22px 24px 34px}.topbar{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow-1)}.brand{display:flex;gap:14px;align-items:center;min-width:420px}.mark{width:44px;height:44px;border-radius:12px;background:var(--brand);display:flex;align-items:center;justify-content:center;flex:none}.mark svg{width:26px;height:26px;fill:none;stroke:#fff;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}h1{margin:0;font-size:19px;font-weight:650;letter-spacing:.2px}.brand p{margin:3px 0 0;font-size:12.5px;color:var(--ink-3);letter-spacing:.1px}.sku-chip{display:inline-flex;align-items:center;gap:6px;background:#f3f7fb;border:1px solid var(--line);border-radius:8px;padding:1px 8px;font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}.controls{display:flex;flex-wrap:wrap;gap:11px;align-items:center}.seg{display:flex;background:#eef2f7;border:1px solid var(--line);border-radius:11px;padding:3px}.seg button{border:0;background:transparent;font:inherit;font-size:13px;font-weight:600;color:var(--ink-2);padding:7px 15px;border-radius:8px;cursor:pointer;transition:.18s}.seg button:hover{color:var(--ink)}.seg button.on{background:var(--surface);color:var(--brand);box-shadow:0 1px 3px rgba(18,33,47,.12)}.seg.small button{padding:5px 12px;font-size:12.5px}.btn{border:1px solid var(--line);background:var(--surface);font:inherit;font-size:13px;font-weight:600;color:var(--ink);padding:8px 15px;border-radius:10px;cursor:pointer;transition:.18s}.btn:hover{border-color:#c3d2e2;background:#fafcfe}.btn.ghost{color:var(--ink-2)}.speed{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2);border:1px solid var(--line);border-radius:10px;padding:6px 12px;background:var(--surface)}input[type=range]{-webkit-appearance:none;appearance:none;width:92px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--brand) 0%,var(--brand) var(--p,30%),#dde5ee var(--p,30%),#dde5ee 100%);outline:none}input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid var(--brand);cursor:pointer;box-shadow:0 1px 3px rgba(18,33,47,.25)}input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--brand);cursor:pointer}#speedVal{font-family:var(--mono);font-size:12px;min-width:34px;color:var(--ink)}.kpis{display:grid;grid-template-columns:minmax(300px,1.75fr) repeat(4,minmax(0,1fr));gap:14px;margin-top:14px}.kpi{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow-1);position:relative;overflow:hidden}.kpi .accent{position:absolute;left:0;top:0;bottom:0;width:3px}.kpi .k-label{font-size:12px;color:var(--ink-3);letter-spacing:.3px;display:flex;align-items:center;gap:6px}.kpi .k-val{font-size:25px;font-weight:660;margin-top:4px;font-variant-numeric:tabular-nums;letter-spacing:-.4px}.kpi .k-val small{font-size:12.5px;font-weight:500;color:var(--ink-3);margin-left:3px}.kpi .k-note{font-size:11.5px;color:var(--ink-3);margin-top:2px}.kpi .dotm{width:8px;height:8px;border-radius:2px;display:inline-block}.kpi.total{padding-right:20px}.kpi.total .k-val{font-size:31px}.stackbar{display:flex;height:12px;border-radius:6px;overflow:hidden;background:#eef2f7;margin:12px 0 10px}.stackbar i{display:block;transition:width .5s cubic-bezier(.2,.8,.2,1)}.stacklegend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:11.5px;color:var(--ink-2)}.stacklegend span{display:inline-flex;align-items:center;gap:6px}.stacklegend i{width:8px;height:8px;border-radius:2px;display:inline-block}.stacklegend b{font-weight:650;color:var(--ink);font-variant-numeric:tabular-nums}.kpi.flash{animation:flash .55s ease}@keyframes flash{0%{background:#f3f7fb}100%{background:var(--surface)}}.board{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-1);padding:14px 16px 4px;overflow:hidden}.board-head{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;padding:2px 4px 10px;border-bottom:1px dashed var(--line);font-size:12.5px;color:var(--ink-2)}.board-head b{color:var(--ink);font-family:var(--mono);font-size:12px}.board-head .hint{color:var(--ink-3);font-size:11.5px}.dot-live{width:7px;height:7px;border-radius:50%;background:var(--ok);display:inline-block;margin-right:7px;box-shadow:0 0 0 0 rgba(47,158,111,.55);animation:pulse 2s infinite}.dot-live.paused{background:var(--ink-3);animation:none;box-shadow:none}@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(47,158,111,.5)}70%{box-shadow:0 0 0 7px rgba(47,158,111,0)}100%{box-shadow:0 0 0 0 rgba(47,158,111,0)}}svg#flow{display:block;width:100%;height:auto;margin-top:4px}.rail{fill:none;stroke:#e3eaf2;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}.rail-dash{fill:none;stroke:#fff;stroke-opacity:.9;stroke-width:3.5;stroke-linecap:round;stroke-dasharray:3 24;animation:flow 1.15s linear infinite}@keyframes flow{to{stroke-dashoffset:-27}}.st{cursor:pointer}.st-inner{transition:transform .3s cubic-bezier(.2,.8,.2,1);transform-origin:0 0}.st:hover .st-inner{transform:translateY(-3px)}.st-card{fill:#fff;stroke:var(--line);stroke-width:1.2;filter:url(#cardShadow);transition:stroke .3s,fill .3s}.st:hover .st-card{stroke:#b9cadc;filter:url(#cardShadowHover)}.st.is-active .st-card{stroke:var(--brand);stroke-width:2}.st.is-selected .sel-ring{opacity:1}.sel-ring{fill:none;stroke:var(--brand);stroke-width:2;stroke-dasharray:7 6;opacity:0;transition:opacity .28s ease}.divider{stroke:#eef3f8;stroke-width:1}.st-idx{font-size:10px;font-weight:700;fill:#b9cadc;font-family:var(--mono)}.st.is-active .st-idx{fill:var(--brand)}.st-title{font-size:15px;font-weight:650;fill:var(--ink);text-anchor:middle;letter-spacing:.2px}.st.leg .st-title{font-size:12.5px}.st-sub{font-size:10.5px;fill:var(--ink-3);text-anchor:middle;letter-spacing:.2px}.kind-chip text{font-size:9.5px;font-weight:650;letter-spacing:.3px}.kind-chip rect{opacity:.95}.total-chip text{font-size:10.5px;font-weight:700;fill:var(--ink);font-variant-numeric:tabular-nums}.total-chip rect{fill:#f5f8fb;stroke:#e4ecf4;stroke-width:1}.main-qty{text-anchor:middle;font-size:10.5px;fill:var(--ink-3);letter-spacing:.3px}.main-qty .n{font-size:19px;font-weight:700;fill:var(--ink);font-variant-numeric:tabular-nums}.main-qty .u{font-size:10px;fill:var(--ink-3);font-weight:500}.g4-l{font-size:9.5px;fill:#8b9aab;text-anchor:middle;letter-spacing:.2px}.g4-v{font-size:13px;font-weight:700;fill:var(--ink);text-anchor:middle;font-variant-numeric:tabular-nums}.g4-v.zero{fill:#c9d3dd;font-weight:500}.g4-u{font-size:8.5px;fill:#a9b7c4}.ent-line{font-size:9.5px;fill:var(--ink-3);text-anchor:middle;letter-spacing:.1px}.bar-track{fill:#eef2f7}.leg-fill{fill:var(--c-transit)}.leg-meta{font-size:9.5px;fill:var(--ink-3);text-anchor:middle}.leg-note{font-size:9px;fill:#a9b7c4;text-anchor:middle}.port-sub{font-size:10px;fill:var(--ink-2);text-anchor:middle;font-variant-numeric:tabular-nums}.ico path{fill:none;stroke:#8fa3b6;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:stroke .3s}.st.is-active .ico path{stroke:var(--brand)}.chip text{font-size:9px;fill:#7c8a9c;text-anchor:middle;font-weight:650}.chip rect{fill:#eef2f7}.marker rect{fill:#1d6fa5;stroke:#fff;stroke-width:1.6}.marker .stripe{fill:rgba(255,255,255,.55);stroke:none}.lg text{font-size:11px;fill:var(--ink-2);letter-spacing:.2px}.lg .lg-t{font-size:11.5px;font-weight:650;fill:var(--ink)}.lg .lg-s{font-size:9.5px;fill:#a9b7c4}.lg-box{fill:#fff;stroke:#e0e8f0;stroke-width:1}.lg-bar{fill:#eef2f7}.lg-bar-f{fill:#1d6fa5}.panels{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1.15fr) minmax(0,1fr);gap:14px;margin-top:14px}.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-1);padding:16px 18px;display:flex;flex-direction:column;min-height:330px}.panel h2{margin:0 0 12px;font-size:13px;font-weight:650;letter-spacing:.4px;display:flex;align-items:center;justify-content:space-between;gap:10px}.panel h2 .tag{font-size:11px;font-weight:600;color:var(--brand);background:#eaf1f8;padding:2px 9px;border-radius:20px;white-space:nowrap}.panel h2 .filters{display:flex;gap:6px}.panel h2 .filters button{border:1px solid var(--line);background:#fff;font:inherit;font-size:11px;font-weight:600;color:var(--ink-2);padding:3px 9px;border-radius:7px;cursor:pointer}.panel h2 .filters button.on{background:var(--brand);border-color:var(--brand);color:#fff}.stage-head{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:4px}.stage-head .n{font-size:17px;font-weight:660}.stage-head .kind{font-size:10.5px;font-weight:650;padding:1px 8px;border-radius:20px}.k-node{background:#e8f0f7;color:#1d6fa5}.k-leg{background:#faf1e4;color:#b5731c}.k-port{background:#e6f4f2;color:#0e8f7d}.stage-desc{font-size:12.3px;color:var(--ink-2);line-height:1.65;margin:0 0 12px}.ents{display:flex;flex-direction:column;gap:9px;overflow:auto;max-height:430px;padding-right:2px}.ent{border:1px solid var(--line);border-radius:12px;padding:11px 12px;cursor:pointer;transition:.2s;background:#fff}.ent:hover{border-color:#b9cadc;background:#fbfdff}.ent.on{border-color:var(--brand);box-shadow:0 0 0 2px rgba(20,69,107,.09)}.ent-h{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}.ent-h .n{font-size:13.5px;font-weight:650}.ent-h .r{font-size:10.5px;font-weight:650;color:var(--brand);background:#eaf1f8;padding:1px 7px;border-radius:20px}.ent-h .c{font-size:11px;color:var(--ink-3);margin-left:auto;white-space:nowrap}.ent-f{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:9px 0 8px}.ent-f .c1{text-align:center}.ent-f .c1 .l{font-size:10px;color:var(--ink-3)}.ent-f .c1 .v{font-size:14px;font-weight:680;font-variant-numeric:tabular-nums;margin-top:1px}.ent-f .c1 .v.z{color:#c9d3dd;font-weight:500}.ent-bar{display:flex;height:7px;border-radius:4px;overflow:hidden;background:#eef2f7}.ent-bar i{display:block}.ent-ft{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);margin-top:7px}.ent-ft b{color:var(--ink);font-weight:650;font-variant-numeric:tabular-nums}ul.docs{margin:0;padding:0;list-style:none;overflow:auto;max-height:430px;display:flex;flex-direction:column;gap:6px}ul.docs li{border:1px solid var(--line);border-radius:11px;padding:9px 11px;cursor:pointer;transition:.18s;display:grid;grid-template-columns:1fr auto;gap:4px 10px;background:#fff}ul.docs li:hover{border-color:#b9cadc;background:#fbfdff}ul.docs li.on{border-color:var(--brand);box-shadow:0 0 0 2px rgba(20,69,107,.09);background:#fbfdff}ul.docs li .r1{display:flex;align-items:center;gap:7px;flex-wrap:wrap;min-width:0}.dt{font-size:10px;font-weight:650;color:var(--ink-2);background:#f1f5f9;padding:1px 7px;border-radius:6px;white-space:nowrap}.dn{font-family:var(--mono);font-size:11.5px;font-weight:650;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dq{font-size:12px;font-weight:650;font-variant-numeric:tabular-nums;white-space:nowrap}ul.docs li .r2{grid-column:1/-1;display:flex;align-items:center;gap:9px;font-size:11px;color:var(--ink-3);flex-wrap:wrap}.ds{font-size:10.5px;font-weight:650;padding:1px 8px;border-radius:20px;white-space:nowrap}.s-ok{background:#e9f4ee;color:#2f9e6f}.s-run{background:#e8f0f7;color:#1d6fa5}.s-wait{background:#faf1e4;color:#b5731c}.s-lock{background:#f1f5f9;color:#7b8794}.party{color:var(--ink-2)}.docbox{border:1px solid var(--line);border-radius:12px;padding:12px 13px;background:#fbfdff;margin-bottom:12px}.docbox .h{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.docbox .no{font-family:var(--mono);font-size:13.5px;font-weight:700}.docbox dl{display:grid;grid-template-columns:auto 1fr auto 1fr;gap:6px 12px;margin:11px 0 0;font-size:11.8px}.docbox dt{color:var(--ink-3);white-space:nowrap}.docbox dd{margin:0;font-weight:550;white-space:nowrap}table.lines{width:100%;border-collapse:collapse;font-size:12px}table.lines th{background:#f2f6fa;color:var(--ink-2);font-weight:650;font-size:11px;text-align:left;padding:7px 9px;border-bottom:1px solid var(--line)}table.lines th.r,table.lines td.r{text-align:right}table.lines td{padding:7px 9px;border-bottom:1px solid var(--line-2);font-variant-numeric:tabular-nums}table.lines tr.cur{background:#fff9ec}table.lines tr.cur td:first-child{box-shadow:inset 3px 0 0 var(--c-wip)}.cur-tag{font-size:9.5px;font-weight:650;color:#b5731c;background:#faf1e4;padding:1px 6px;border-radius:20px;margin-left:6px}table.lines tfoot td{font-weight:700;border-bottom:0;padding-top:9px}.empty{color:var(--ink-3);font-size:12.5px;text-align:center;padding:36px 10px;line-height:1.8}.doc-sum{display:flex;gap:14px;font-size:11.5px;color:var(--ink-3);margin-bottom:10px;flex-wrap:wrap}.doc-sum b{color:var(--ink)}.matrix{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-1);padding:16px 18px 18px}.matrix h2{margin:0 0 4px;font-size:13px;font-weight:650;letter-spacing:.4px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.matrix .sub{font-size:11.5px;color:var(--ink-3);margin:0 0 13px}.defs{display:flex;flex-wrap:wrap;gap:10px 22px;padding:11px 14px;background:#f7fafd;border:1px solid var(--line);border-radius:11px;margin-bottom:14px;font-size:11.5px;color:var(--ink-3);line-height:1.6}.defs span{display:inline-flex;gap:7px;align-items:baseline}.defs b{color:var(--ink);font-weight:650;white-space:nowrap}.mtab{width:100%;border-collapse:collapse;font-size:12.5px;table-layout:fixed}.mtab th{background:#eef4fb;color:#12212f;font-weight:650;font-size:12.5px;text-align:left;padding:11px 14px;border:1px solid #e3e9f0;letter-spacing:.3px}.mtab td{padding:9px 14px;border:1px solid #e6ecf3;vertical-align:middle}.mtab th.c,.mtab td.c{text-align:center}.mtab .stg{font-weight:600}.mtab .stg small{font-weight:400;color:var(--ink-3);margin-left:4px}.mtab tr{cursor:pointer;transition:.16s}.mtab tbody tr:hover td{background:#f7fafd}.mtab tbody tr.on td{background:#f1f7fc}.mtab tbody tr.on .stg{color:var(--brand)}.prop{display:flex;flex-direction:column;align-items:center;gap:1px;line-height:1.25}.prop .m{font-size:15px;font-weight:700}.prop .q{font-size:10.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}.m-main{color:#12212f}.m-minor{color:#a9b7c4}.m-none{color:#d7dee6;font-weight:400}.mtab tfoot td{background:#f7fafd;font-weight:700}.foot{margin-top:16px;font-size:11.5px;color:var(--ink-3);text-align:center;letter-spacing:.2px}@media (max-width:1400px){.kpis{grid-template-columns:minmax(280px,1.6fr) repeat(2,minmax(0,1fr))}.panels{grid-template-columns:1fr 1fr}.panel:nth-child(3){grid-column:span 2}}@media (max-width:820px){.wrap{padding:14px 12px 26px}.kpis{grid-template-columns:1fr 1fr}.kpi.total{grid-column:span 2}.panels{grid-template-columns:1fr}.panel:nth-child(3){grid-column:span 1}h1{font-size:17px}.mtab{font-size:11.5px}.mtab th,.mtab td{padding:7px 8px}}</style>
 </head>
 <body data-page-node-id="afnVNA0JtsffNeiYVnJJQF">
 <div data-page-node-id="9PG9r1Wnp00VHbUEA3HO8P" class="wrap">
-
-  <header data-page-node-id="4NQKCMIhdKffh2hLR8L1MH" class="topbar">
-    <div data-page-node-id="nRuDWpxZJrEhgKC0ZrGHE6" class="brand">
-      <div data-page-node-id="34nXFGJhcMEwInFpxsBCzQ" class="mark">
-        <svg data-page-node-id="rZHwCBlyIhY8kpd1gmVOwn" viewBox="0 0 24 24"><path data-page-node-id="BYfvQ1aNZXfSqKZCRhbY9B" d="M3 8.5l9-4.5 9 4.5v7l-9 4.5-9-4.5z"/><path data-page-node-id="iJtRTjeWKkC7H2Me2ATw7n" d="M3 8.5l9 4.5 9-4.5M12 13v7"/></svg>
-      </div>
-      <div data-page-node-id="Mesgv8yfCx9nS6pr028qme">
-        <h1 data-page-node-id="qIfpLhNmzEXSdIUUbgGfb9"><!--pnid:eK0SxWRzKCLSXaGI02BKNN-->SKU 全链路库存可视化</h1>
-        <p data-page-node-id="hGF0TtaHdFsB1mG0QJsaEi"><span data-page-node-id="3WGGjzJehkZEYSIirrkupB" class="sku-chip" id="skuCode"><!--pnid:eiNTfIdUgJ5enputSaGKBZ-->WD-2409-BLK-M</span><!--pnid:scitdGCiGoWLVvjSwvTF5h--> 女士针织连衣裙 · 黑色 · M &nbsp;·&nbsp; 快照 <span data-page-node-id="D7p1FNCirdi7Y1CRfFg6Oq" id="snapTime"><!--pnid:gWAoE9xvFRLq4bUXlKqaQN-->2026-09-17 10:30</span></p>
-      </div>
-    </div>
-    <div data-page-node-id="O7Gi6wMQkYhESGfFo7lYtx" class="controls">
-      <div data-page-node-id="QwFPcNrde1wkgZ9Cmiv91M" class="seg small" id="unitSeg">
-        <button data-page-node-id="5qyMYXS4EUm4F9mT0GT8es" class="on" data-unit="pc"><!--pnid:Bn7nq9mVcTjydybSScySVu-->件</button>
-        <button data-page-node-id="KZbK69MwfiwbqwlgSr2Vwr" data-unit="box"><!--pnid:plJMC2j6UFYYBKDicMMOeN-->箱</button>
-      </div>
-      <button data-page-node-id="D7KoYuVs1sgeBLIvVqX0UP" class="btn" id="playBtn"><!--pnid:Xmjd9GTL744EB3Tjy9akQP-->暂停</button>
-      <div data-page-node-id="8bmGxE3e7aNVzk3ksgLU7z" class="speed">
-        <label data-page-node-id="oprETjGftYjszpLFQOOgeF" for="speed"><!--pnid:ArWR0L0H8ZmLefE8EN8V4X-->在途动画</label>
-        <input data-page-node-id="Jy55cDCJdES3As5OcUkm8D" id="speed" max="3" min="0.4" step="0.2" type="range" value="1">
-        <span data-page-node-id="bl6XdPj6MDWJ2e7cIfh0eu" id="speedVal"><!--pnid:tfa94E9cXmD2FXLNnQ6gck-->1.0×</span>
-      </div>
-      <button data-page-node-id="RUGFExHnuhCbAJcc4AbtT9" class="btn ghost" id="resetBtn"><!--pnid:kbr1tMY9io7Xh3M8NRqbte-->重置选择</button>
-    </div>
-  </header>
-
-  <section data-page-node-id="ABMVgWgzqJSCHhqKQVq8zZ" class="kpis" id="kpis"></section>
-
-  <section data-page-node-id="h7NOYpxThV9uUrBZhdFJY5" class="board">
-    <div data-page-node-id="vm5Mp3VevEY3c3utRQpKKT" class="board-head">
-      <div data-page-node-id="ry40aU2nakfpQ9BVZkoDSX"><span data-page-node-id="w2rJumuP68FrhB6QShr946" class="dot-live" id="liveDot"></span><!--pnid:yuJt4QYlpxhn88yMELCfwB-->库存快照 · 共 7 个环节（3 个节点 / 3 个在途段 / 1 个在港在途）
-        &nbsp;·&nbsp; <span data-page-node-id="LZTGVwZD3Ami2gLwD1my9w" class="hint"><!--pnid:bbXJLi7pgmb0XyPPfXgTkg-->点击任意环节或下方表格行查看该环节库存与关联单据</span></div>
-      <div data-page-node-id="hUXJo2PNaGWKyV1bnZ8WwQ"><!--pnid:9uBPVUtXwqZ8wcwNjNnDNh-->总库存 <b data-page-node-id="wDz1JUQB0m07sn3RKy0aRA" id="headTotal"><!--pnid:QzsbXaPPta44VsRXtctQRT-->12,840 件</b><!--pnid:ELCMd0wsxbTgmoKZEUGhpf--> · 在途占比 <b data-page-node-id="qhcxIldOkUABmUJSEgGay2" id="headTransit"><!--pnid:TKE7FZm5qq4rKhAU34Re26-->40.8%</b></div>
-    </div>
-    <svg data-page-node-id="wgGKZRzA6rnmNDh3KaFOmm" aria-label="SKU 各环节库存分布" id="flow" preserveAspectRatio="xMidYMid meet" role="img" viewBox="0 0 1680 566">
-      <defs data-page-node-id="yoZfbYWLMfhKm1EJBTn70T">
-        <pattern data-page-node-id="z2MR7YPM9MBOxn10bHgFr3" height="48" id="grid" patternUnits="userSpaceOnUse" width="48">
-          <path data-page-node-id="u3CD37mRVDEVoK4d8qmXkh" d="M48 0H0V48" fill="none" stroke="#f1f5f9" stroke-width="1"/>
-        </pattern>
-        <filter data-page-node-id="1US1RnRzSD2n8HBzbIAoj3" height="190%" id="cardShadow" width="160%" x="-30%" y="-30%">
-          <feDropShadow data-page-node-id="s7TarBDlxP7BXhsKDNfzaM" dx="0" dy="5" flood-color="#12212f" flood-opacity="0.07" stdDeviation="6"/>
-        </filter>
-        <filter data-page-node-id="JDBsdVDeaEaSqQVVgZrzxF" height="190%" id="cardShadowHover" width="160%" x="-30%" y="-30%">
-          <feDropShadow data-page-node-id="j0BnHoPMukqHXOOC5kSOOp" dx="0" dy="10" flood-color="#12212f" flood-opacity="0.16" stdDeviation="11"/>
-        </filter>
-      </defs>
-
-      <rect data-page-node-id="F7bos82FL9PmCCWR1sbccf" fill="url(#grid)" height="566" width="1680"/>
-      <path data-page-node-id="6EoJwM9R4cDoW59eDlO6Hb" class="rail" d="M190 170 H1288 Q1440 170 1440 450 H640"/>
-      <path data-page-node-id="eiLs6kYgajRZgqhkNSl2af" class="rail-dash" d="M190 170 H1288 Q1440 170 1440 450 H640"/>
-      <g data-page-node-id="ik9PN71JED9EQJRbh89jyA" id="markers"></g>
-      <g data-page-node-id="TUbvGlN2RE4KPM3A8EZ5E3" id="stations"></g>
-      <g data-page-node-id="DmamTopO3Y1AbEsWkwnBG1" id="deco"></g>
-    </svg>
-  </section>
-
-  <section data-page-node-id="wTiZb0s0e3wysZIFKB9zCw" class="panels">
-    <div data-page-node-id="lzu3Q0OnV5sXP0A294SSAo" class="panel">
-      <h2 data-page-node-id="0ZfgM0UWmRkggyYK57X7UO"><!--pnid:0IRchsMIHbMaMWtgWOjqlm-->环节库存明细<span data-page-node-id="DglPGQTvmLZTzcDBoflWnK" class="tag" id="p1tag"><!--pnid:Ris5S6ehDQyCnuQwLdPZKt-->供应商节点</span></h2>
-      <div data-page-node-id="69yMAojMQ4ygUiaVDQCqNN" id="p1body"></div>
-    </div>
-    <div data-page-node-id="LD4pCcUMqett9eEfhXf8Hb" class="panel">
-      <h2 data-page-node-id="jXOlbbmqAUW70WzYaUJZjQ"><!--pnid:zQRmzQB0UISNTC4ILDXFGL-->关联单据
-        <span data-page-node-id="qNmIbyrbjP5l72iqGtUxgT" class="filters" id="docFilter">
-          <button data-page-node-id="A4kq4CNHp8vKdj4HjUVDuh" class="on" data-f="stage"><!--pnid:5DoW4PbO8pOibDpg3xo7v1-->本环节</button>
-          <button data-page-node-id="S7gT75wJTZrP5bfvDNoBcb" data-f="all"><!--pnid:pKg1IZ05klqRaTpm9Tqh9s-->全部环节</button>
-        </span>
-      </h2>
-      <div data-page-node-id="TyTpGrrr1RM1ivt8UdGMyx" id="p2body"></div>
-    </div>
-    <div data-page-node-id="rl5ctg8ZNvMuuuh58kUUyp" class="panel">
-      <h2 data-page-node-id="teBHNEFOMZpwSv1NBRFuN8"><!--pnid:Xs21VF7EwaPOQ5D0hrefPV-->单据明细<span data-page-node-id="TyTlqstPK5zxVjiqT0ynk6" class="tag" id="p3tag"><!--pnid:iWBezTJt6Hupl9qy7m2bUG-->未选择</span></h2>
-      <div data-page-node-id="RTEUwHHjt2AiFIrZPBgwPl" id="p3body"></div>
-    </div>
-  </section>
-
-  <section data-page-node-id="ZRRQVzxjOrQLdrWBdGXG3i" class="matrix">
-    <h2 data-page-node-id="nebT22vmuTHwFQDnKbepzi"><!--pnid:VMQDVsnSFpdRtA1T6yX1rw-->库存形态矩阵</h2>
-    <p data-page-node-id="f6aPmb8HMBWT0bmvsXUZJK" class="sub"><!--pnid:3QESHC8PeT9kR86sZo8ZiW-->同一 SKU 在不同环节以不同库存形态存在；下表左侧为形态判定，数字为该形态在本环节的实时数量。</p>
-    <div data-page-node-id="2lqYHnJmlaCrkCBxAhOz8U" class="defs">
-      <span data-page-node-id="E77eQxsFnxoj9mA8qcHCJE"><b data-page-node-id="p1x1wkZVhH8MqKtaio3N4A"><!--pnid:4Ldq0A7nqB8q9XbNzdBXaH-->&#10003; 主形态</b><!--pnid:yiEXV41aaVns8pHLTG0cYs-->该环节库存的主要存在形态，占用额度与账期</span>
-      <span data-page-node-id="SSPoUYf9T62bA8bvZm52BW"><b data-page-node-id="NP9H0fQ958GuXbUgdTmCzj"><!--pnid:yJ0Nla9VBudOC1ZYVE1OK4-->△ 次形态</b><!--pnid:u7y5RSKLBtZWgrLpuGwOOW-->少量或条件性存在，如到仓在途、入库在途</span>
-      <span data-page-node-id="2DavPdpjgXhh5P3npMCuy0"><b data-page-node-id="RaPVibp4UzY4Tec0yjPiGB"><!--pnid:azJfNIgLiY3zjXTB2hCbTX-->&#8212; 无</b><!--pnid:VsjBJqMzn0DVi9YSUCaU0b-->该形态在该环节不存在</span>
-      <span data-page-node-id="uBLhlTu7BoVydcrmQNA6oR"><b data-page-node-id="a9FE4u0AxxilGmVsliX9Do"><!--pnid:RI3Qz9l0cSVy3pFSIFSbqS-->口径</b><!--pnid:Wdw1fNTm0iCAqKYjFxD9nS-->总库存 = 在制 + 在途 + 可用 + 预留，不含已售出库部分；1 箱 = 20 件</span>
-    </div>
-    <table data-page-node-id="DdTiIy4jWGDgyV6ahgQcRY" class="mtab" id="mtab"></table>
-  </section>
-
-  <p data-page-node-id="pDW5NHz2xPgG4DXOW4Id0N" class="foot"><!--pnid:oayphsU4bhdKgkyqeozjpp-->数量为示意快照数据，用于展示库存形态与环节归属关系；实际取值以 ERP / WMS / 货代回传数据为准。</p>
+<header data-page-node-id="4NQKCMIhdKffh2hLR8L1MH" class="topbar">
+ <div data-page-node-id="nRuDWpxZJrEhgKC0ZrGHE6" class="brand">
+<div data-page-node-id="34nXFGJhcMEwInFpxsBCzQ" class="mark">
+ <svg data-page-node-id="rZHwCBlyIhY8kpd1gmVOwn" viewBox="0 0 24 24"><path data-page-node-id="BYfvQ1aNZXfSqKZCRhbY9B" d="M3 8.5l9-4.5 9 4.5v7l-9 4.5-9-4.5z"/><path data-page-node-id="iJtRTjeWKkC7H2Me2ATw7n" d="M3 8.5l9 4.5 9-4.5M12 13v7"/></svg>
+ </div>
+<div data-page-node-id="Mesgv8yfCx9nS6pr028qme">
+ <h1 data-page-node-id="qIfpLhNmzEXSdIUUbgGfb9">SKU 全链路库存可视化</h1>
+<p data-page-node-id="hGF0TtaHdFsB1mG0QJsaEi"><span data-page-node-id="3WGGjzJehkZEYSIirrkupB" class="sku-chip" id="skuCode">WD-2409-BLK-M</span> 女士针织连衣裙 · 黑色 · M &nbsp;·&nbsp; 快照 <span data-page-node-id="D7p1FNCirdi7Y1CRfFg6Oq" id="snapTime">2026-09-17 10:30</span></p>
+ </div>
 </div>
-
-<script data-page-node-id="xf7AonpGs8qSxVomU0qtrO" data-pnid-children="U7SeHgPyTRv0izklCIX551">
-(function () {
-  'use strict';
-
-  /* =========================================================
-     一、数据层
-     ========================================================= */
-
-  var SKU = {
-    code: 'WD-2409-BLK-M',
-    name: '女士针织连衣裙',
-    color: '黑色',
-    size: 'M',
-    boxSize: 20,
-    cost: 38.5,
-    snapshot: '2026-09-17 10:30'
-  };
-
-  var STATES = [
-    { k: 'wip',      label: '在制', color: '#c2761a' },
-    { k: 'transit',  label: '在途', color: '#1d6fa5' },
-    { k: 'avail',    label: '可用', color: '#2f9e6f' },
-    { k: 'reserved', label: '预留', color: '#7b8794' }
-  ];
-
-  var ICONS = {
-    factory:   'M3 20h18M5 20V9.2l4.4 3.1V9.2l4.4 3.1V6.2h5.2V20M17.2 6.2V3.6h1.6v2.6M15 9.4h5.2M7.4 13.2h1.6M11.8 13.2h1.6',
-    truck:     'M1.6 16.5V7.2h11.2v9.3M12.8 10.4h4.1l3.5 3.6v2.5h-2.6M4.2 16.5h8.6M8.3 18.6a1.75 1.75 0 1 1 0-3.5 1.75 1.75 0 0 1 0 3.5M17.6 18.6a1.75 1.75 0 1 1 0-3.5 1.75 1.75 0 0 1 0 3.5M1.6 13.5h4',
-    warehouse: 'M2.5 20h19M4.5 20V9.6L12 6.2l7.5 3.4V20M7.5 20v-6.6h9V20M7.5 16.4h9',
-    ship:      'M3.2 14.6h17.6l-2.6 4.6H5.8zM6.8 14.6V10h10.4v4.6M12 10V6.6M4 21.6c1.8-1.6 3.6-1.6 5.4 0s3.6 1.6 5.4 0 3.6-1.6 5.4 0',
-    anchor:    'M12 4.4a2.2 2.2 0 1 0 0 4.4 2.2 2.2 0 0 0 0-4.4M12 8.8V21.4M4.6 14.4c0 4 3.3 6.8 7.4 6.8s7.4-2.8 7.4-6.8M2.6 14.4h4M17.4 14.4h4',
-    container: 'M3.2 8h17.6v11.2H3.2zM7.6 8v11.2M12 8v11.2M16.4 8v11.2M4.8 4.6h14.4'
-  };
-
-  // groups：节点环节是「供应商 / 仓库」实体；在途环节是「批次」
-  var STAGES = [
-    {
-      id: 'sup', kind: 'node', x: 190, y: 170, w: 236, h: 252, icon: 'factory',
-      title: '供应商节点', sub: '工厂 / 供应商仓', qtyLabel: '在制',
-      desc: '货物在工厂端以「在制」形态存在，未完工部分不可用；已验收入库的部分转为可用与预留（已被采购订单锁定）。',
-      matrix: { wip: 'main', transit: 'none', avail: 'minor', reserved: 'main' },
-      groups: [
-        { id: 'supA', name: '宁波鸣鹤制衣', role: '供应商 · A厂', city: '浙江 宁波',
-          forms: { wip: 2200, transit: 0, avail: 240, reserved: 520 } },
-        { id: 'supB', name: 'Vinatex 越南', role: '供应商 · B厂', city: '越南 胡志明',
-          forms: { wip: 1400, transit: 0, avail: 0, reserved: 0 } }
-      ]
-    },
-    {
-      id: 'leg1', kind: 'leg', x: 512, y: 170, w: 204, h: 204, icon: 'truck',
-      title: '供应商 → 本地仓', sub: '头程短驳', carrier: '德邦物流 · 2 车',
-      prog: 0.62, span: '09-15 发出 · 预计 09-17 到仓',
-      desc: '供应商到国内仓的头程在途段，货物已离厂但未入仓，仅在途形态存在。',
-      matrix: { wip: 'none', transit: 'main', avail: 'none', reserved: 'none' },
-      groups: [
-        { id: 'd1', name: '宁波鸣鹤 → 华南仓', role: '头程批次', city: '宁波 → 东莞',
-          forms: { wip: 0, transit: 720, avail: 0, reserved: 0 } },
-        { id: 'd2', name: 'Vinatex → 华东仓', role: '头程批次', city: '胡志明 → 宁波',
-          forms: { wip: 0, transit: 480, avail: 0, reserved: 0 } }
-      ]
-    },
-    {
-      id: 'cnwh', kind: 'node', x: 866, y: 170, w: 236, h: 252, icon: 'warehouse',
-      title: '本地仓', sub: '国内仓 · 自营 2 仓', qtyLabel: '可用',
-      desc: '国内仓承载可用与预留库存，是在库管理的主战场；另有少量在途（到仓在途）尚未转为可用。',
-      matrix: { wip: 'none', transit: 'minor', avail: 'main', reserved: 'main' },
-      groups: [
-        { id: 'cnS', name: '华南仓（东莞虎门）', role: '国内仓 · 自营', city: '广东 东莞',
-          forms: { wip: 0, transit: 380, avail: 1180, reserved: 120 } },
-        { id: 'cnE', name: '华东仓（宁波北仑）', role: '国内仓 · 自营', city: '浙江 宁波',
-          forms: { wip: 0, transit: 0, avail: 680, reserved: 60 } }
-      ]
-    },
-    {
-      id: 'leg2', kind: 'leg', x: 1202, y: 170, w: 204, h: 204, icon: 'truck',
-      title: '本地仓--发货港', sub: '拖车 / 报关', carrier: '盐田车队 · 3 车',
-      prog: 0.35, span: '09-17 派车 · 预计 09-18 进港',
-      desc: '国内仓到启运港的短驳与出口报关，库存已出仓、尚未上船，计为在途。',
-      matrix: { wip: 'none', transit: 'main', avail: 'none', reserved: 'none' },
-      groups: [
-        { id: 'tk1', name: '华南仓 → 盐田港', role: '拖车批次', city: '东莞 → 深圳',
-          forms: { wip: 0, transit: 900, avail: 0, reserved: 0 } }
-      ]
-    },
-    {
-      id: 'port', kind: 'port', x: 1430, y: 444, w: 200, h: 200, icon: 'anchor',
-      title: '到目的港', sub: '在港 / 在途', qtyLabel: '在途',
-      carrier: 'COSCO 2026E · 海运',
-      prog: 0.72, span: '09-18 起运 · 预计 09-28 到港',
-      desc: '发货港--目的港 主段与目的港段。海上在途与已到港待清关的货物都属于在途库存，未完成清关不得计入可用。',
-      matrix: { wip: 'none', transit: 'main', avail: 'none', reserved: 'none' },
-      subs: [['海上在途', 840], ['在港待清关', 620]],
-      groups: [
-        { id: 'sea', name: '海上在途 · COSCO 2026E', role: '主段批次', city: '宁波 → 洛杉矶',
-          forms: { wip: 0, transit: 840, avail: 0, reserved: 0 } },
-        { id: 'portw', name: '在港待清关 · Los Angeles', role: '在港批次', city: '美国 洛杉矶',
-          forms: { wip: 0, transit: 620, avail: 0, reserved: 0 } }
-      ]
-    },
-    {
-      id: 'leg3', kind: 'leg', x: 1046, y: 444, w: 204, h: 204, icon: 'truck',
-      title: '目的港--目的仓', sub: '提柜 / 派送', carrier: '美西卡车行 · 4 车',
-      prog: 0.45, span: '09-30 提柜 · 预计 10-01 入仓',
-      desc: '目的港到海外仓的派送在途段，按目的仓分车，入仓上架后才转为可用。',
-      matrix: { wip: 'none', transit: 'main', avail: 'none', reserved: 'none' },
-      groups: [
-        { id: 't1', name: '拖车在途 · ONT8', role: '派送批次', city: '洛杉矶 → 加州',
-          forms: { wip: 0, transit: 560, avail: 0, reserved: 0 } },
-        { id: 't2', name: '拖车在途 · NJ', role: '派送批次', city: '洛杉矶 → 新泽西',
-          forms: { wip: 0, transit: 420, avail: 0, reserved: 0 } },
-        { id: 't3', name: '拖车在途 · Felixstowe', role: '派送批次', city: '洛杉矶 → 英国',
-          forms: { wip: 0, transit: 320, avail: 0, reserved: 0 } }
-      ]
-    },
-    {
-      id: 'ovwh', kind: 'node', x: 640, y: 444, w: 236, h: 236, icon: 'container',
-      title: '目的仓', sub: '海外仓 / FBA · 3 仓', qtyLabel: '可用',
-      desc: '海外仓承载可售库存与订单预留，是履约的最后一层库存；入库在途为次形态。',
-      matrix: { wip: 'none', transit: 'minor', avail: 'main', reserved: 'main' },
-      groups: [
-        { id: 'usW', name: 'US-West FBA · ONT8', role: '海外仓 · FBA', city: '美国 加州',
-          forms: { wip: 0, transit: 0, avail: 520, reserved: 20 } },
-        { id: 'usE', name: 'US-East 3PL · NJ', role: '海外仓 · 第三方', city: '美国 新泽西',
-          forms: { wip: 0, transit: 0, avail: 380, reserved: 40 } },
-        { id: 'ukS', name: 'UK 3PL · Felixstowe', role: '海外仓 · 第三方', city: '英国 费利克斯托',
-          forms: { wip: 0, transit: 0, avail: 240, reserved: 0 } }
-      ]
-    }
-  ];
-
-  // 单据：[单号, 类型, 日期, 数量, 状态, 往来方, 环节序号, 归属实体/批次]
-  var RAW_DOCS = [
-    ['PO-2026-0813-A',   '采购订单',   '2026-08-13', 3200, '已确认', '宁波鸣鹤制衣',       0, 'supA'],
-    ['WO-2026-0816-A',   '生产工单',   '2026-08-16', 3200, '生产中', '宁波鸣鹤制衣',       0, 'supA'],
-    ['QC-2026-0905-A',   '验货报告',   '2026-09-05', 1200, '合格',   'SGS 第三方验货',     0, 'supA'],
-    ['RSV-2026-0916-A',  '锁单预留单', '2026-09-16',  520, '已锁定', '运营部',             0, 'supA'],
-    ['PO-2026-0820-B',   '采购订单',   '2026-08-20', 1400, '已确认', 'Vinatex 越南',       0, 'supB'],
-    ['PI-2026-0820-B',   '形式发票',   '2026-08-20', 1400, '已收到', 'Vinatex 越南',       0, 'supB'],
-
-    ['TMS-2026-0915-08', '头程运单',   '2026-09-15', 1200, '运输中', '德邦物流',           1, 'd1'],
-    ['DN-2026-0915-A01', '送货单',     '2026-09-15',  720, '在途',   '宁波鸣鹤 → 华南仓',  1, 'd1'],
-    ['DN-2026-0915-B02', '送货单',     '2026-09-15',  480, '在途',   'Vinatex → 华东仓',   1, 'd2'],
-    ['PL-2026-0915-A',   '装箱单',     '2026-09-15', 1200, '已确认', '宁波鸣鹤制衣',       1, 'd1'],
-
-    ['IR-2026-0912-CN01','入库单',     '2026-09-12', 1180, '已入库', '华南仓',             2, 'cnS'],
-    ['ASN-2026-0917-CN', '到仓预告',   '2026-09-17',  380, '在途',   '德邦物流',           2, 'cnS'],
-    ['QC-2026-0912-CN01','抽检报告',   '2026-09-12',  120, '合格',   '品控部',             2, 'cnS'],
-    ['SO-2026-0916-11',  '预留锁定单', '2026-09-16',  180, '已锁定', '运营部',             2, null],
-    ['IR-2026-0906-CN02','入库单',     '2026-09-06',  680, '已入库', '华东仓',             2, 'cnE'],
-    ['IV-2026-0916-CN',  '库存快照',   '2026-09-16', 2420, '已记账', 'WMS',                2, null],
-
-    ['DEC-2026-0917-04', '出口报关单', '2026-09-17',  900, '审批中', '深圳报关行',         3, 'tk1'],
-    ['TR-2026-0917-02',  '拖车派车单', '2026-09-17',  900, '运输中', '盐田车队',           3, 'tk1'],
-    ['PL-2026-0917-02',  '装箱单',     '2026-09-17',  900, '已确认', '华南仓',             3, 'tk1'],
-    ['SC-2026-0917-01',  '场站收据',   '2026-09-17',  900, '待换取', '盐田港',             3, 'tk1'],
-
-    ['BL-2026-0918-77',  '海运提单',   '2026-09-18', 1460, '在途',   'COSCO',              4, null],
-    ['AN-2026-0928-01',  '到港通知',   '2026-09-28',  620, '待清关', '洛杉矶港代理',       4, 'portw'],
-    ['CD-2026-0929-03',  '进口清关单', '2026-09-29',  620, '申报中', '美国清关行',         4, 'portw'],
-    ['DUTY-2026-0929-01','关税及增值税单','2026-09-29',620,'待缴纳','美国海关',           4, 'portw'],
-
-    ['ISA-2026-0930-11', '入仓预约',   '2026-09-30', 1300, '已预约', 'US-West FBA',        5, null],
-    ['TRK-2026-0930-06', '拖车派送单', '2026-09-30', 1300, '运输中', '美西卡车行',         5, null],
-    ['PL-2026-0930-06',  '装箱单',     '2026-09-30', 1300, '已确认', '洛杉矶仓',           5, null],
-
-    ['RC-2026-0921-ONT8','入仓收据',   '2026-09-21',  540, '已上架', 'US-West FBA',        6, 'usW'],
-    ['RC-2026-0919-NJ3', '入仓收据',   '2026-09-19',  420, '已上架', 'US-East 3PL',        6, 'usE'],
-    ['RC-2026-0915-UKF', '入仓收据',   '2026-09-15',  240, '已上架', 'UK 3PL',             6, 'ukS'],
-    ['SO-2026-0916-US',  '订单预留单', '2026-09-16',   60, '已预留', '运营部',             6, null],
-    ['INV-2026-0916-ALL','库存快照',   '2026-09-16', 1200, '已记账', 'ERP',                6, null]
-  ];
-
-  var SPEC_LINES = [
-    ['黑色', 'M', 0.375], ['黑色', 'L', 0.3125], ['米白', 'M', 0.1875], ['米白', 'L', 0.125]
-  ];
-
-  // 卡片底部实体行的短名（长名会溢出卡片宽度）
-  var SHORT = {
-    supA: '鸣鹤', supB: 'Vinatex',
-    cnS: '华南仓', cnE: '华东仓',
-    d1: '鸣鹤→华南', d2: 'Vinatex→华东', tk1: '盐田拖车',
-    sea: 'COSCO 海上', portw: '洛杉矶在港',
-    t1: 'ONT8', t2: 'NJ 3PL', t3: 'UK 3PL',
-    usW: 'ONT8', usE: 'NJ 3PL', ukS: 'UK 3PL'
-  };
-
-  var STATUS_CLASS = {
-    '已确认': 's-ok', '合格': 's-ok', '已入库': 's-ok', '已上架': 's-ok', '已记账': 's-ok', '已收到': 's-ok',
-    '生产中': 's-run', '运输中': 's-run', '在途': 's-run', '申报中': 's-run', '审批中': 's-run', '待清关': 's-run',
-    '待缴纳': 's-wait', '待换取': 's-wait', '在港待清关': 's-wait',
-    '已锁定': 's-lock', '已预留': 's-lock', '已预约': 's-lock'
-  };
-
-  var DOCS = RAW_DOCS.map(function (d, i) {
-    return {
-      idx: i, no: d[0], type: d[1], date: d[2], qty: d[3], status: d[4],
-      party: d[5], stage: d[6], group: d[7]
-    };
-  });
-
-  /* =========================================================
-     二、计算层
-     ========================================================= */
-
-  var state = {
-    unit: 'pc',
-    playing: true,
-    mult: 1,
-    selectedStage: 0,
-    selectedGroup: null,
-    selectedDoc: null,
-    docScope: 'stage',
-    progress: 0
-  };
-
-  function sumForms(list) {
-    var t = { wip: 0, transit: 0, avail: 0, reserved: 0 };
-    list.forEach(function (f) {
-      t.wip += f.wip; t.transit += f.transit; t.avail += f.avail; t.reserved += f.reserved;
-    });
-    return t;
-  }
-
-  STAGES.forEach(function (st) {
-    st.forms = sumForms(st.groups.map(function (g) { return g.forms; }));
-    st.total = st.forms.wip + st.forms.transit + st.forms.avail + st.forms.reserved;
-    st.groups.forEach(function (g) {
-      g.total = g.forms.wip + g.forms.transit + g.forms.avail + g.forms.reserved;
-      g.docs = DOCS.filter(function (d) { return d.stage === STAGES.indexOf(st) && d.group === g.id; });
-    });
-    st.docs = DOCS.filter(function (d) { return d.stage === STAGES.indexOf(st); });
-  });
-
-  var GRAND = sumForms(STAGES.map(function (s) { return s.forms; }));
-  var TOTAL = GRAND.wip + GRAND.transit + GRAND.avail + GRAND.reserved;
-
-  function countStages(key) {
-    return STAGES.filter(function (s) { return s.forms[key] > 0; }).length;
-  }
-  function countGroups(key) {
-    var n = 0;
-    STAGES.forEach(function (s) {
-      s.groups.forEach(function (g) { if (g.forms[key] > 0) n++; });
-    });
-    return n;
-  }
-
-  /* =========================================================
-     三、格式化
-     ========================================================= */
-
-  var $ = function (id) { return document.getElementById(id); };
-  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
-  function isBox() { return state.unit === 'box'; }
-  function unitTxt() { return isBox() ? '箱' : '件'; }
-  function num(v) {
-    var n = isBox() ? v / SKU.boxSize : v;
-    n = Math.round(n);
-    return n.toLocaleString('en-US');
-  }
-  function qty(v) { return num(v) + ' ' + unitTxt(); }
-  function qty0(v) { return v === 0 ? '—' : qty(v); }
-  function pct(v) { return (v / TOTAL * 100).toFixed(1) + '%'; }
-  function textWidth(str, size) {
-    var w = 0;
-    for (var i = 0; i < str.length; i++) w += str.charCodeAt(i) > 255 ? size : size * 0.56;
-    return w;
-  }
-  function docLines(q) {
-    var out = [], used = 0;
-    SPEC_LINES.forEach(function (s, i) {
-      var q2 = i === SPEC_LINES.length - 1 ? q - used : Math.round(q * s[2]);
-      used += q2;
-      out.push({
-        color: s[0], size: s[1], qty: q2, cost: SKU.cost,
-        cur: s[0] === SKU.color && s[1] === SKU.size
-      });
-    });
-    return out;
-  }
-  function findDoc(no) {
-    for (var i = 0; i < DOCS.length; i++) if (DOCS[i].no === no) return DOCS[i];
-    return null;
-  }
-
-  /* =========================================================
-     四、渲染：KPI
-     ========================================================= */
-
-  function renderKpis() {
-    var html = '';
-
-    html += '<div class="kpi total flash"><div class="accent" style="background:var(--brand)"></div>' +
-      '<div class="k-label">SKU 总库存 <span style="color:#b9c6d4">= 在制 + 在途 + 可用 + 预留</span></div>' +
-      '<div class="k-val">' + num(TOTAL) + '<small>' + unitTxt() + '</small></div>' +
-      '<div class="stackbar">' + STATES.map(function (s) {
-        return '<i style="width:' + (GRAND[s.k] / TOTAL * 100).toFixed(2) + '%;background:' + s.color + '"></i>';
-      }).join('') + '</div>' +
-      '<div class="stacklegend">' + STATES.map(function (s) {
-        return '<span><i style="background:' + s.color + '"></i>' + s.label +
-               ' <b>' + num(GRAND[s.k]) + '</b> ' + unitTxt() + ' · ' + pct(GRAND[s.k]) + '</span>';
-      }).join('') + '</div></div>';
-
-    var noteTxt = {
-      wip: '在 ' + countStages('wip') + ' 个环节 · ' + countGroups('wip') + ' 个供应商工厂生产中',
-      transit: '分属 ' + countGroups('transit') + ' 个在途批次 / 载具',
-      avail: '分布在 ' + countGroups('avail') + ' 个实体仓 · 可直接履约',
-      reserved: '已被 ' + countGroups('reserved') + ' 个实体的订单 / 计划锁定'
-    };
-    STATES.forEach(function (s) {
-      html += '<div class="kpi flash"><div class="accent" style="background:' + s.color + '"></div>' +
-        '<div class="k-label"><span class="dotm" style="background:' + s.color + '"></span>' + s.label + '库存</div>' +
-        '<div class="k-val">' + num(GRAND[s.k]) + '<small>' + unitTxt() + '</small></div>' +
-        '<div class="k-note">占总量 ' + pct(GRAND[s.k]) + ' · 涉及 ' + countStages(s.k) + ' 个环节</div>' +
-        '<div class="k-note" style="color:#a9b7c4">' + noteTxt[s.k] + '</div></div>';
-    });
-
-    $('kpis').innerHTML = html;
-    $('headTotal').textContent = qty(TOTAL);
-    $('headTransit').textContent = pct(GRAND.transit);
-  }
-
-  /* =========================================================
-     五、渲染：SVG
-     ========================================================= */
-
-  function kindMeta(kind) {
-    if (kind === 'node') return { label: '节点', cls: 'k-node-bg' };
-    if (kind === 'leg') return { label: '在途段', cls: 'k-leg-bg' };
-    return { label: '在港/在途', cls: 'k-port-bg' };
-  }
-  var KIND_STYLE = {
-    node: { bg: '#e8f0f7', fg: '#1d6fa5' },
-    leg: { bg: '#faf1e4', fg: '#b5731c' },
-    port: { bg: '#e6f4f2', fg: '#0e8f7d' }
-  };
-
-  // 在途环节卡片统一尺寸，不随标题字数变化
-  var LEG_CARD = { w: 204, h: 204 };
-
-  function chipMarkup(x, y, text, bg, fg, anchorRight) {
-    var w = textWidth(text, 9.5) + 16;
-    var rx = anchorRight ? x - w : x;
-    return '<g class="kind-chip"><rect x="' + rx.toFixed(1) + '" y="' + y + '" width="' + w.toFixed(1) +
-      '" height="17" rx="8.5" fill="' + bg + '" style="opacity:.95"></rect>' +
-      '<text x="' + (rx + w / 2).toFixed(1) + '" y="' + (y + 12) + '" fill="' + fg + '">' + esc(text) + '</text></g>';
-  }
-
-  function barMarkup(id, y, h, w, segs) {
-    var x0 = -w / 2, acc = 0;
-    var out = '<clipPath id="' + id + '"><rect x="' + x0.toFixed(1) + '" y="' + y + '" width="' + w +
-      '" height="' + h + '" rx="' + (h / 2).toFixed(1) + '"/></clipPath>' +
-      '<rect class="bar-track" x="' + x0.toFixed(1) + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="' + (h / 2).toFixed(1) + '"/>' +
-      '<g clip-path="url(#' + id + ')">';
-    segs.forEach(function (s) {
-      if (s.v <= 0) return;
-      var sw = w * s.v;
-      out += '<g>' + (s.label ? '<title>' + esc(s.label) + '</title>' : '') +
-        '<rect x="' + (x0 + acc).toFixed(1) + '" y="' + y + '" width="' + sw.toFixed(2) +
-        '" height="' + h + '" fill="' + s.color + '"/></g>';
-      acc += sw;
-    });
-    return out + '</g>';
-  }
-
-  function g4Cell(x, yLabel, yVal, label, value, isMain) {
-    var cls = 'g4-v' + (value === 0 ? ' zero' : '');
-    var style = isMain && value > 0 ? ' style="fill:#12212f"' : '';
-    return '<g transform="translate(' + x + ',0)">' +
-      '<text class="g4-l" y="' + yLabel + '">' + esc(label) + '</text>' +
-      '<text class="' + cls + '" y="' + yVal + '"' + style + '>' + (value === 0 ? '—' : num(value)) + '</text>' +
-      '</g>';
-  }
-
-  function renderStations() {
-    var out = STAGES.map(function (st, i) {
-      var k = KIND_STYLE[st.kind];
-      var active = state.selectedStage === i;
-      var cls = 'st k-' + st.kind + (active ? ' is-active is-selected' : '');
-      var inner = '';
-
-      if (st.kind === 'node') {
-        var segs = st.groups.map(function (g, gi) {
-          return {
-            v: g.total / (st.total || 1),
-            color: ['#1d6fa5', '#4d90bd', '#8bb8d6', '#c3d9e8'][gi % 4],
-            label: (SHORT[g.id] || g.name) + ' · ' + qty(g.total)
-          };
-        });
-        var entLine = st.groups.map(function (g) {
-          return (SHORT[g.id] || g.name) + ' ' + num(g.total);
-        }).join(' · ');
-
-        var totalTxt = qty(st.total);
-        var tcW = textWidth(totalTxt, 10.5) + 20;
-
-        inner =
-          '<rect class="sel-ring" x="-124" y="-132" width="248" height="264" rx="22"/>' +
-          '<rect class="st-card" x="-' + (st.w / 2) + '" y="-' + (st.h / 2) + '" width="' + st.w + '" height="' + st.h + '" rx="18"/>' +
-          '<text class="st-idx" x="-102" y="-106" text-anchor="start">' + ('0' + (i + 1)).slice(-2) + '</text>' +
-          chipMarkup(-84, -118, kindMeta(st.kind).label, k.bg, k.fg, false) +
-          '<g class="total-chip"><rect x="' + (102 - tcW).toFixed(1) + '" y="-120" width="' + tcW.toFixed(1) +
-            '" height="20" rx="10"/><text x="100" y="-106" text-anchor="end">' + esc(totalTxt) + '</text></g>' +
-          '<g class="ico" transform="translate(0,-78) scale(1.18) translate(-12,-12)"><path d="' + ICONS[st.icon] + '"/></g>' +
-          '<text class="st-title" x="0" y="-44">' + esc(st.title) + '</text>' +
-          '<text class="st-sub" x="0" y="-26">' + esc(st.sub) + '</text>' +
-          '<line class="divider" x1="-98" x2="98" y1="-12" y2="-12"/>' +
-          g4Cell(-58, 10, 26, '在制', st.forms.wip, st.matrix.wip === 'main') +
-          g4Cell(58, 10, 26, '在途', st.forms.transit, st.matrix.transit === 'main') +
-          g4Cell(-58, 46, 62, '可用', st.forms.avail, st.matrix.avail === 'main') +
-          g4Cell(58, 46, 62, '预留', st.forms.reserved, st.matrix.reserved === 'main') +
-          '<line class="divider" x1="-98" x2="98" y1="74" y2="74"/>' +
-          '<text class="ent-line" x="0" y="90">' + esc(entLine) + '</text>' +
-          barMarkup('bar' + i, 102, 10, 180, segs);
-
-      } else if (st.kind === 'leg') {
-        var q = st.forms.transit;
-        var W = LEG_CARD.w, H = LEG_CARD.h;
-        var fillW = (W - 40) * st.prog;
-        inner =
-          '<rect class="sel-ring" x="-' + (W / 2 + 6) + '" y="-' + (H / 2 + 6) + '" width="' + (W + 12) +
-            '" height="' + (H + 12) + '" rx="16"/>' +
-          '<rect class="st-card" x="-' + (W / 2) + '" y="-' + (H / 2) + '" width="' + W + '" height="' + H + '" rx="14"/>' +
-          '<text class="st-idx" x="-' + (W / 2 - 14) + '" y="-68" text-anchor="start">' + ('0' + (i + 1)).slice(-2) + '</text>' +
-          chipMarkup(W / 2 - 14, -81, kindMeta(st.kind).label, k.bg, k.fg, true) +
-          '<g class="ico" transform="translate(0,-38) scale(1.0) translate(-12,-12)"><path d="' + ICONS[st.icon] + '"/></g>' +
-          '<text class="st-title" x="0" y="-8">' + esc(st.title) + '</text>' +
-          '<text class="main-qty" x="0" y="18">在途 <tspan class="n">' + num(q) + '</tspan> <tspan class="u">' + unitTxt() + '</tspan></text>' +
-          '<text class="leg-meta" x="0" y="36">' + esc(st.carrier) + '</text>' +
-          '<rect class="bar-track" x="-' + (W / 2 - 20) + '" y="48" width="' + (W - 40) + '" height="8" rx="4"/>' +
-          '<rect class="leg-fill" x="-' + (W / 2 - 20) + '" y="48" width="' + fillW.toFixed(1) + '" height="8" rx="4"/>' +
-          '<text class="leg-note" x="0" y="72">' + esc(st.span) + '</text>';
-
-      } else {
-        var qt = st.forms.transit;
-        inner =
-          '<rect class="sel-ring" x="-106" y="-106" width="212" height="212" rx="20"/>' +
-          '<rect class="st-card" x="-' + (st.w / 2) + '" y="-' + (st.h / 2) + '" width="' + st.w + '" height="' + st.h + '" rx="16"/>' +
-          '<text class="st-idx" x="-84" y="-82" text-anchor="start">' + ('0' + (i + 1)).slice(-2) + '</text>' +
-          chipMarkup(84, -94, kindMeta(st.kind).label, k.bg, k.fg, true) +
-          '<g class="ico" transform="translate(0,-52) scale(1.1) translate(-12,-12)"><path d="' + ICONS[st.icon] + '"/></g>' +
-          '<text class="st-title" x="0" y="-22">' + esc(st.title) + '</text>' +
-          '<text class="main-qty" x="0" y="8">在途 <tspan class="n">' + num(qt) + '</tspan> <tspan class="u">' + unitTxt() + '</tspan></text>' +
-          st.subs.map(function (s, si) {
-            return '<text class="port-sub" x="0" y="' + (32 + si * 18) + '">' + esc(s[0]) + ' ' + num(s[1]) + ' ' + unitTxt() + '</text>';
-          }).join('') +
-          '<rect class="bar-track" x="-78" y="66" width="156" height="8" rx="4"/>' +
-          '<rect class="leg-fill" x="-78" y="66" width="' + (156 * st.prog).toFixed(1) + '" height="8" rx="4"/>' +
-          '<text class="leg-note" x="0" y="90">' + esc(st.span) + '</text>';
-      }
-
-      return '<g class="' + cls + '" data-i="' + i + '" transform="translate(' + st.x + ',' + st.y + ')" tabindex="0" role="button" aria-label="' + esc(st.title) + '">' +
-        '<g class="st-inner">' + inner + '</g></g>';
-    }).join('');
-
-    $('stations').innerHTML = out;
-  }
-
-  function renderMarkers() {
-    var out = '';
-    for (var i = 0; i < 6; i++) {
-      out += '<g class="marker" data-m="' + i + '">' +
-        '<rect x="-10" y="-7" width="20" height="14" rx="3"/>' +
-        '<rect class="stripe" x="-6" y="-3" width="3.6" height="6" rx="1"/>' +
-        '<rect class="stripe" x="2.4" y="-3" width="3.6" height="6" rx="1"/></g>';
-    }
-    $('markers').innerHTML = out;
-  }
-
-  /* 画布注记：仅保留与画布直接相关的说明，配色图例已移到画布外 */
-  function renderDeco() {
-    var out = '<g class="lg">';
-    out += '<text x="40" y="26" font-size="10.5" fill="#8b9aab">' +
-      '标记：\u2713 主形态　\u25B3 次形态　\u2014 无　·　点击节点或下表行查看该环节库存与关联单据</text>';
-    out += '<text x="1416" y="26" font-size="10.5" fill="#8b9aab" text-anchor="end">' +
-      '总库存 = 在制 + 在途 + 可用 + 预留　·　1 箱 = ' + SKU.boxSize + ' 件</text>';
-    out += '</g>';
-    $('deco').innerHTML = out;
-  }
-
-  /* =========================================================
-     六、渲染：面板
-     ========================================================= */
-
-  function renderP1() {
-    var st = STAGES[state.selectedStage];
-    var k = KIND_STYLE[st.kind];
-    $('p1tag').textContent = st.title;
-
-    var html = '<div class="stage-head"><span class="n">' + esc(st.title) + '</span>' +
-      '<span class="kind k-' + st.kind + '">' + kindMeta(st.kind).label + '</span>' +
-      '<span style="font-size:11.5px;color:#8b9aab;font-family:var(--mono)">环节合计 ' + qty(st.total) + '</span></div>' +
-      '<p class="stage-desc">' + esc(st.desc) + '</p>';
-
-    html += '<div class="ents">';
-    st.groups.forEach(function (g) {
-      var on = state.selectedGroup === g.id ? ' on' : '';
-      var segs = STATES.map(function (s) {
-        return { v: g.forms[s.k] / (g.total || 1), color: s.color };
-      }).filter(function (s) { return s.v > 0; });
-      html += '<div class="ent' + on + '" data-g="' + g.id + '">' +
-        '<div class="ent-h"><span class="n">' + esc(g.name) + '</span>' +
-        '<span class="r">' + esc(g.role) + '</span>' +
-        '<span class="c">' + esc(g.city) + '</span></div>' +
-        '<div class="ent-f">' + STATES.map(function (s) {
-          var v = g.forms[s.k];
-          return '<div class="c1"><div class="l">' + s.label + '</div>' +
-            '<div class="v' + (v === 0 ? ' z' : '') + '"' + (v > 0 ? ' style="color:' + s.color + '"' : '') + '>' +
-            (v === 0 ? '—' : num(v)) + '</div></div>';
-        }).join('') + '</div>' +
-        '<div class="ent-bar">' + segs.map(function (s) {
-          return '<i style="width:' + (s.v * 100).toFixed(2) + '%;background:' + s.color + '"></i>';
-        }).join('') + '</div>' +
-        '<div class="ent-ft"><span>实体合计 <b>' + qty(g.total) + '</b></span>' +
-        '<span>关联单据 <b>' + g.docs.length + '</b> 张</span></div>' +
-        '</div>';
-    });
-    html += '</div>';
-
-    $('p1body').innerHTML = html;
-  }
-
-  function renderP2() {
-    var list;
-    if (state.docScope === 'all') {
-      list = DOCS.slice();
-    } else {
-      var st = STAGES[state.selectedStage];
-      list = st.docs.slice();
-      if (state.selectedGroup) list = list.filter(function (d) { return d.group === state.selectedGroup; });
-    }
-    list = list.sort(function (a, b) { return a.date < b.date ? -1 : 1; });
-
-    var scopeTxt = state.docScope === 'all' ? '全部环节' :
-      (STAGES[state.selectedStage].title + (state.selectedGroup ? ' · ' + groupName(state.selectedGroup) : ''));
-    var totalQty = list.reduce(function (a, d) { return a + d.qty; }, 0);
-
-    var html = '<div class="doc-sum"><span>范围 <b>' + esc(scopeTxt) + '</b></span>' +
-      '<span>单据 <b>' + list.length + '</b> 张</span>' +
-      '<span>涉及数量 <b>' + qty(totalQty) + '</b></span></div>';
-
-    if (!list.length) {
-      html += '<div class="empty">该范围暂无关联单据</div>';
-    } else {
-      html += '<ul class="docs">' + list.map(function (d) {
-        var on = state.selectedDoc === d.no ? ' on' : '';
-        return '<li class="doc' + on + '" data-no="' + d.no + '">' +
-          '<div class="r1"><span class="dt">' + esc(d.type) + '</span>' +
-          '<span class="dn">' + esc(d.no) + '</span></div>' +
-          '<div class="dq">' + qty(d.qty) + '</div>' +
-          '<div class="r2"><span class="ds ' + (STATUS_CLASS[d.status] || 's-lock') + '">' + esc(d.status) + '</span>' +
-          '<span>' + esc(d.date) + '</span>' +
-          '<span class="party">' + esc(d.party) + '</span></div></li>';
-      }).join('') + '</ul>';
-    }
-    $('p2body').innerHTML = html;
-  }
-
-  function groupName(gid) {
-    var n = '';
-    STAGES.forEach(function (st) {
-      st.groups.forEach(function (g) { if (g.id === gid) n = g.name; });
-    });
-    return n;
-  }
-
-  function renderP3() {
-    if (!state.selectedDoc) {
-      $('p3tag').textContent = '未选择';
-      $('p3body').innerHTML = '<div class="empty">从左侧「关联单据」中点击一张单据<br>即可查看单号、往来方、数量与规格明细</div>';
-      return;
-    }
-    var d = findDoc(state.selectedDoc);
-    if (!d) { $('p3tag').textContent = '未选择'; return; }
-    var st = STAGES[d.stage];
-    var g = null;
-    st.groups.forEach(function (x) { if (x.id === d.group) g = x; });
-    var lines = docLines(d.qty);
-    var amount = d.qty * SKU.cost;
-
-    $('p3tag').textContent = d.no;
-
-    var html = '<div class="docbox"><div class="h">' +
-      '<span class="dt">' + esc(d.type) + '</span>' +
-      '<span class="no">' + esc(d.no) + '</span>' +
-      '<span class="ds ' + (STATUS_CLASS[d.status] || 's-lock') + '">' + esc(d.status) + '</span></div>' +
-      '<dl>' +
-        '<dt>单据日期</dt><dd>' + esc(d.date) + '</dd>' +
-        '<dt>单据数量</dt><dd>' + qty(d.qty) + '</dd>' +
-        '<dt>往来方</dt><dd>' + esc(d.party) + '</dd>' +
-        '<dt>归属环节</dt><dd>' + esc(st.title) + '</dd>' +
-        '<dt>归属对象</dt><dd>' + esc(g ? g.name : '整环节') + '</dd>' +
-        '<dt>本 SKU 占比</dt><dd>' + (SKU.color + ' / ' + SKU.size) + '</dd>' +
-      '</dl></div>' +
-      '<table class="lines"><thead><tr><th>规格</th><th class="r">数量</th><th class="r">单位成本</th><th class="r">金额</th></tr></thead><tbody>' +
-      lines.map(function (l) {
-        return '<tr class="' + (l.cur ? 'cur' : '') + '"><td>' + esc(l.color) + ' / ' + esc(l.size) +
-          (l.cur ? '<span class="cur-tag">本 SKU</span>' : '') + '</td>' +
-          '<td class="r">' + num(l.qty) + '</td><td class="r">¥' + l.cost.toFixed(2) + '</td>' +
-          '<td class="r">¥' + (l.qty * l.cost).toLocaleString('en-US', { maximumFractionDigits: 0 }) + '</td></tr>';
-      }).join('') +
-      '</tbody><tfoot><tr><td>合计</td><td class="r">' + num(d.qty) + ' ' + unitTxt() + '</td><td class="r">—</td>' +
-      '<td class="r">¥' + amount.toLocaleString('en-US', { maximumFractionDigits: 0 }) + '</td></tr></tfoot></table>';
-
-    $('p3body').innerHTML = html;
-  }
-
-  function renderMatrix() {
-    var head = '<thead><tr><th style="width:29%">环节</th><th style="width:12%" class="c">环节性质</th>' +
-      STATES.map(function (s) { return '<th class="c">' + s.label + '库存</th>'; }).join('') +
-      '<th class="c" style="width:11%">环节合计</th></tr></thead>';
-    var body = '<tbody>' + STAGES.map(function (st, i) {
-      var mark = { main: '&#10003;', minor: '△', none: '—' };
-      var cls = { main: 'm-main', minor: 'm-minor', none: 'm-none' };
-      var on = state.selectedStage === i ? ' on' : '';
-      return '<tr class="mtr' + on + '" data-i="' + i + '">' +
-        '<td class="stg">' + esc(st.title) + ' <small>' + esc(st.sub) + '</small></td>' +
-        '<td class="c">' + kindMeta(st.kind).label + '</td>' +
-        STATES.map(function (s) {
-          var f = st.matrix[s.k], v = st.forms[s.k];
-          return '<td class="c"><div class="prop"><span class="m ' + cls[f] + '">' + mark[f] + '</span>' +
-            '<span class="q">' + (v === 0 ? '—' : num(v) + ' ' + unitTxt()) + '</span></div></td>';
-        }).join('') +
-        '<td class="c" style="font-variant-numeric:tabular-nums">' + num(st.total) + '</td></tr>';
-    }).join('') +
-      '</tbody><tfoot><tr><td>合计</td><td class="c">7 个环节</td>' +
-      STATES.map(function (s) { return '<td class="c">' + num(GRAND[s.k]) + '</td>'; }).join('') +
-      '<td class="c">' + num(TOTAL) + '</td></tr></tfoot>';
-
-    $('mtab').innerHTML = head + body;
-  }
-
-  /* =========================================================
-     七、动画
-     ========================================================= */
-
-  var svgPath, pathLen, markerEls = [], lastTs = 0;
-
-  function frame(ts) {
-    if (!lastTs) lastTs = ts;
-    var dt = Math.min(0.05, (ts - lastTs) / 1000);
-    lastTs = ts;
-    if (state.playing) {
-      state.progress += 0.05 * state.mult * dt;
-      if (state.progress >= 1) state.progress -= 1;
-    }
-    for (var i = 0; i < markerEls.length; i++) {
-      var p = (state.progress + i * 0.165) % 1;
-      var l = p * pathLen;
-      var pt = svgPath.getPointAtLength(l);
-      var pt2 = svgPath.getPointAtLength(Math.min(pathLen, l + 2));
-      var ang = Math.atan2(pt2.y - pt.y, pt2.x - pt.x) * 180 / Math.PI;
-      if (markerEls[i]) {
-        markerEls[i].setAttribute('transform',
-          'translate(' + pt.x.toFixed(1) + ',' + pt.y.toFixed(1) + ') rotate(' + ang.toFixed(1) + ')');
-      }
-    }
-    requestAnimationFrame(frame);
-  }
-
-  /* =========================================================
-     八、交互
-     ========================================================= */
-
-  function selectStage(i) {
-    state.selectedStage = i;
-    state.selectedGroup = null;
-    renderStations(); renderP1(); renderP2(); renderP3(); renderMatrix();
-  }
-
-  function bind() {
-    $('stations').addEventListener('click', function (e) {
-      var g = e.target.closest ? e.target.closest('.st') : null;
-      if (!g) return;
-      selectStage(parseInt(g.getAttribute('data-i'), 10));
-    });
-    $('stations').addEventListener('keydown', function (e) {
-      if (e.key !== 'Enter' && e.key !== ' ') return;
-      var g = e.target.closest ? e.target.closest('.st') : null;
-      if (g) selectStage(parseInt(g.getAttribute('data-i'), 10));
-    });
-
-    $('mtab').addEventListener('click', function (e) {
-      var tr = e.target.closest ? e.target.closest('tr.mtr') : null;
-      if (!tr) return;
-      selectStage(parseInt(tr.getAttribute('data-i'), 10));
-    });
-
-    $('p1body').addEventListener('click', function (e) {
-      var el = e.target.closest ? e.target.closest('.ent') : null;
-      if (!el) return;
-      var gid = el.getAttribute('data-g');
-      state.selectedGroup = state.selectedGroup === gid ? null : gid;
-      renderP1(); renderP2();
-    });
-
-    $('p2body').addEventListener('click', function (e) {
-      var li = e.target.closest ? e.target.closest('.doc') : null;
-      if (!li) return;
-      state.selectedDoc = li.getAttribute('data-no');
-      renderP2(); renderP3();
-    });
-
-    $('docFilter').addEventListener('click', function (e) {
-      var b = e.target.closest ? e.target.closest('button') : null;
-      if (!b) return;
-      state.docScope = b.getAttribute('data-f');
-      var bs = this.querySelectorAll('button');
-      for (var i = 0; i < bs.length; i++) bs[i].classList.toggle('on', bs[i] === b);
-      renderP2();
-    });
-
-    $('unitSeg').addEventListener('click', function (e) {
-      var b = e.target.closest ? e.target.closest('button') : null;
-      if (!b) return;
-      state.unit = b.getAttribute('data-unit');
-      var bs = this.querySelectorAll('button');
-      for (var i = 0; i < bs.length; i++) bs[i].classList.toggle('on', bs[i] === b);
-      renderKpis(); renderStations(); renderDeco(); renderP1(); renderP2(); renderP3(); renderMatrix();
-    });
-
-    $('playBtn').addEventListener('click', function () {
-      state.playing = !state.playing;
-      this.textContent = state.playing ? '暂停' : '继续';
-      $('liveDot').classList.toggle('paused', !state.playing);
-    });
-
-    var sp = $('speed');
-    function syncSpeed() {
-      var v = parseFloat(sp.value);
-      $('speedVal').textContent = v.toFixed(1) + '×';
-      sp.style.setProperty('--p', ((v - 0.4) / 2.6 * 100).toFixed(1) + '%');
-    }
-    sp.addEventListener('input', function () { state.mult = parseFloat(this.value); syncSpeed(); });
-    syncSpeed();
-
-    $('resetBtn').addEventListener('click', function () {
-      state.selectedGroup = null;
-      state.selectedDoc = null;
-      state.docScope = 'stage';
-      var bs = $('docFilter').querySelectorAll('button');
-      for (var i = 0; i < bs.length; i++) bs[i].classList.toggle('on', bs[i].getAttribute('data-f') === 'stage');
-      selectStage(0);
-    });
-  }
-
-  /* =========================================================
-     九、启动
-     ========================================================= */
-
-  function init() {
-    svgPath = $('flow').querySelector('.rail');
-    pathLen = svgPath.getTotalLength();
-
-    $('skuCode').textContent = SKU.code;
-    $('snapTime').textContent = SKU.snapshot;
-
-    renderMarkers();
-    renderKpis();
-    renderStations();
-    renderDeco();
-    renderP1();
-    renderP2();
-    renderP3();
-    renderMatrix();
-
-    var els = $('markers').querySelectorAll('.marker');
-    markerEls = [];
-    for (var i = 0; i < els.length; i++) markerEls.push(els[i]);
-
-    bind();
-    requestAnimationFrame(frame);
-  }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
-})();
-</script>
+ <div data-page-node-id="O7Gi6wMQkYhESGfFo7lYtx" class="controls">
+<div data-page-node-id="QwFPcNrde1wkgZ9Cmiv91M" class="seg small" id="unitSeg">
+ <button data-page-node-id="5qyMYXS4EUm4F9mT0GT8es" class="on" data-unit="pc">件</button>
+ <button data-page-node-id="KZbK69MwfiwbqwlgSr2Vwr" data-unit="box">箱</button>
+ </div>
+ <button data-page-node-id="D7KoYuVs1sgeBLIvVqX0UP" class="btn" id="playBtn">暂停</button>
+ <div data-page-node-id="8bmGxE3e7aNVzk3ksgLU7z" class="speed">
+ <label data-page-node-id="oprETjGftYjszpLFQOOgeF" for="speed">在途动画</label>
+ <input data-page-node-id="Jy55cDCJdES3As5OcUkm8D" id="speed" max="3" min="0.4" step="0.2" type="range" value="1">
+ <span data-page-node-id="bl6XdPj6MDWJ2e7cIfh0eu" id="speedVal">1.0×</span>
+ </div>
+ <button data-page-node-id="RUGFExHnuhCbAJcc4AbtT9" class="btn ghost" id="resetBtn">重置选择</button>
+ </div>
+ </header>
+<section data-page-node-id="ABMVgWgzqJSCHhqKQVq8zZ" class="kpis" id="kpis"></section>
+<section data-page-node-id="h7NOYpxThV9uUrBZhdFJY5" class="board">
+ <div data-page-node-id="vm5Mp3VevEY3c3utRQpKKT" class="board-head">
+<div data-page-node-id="ry40aU2nakfpQ9BVZkoDSX"><span data-page-node-id="w2rJumuP68FrhB6QShr946" class="dot-live" id="liveDot"></span>库存快照 · 共 7 个环节（3 个节点 / 3 个在途段 / 1 个在港在途）
+ &nbsp;·&nbsp; <span data-page-node-id="LZTGVwZD3Ami2gLwD1my9w" class="hint">点击任意环节或下方表格行查看该环节库存与关联单据</span></div>
+ <div data-page-node-id="hUXJo2PNaGWKyV1bnZ8WwQ">总库存 <b data-page-node-id="wDz1JUQB0m07sn3RKy0aRA" id="headTotal">12,840 件</b> · 在途占比 <b data-page-node-id="qhcxIldOkUABmUJSEgGay2" id="headTransit">40.8%</b></div>
+ </div>
+<svg data-page-node-id="wgGKZRzA6rnmNDh3KaFOmm" aria-label="SKU 各环节库存分布" id="flow" preserveAspectRatio="xMidYMid meet" role="img" viewBox="0 0 1680 566">
+ <defs data-page-node-id="yoZfbYWLMfhKm1EJBTn70T">
+ <pattern data-page-node-id="z2MR7YPM9MBOxn10bHgFr3" height="48" id="grid" patternUnits="userSpaceOnUse" width="48">
+ <path data-page-node-id="u3CD37mRVDEVoK4d8qmXkh" d="M48 0H0V48" fill="none" stroke="#f1f5f9" stroke-width="1"/>
+ </pattern>
+ <filter data-page-node-id="1US1RnRzSD2n8HBzbIAoj3" height="190%" id="cardShadow" width="160%" x="-30%" y="-30%">
+ <feDropShadow data-page-node-id="s7TarBDlxP7BXhsKDNfzaM" dx="0" dy="5" flood-color="#12212f" flood-opacity="0.07" stdDeviation="6"/>
+ </filter>
+ <filter data-page-node-id="JDBsdVDeaEaSqQVVgZrzxF" height="190%" id="cardShadowHover" width="160%" x="-30%" y="-30%">
+ <feDropShadow data-page-node-id="j0BnHoPMukqHXOOC5kSOOp" dx="0" dy="10" flood-color="#12212f" flood-opacity="0.16" stdDeviation="11"/>
+ </filter>
+ </defs>
+ <rect data-page-node-id="F7bos82FL9PmCCWR1sbccf" fill="url(#grid)" height="566" width="1680"/>
+ <path data-page-node-id="6EoJwM9R4cDoW59eDlO6Hb" class="rail" d="M190 170 H1288 Q1440 170 1440 450 H640"/>
+ <path data-page-node-id="eiLs6kYgajRZgqhkNSl2af" class="rail-dash" d="M190 170 H1288 Q1440 170 1440 450 H640"/>
+ <g data-page-node-id="ik9PN71JED9EQJRbh89jyA" id="markers"></g>
+ <g data-page-node-id="TUbvGlN2RE4KPM3A8EZ5E3" id="stations"></g>
+ <g data-page-node-id="DmamTopO3Y1AbEsWkwnBG1" id="deco"></g>
+ </svg>
+</section>
+ <section data-page-node-id="wTiZb0s0e3wysZIFKB9zCw" class="panels">
+<div data-page-node-id="lzu3Q0OnV5sXP0A294SSAo" class="panel">
+ <h2 data-page-node-id="0ZfgM0UWmRkggyYK57X7UO">环节库存明细<span data-page-node-id="DglPGQTvmLZTzcDBoflWnK" class="tag" id="p1tag">供应商节点</span></h2>
+ <div data-page-node-id="69yMAojMQ4ygUiaVDQCqNN" id="p1body"></div>
+ </div>
+<div data-page-node-id="LD4pCcUMqett9eEfhXf8Hb" class="panel">
+ <h2 data-page-node-id="jXOlbbmqAUW70WzYaUJZjQ">关联单据
+ <span data-page-node-id="qNmIbyrbjP5l72iqGtUxgT" class="filters" id="docFilter">
+ <button data-page-node-id="A4kq4CNHp8vKdj4HjUVDuh" class="on" data-f="stage">本环节</button>
+ <button data-page-node-id="S7gT75wJTZrP5bfvDNoBcb" data-f="all">全部环节</button>
+ </span>
+ </h2>
+<div data-page-node-id="TyTpGrrr1RM1ivt8UdGMyx" id="p2body"></div>
+</div>
+ <div data-page-node-id="rl5ctg8ZNvMuuuh58kUUyp" class="panel">
+<h2 data-page-node-id="teBHNEFOMZpwSv1NBRFuN8">单据明细<span data-page-node-id="TyTlqstPK5zxVjiqT0ynk6" class="tag" id="p3tag">未选择</span></h2>
+ <div data-page-node-id="RTEUwHHjt2AiFIrZPBgwPl" id="p3body"></div>
+ </div>
+</section>
+ <section data-page-node-id="ZRRQVzxjOrQLdrWBdGXG3i" class="matrix">
+<h2 data-page-node-id="nebT22vmuTHwFQDnKbepzi">库存形态矩阵</h2>
+<p data-page-node-id="f6aPmb8HMBWT0bmvsXUZJK" class="sub">同一 SKU 在不同环节以不同库存形态存在；下表左侧为形态判定，数字为该形态在本环节的实时数量。</p>
+<div data-page-node-id="2lqYHnJmlaCrkCBxAhOz8U" class="defs">
+ <span data-page-node-id="E77eQxsFnxoj9mA8qcHCJE"><b data-page-node-id="p1x1wkZVhH8MqKtaio3N4A">&#10003; 主形态</b>该环节库存的主要存在形态，占用额度与账期</span>
+ <span data-page-node-id="SSPoUYf9T62bA8bvZm52BW"><b data-page-node-id="NP9H0fQ958GuXbUgdTmCzj">△ 次形态</b>少量或条件性存在，如到仓在途、入库在途</span>
+ <span data-page-node-id="2DavPdpjgXhh5P3npMCuy0"><b data-page-node-id="RaPVibp4UzY4Tec0yjPiGB">&#8212; 无</b>该形态在该环节不存在</span>
+ <span data-page-node-id="uBLhlTu7BoVydcrmQNA6oR"><b data-page-node-id="a9FE4u0AxxilGmVsliX9Do">口径</b>总库存 = 在制 + 在途 + 可用 + 预留，不含已售出库部分；1 箱 = 20 件</span>
+ </div>
+ <table data-page-node-id="DdTiIy4jWGDgyV6ahgQcRY" class="mtab" id="mtab"></table>
+ </section>
+<p data-page-node-id="pDW5NHz2xPgG4DXOW4Id0N" class="foot">数量为示意快照数据，用于展示库存形态与环节归属关系；实际取值以 ERP / WMS / 货代回传数据为准。</p>
+</div>
+<script data-page-node-id="xf7AonpGs8qSxVomU0qtrO" data-pnid-children="U7SeHgPyTRv0izklCIX551">(function(){'use strict';var SKU={code:'WD-2409-BLK-M',name:'女士针织连衣裙',color:'黑色',size:'M',boxSize:20,cost:38.5,snapshot:'2026-09-17 10:30'};var STATES=[{k:'wip',label:'在制',color:'#c2761a'},{k:'transit',label:'在途',color:'#1d6fa5'},{k:'avail',label:'可用',color:'#2f9e6f'},{k:'reserved',label:'预留',color:'#7b8794'}];var ICONS={factory:'M3 20h18M5 20V9.2l4.4 3.1V9.2l4.4 3.1V6.2h5.2V20M17.2 6.2V3.6h1.6v2.6M15 9.4h5.2M7.4 13.2h1.6M11.8 13.2h1.6',truck:'M1.6 16.5V7.2h11.2v9.3M12.8 10.4h4.1l3.5 3.6v2.5h-2.6M4.2 16.5h8.6M8.3 18.6a1.75 1.75 0 1 1 0-3.5 1.75 1.75 0 0 1 0 3.5M17.6 18.6a1.75 1.75 0 1 1 0-3.5 1.75 1.75 0 0 1 0 3.5M1.6 13.5h4',warehouse:'M2.5 20h19M4.5 20V9.6L12 6.2l7.5 3.4V20M7.5 20v-6.6h9V20M7.5 16.4h9',ship:'M3.2 14.6h17.6l-2.6 4.6H5.8zM6.8 14.6V10h10.4v4.6M12 10V6.6M4 21.6c1.8-1.6 3.6-1.6 5.4 0s3.6 1.6 5.4 0 3.6-1.6 5.4 0',anchor:'M12 4.4a2.2 2.2 0 1 0 0 4.4 2.2 2.2 0 0 0 0-4.4M12 8.8V21.4M4.6 14.4c0 4 3.3 6.8 7.4 6.8s7.4-2.8 7.4-6.8M2.6 14.4h4M17.4 14.4h4',container:'M3.2 8h17.6v11.2H3.2zM7.6 8v11.2M12 8v11.2M16.4 8v11.2M4.8 4.6h14.4'};var STAGES=[{id:'sup',kind:'node',x:190,y:170,w:236,h:252,icon:'factory',title:'供应商节点',sub:'工厂 / 供应商仓',qtyLabel:'在制',desc:'货物在工厂端以「在制」形态存在，未完工部分不可用；已验收入库的部分转为可用与预留（已被采购订单锁定）。',matrix:{wip:'main',transit:'none',avail:'minor',reserved:'main'},groups:[{id:'supA',name:'宁波鸣鹤制衣',role:'供应商 · A厂',city:'浙江 宁波',forms:{wip:2200,transit:0,avail:240,reserved:520}},{id:'supB',name:'Vinatex 越南',role:'供应商 · B厂',city:'越南 胡志明',forms:{wip:1400,transit:0,avail:0,reserved:0}}]},{id:'leg1',kind:'leg',x:512,y:170,w:204,h:204,icon:'truck',title:'供应商 → 本地仓',sub:'头程短驳',carrier:'德邦物流 · 2 车',prog:0.62,span:'09-15 发出 · 预计 09-17 到仓',desc:'供应商到国内仓的头程在途段，货物已离厂但未入仓，仅在途形态存在。',matrix:{wip:'none',transit:'main',avail:'none',reserved:'none'},groups:[{id:'d1',name:'宁波鸣鹤 → 华南仓',role:'头程批次',city:'宁波 → 东莞',forms:{wip:0,transit:720,avail:0,reserved:0}},{id:'d2',name:'Vinatex → 华东仓',role:'头程批次',city:'胡志明 → 宁波',forms:{wip:0,transit:480,avail:0,reserved:0}}]},{id:'cnwh',kind:'node',x:866,y:170,w:236,h:252,icon:'warehouse',title:'本地仓',sub:'国内仓 · 自营 2 仓',qtyLabel:'可用',desc:'国内仓承载可用与预留库存，是在库管理的主战场；另有少量在途（到仓在途）尚未转为可用。',matrix:{wip:'none',transit:'minor',avail:'main',reserved:'main'},groups:[{id:'cnS',name:'华南仓（东莞虎门）',role:'国内仓 · 自营',city:'广东 东莞',forms:{wip:0,transit:380,avail:1180,reserved:120}},{id:'cnE',name:'华东仓（宁波北仑）',role:'国内仓 · 自营',city:'浙江 宁波',forms:{wip:0,transit:0,avail:680,reserved:60}}]},{id:'leg2',kind:'leg',x:1202,y:170,w:204,h:204,icon:'truck',title:'本地仓--发货港',sub:'拖车 / 报关',carrier:'盐田车队 · 3 车',prog:0.35,span:'09-17 派车 · 预计 09-18 进港',desc:'国内仓到启运港的短驳与出口报关，库存已出仓、尚未上船，计为在途。',matrix:{wip:'none',transit:'main',avail:'none',reserved:'none'},groups:[{id:'tk1',name:'华南仓 → 盐田港',role:'拖车批次',city:'东莞 → 深圳',forms:{wip:0,transit:900,avail:0,reserved:0}}]},{id:'port',kind:'port',x:1430,y:444,w:200,h:200,icon:'anchor',title:'到目的港',sub:'在港 / 在途',qtyLabel:'在途',carrier:'COSCO 2026E · 海运',prog:0.72,span:'09-18 起运 · 预计 09-28 到港',desc:'发货港--目的港 主段与目的港段。海上在途与已到港待清关的货物都属于在途库存，未完成清关不得计入可用。',matrix:{wip:'none',transit:'main',avail:'none',reserved:'none'},subs:[['海上在途',840],['在港待清关',620]],groups:[{id:'sea',name:'海上在途 · COSCO 2026E',role:'主段批次',city:'宁波 → 洛杉矶',forms:{wip:0,transit:840,avail:0,reserved:0}},{id:'portw',name:'在港待清关 · Los Angeles',role:'在港批次',city:'美国 洛杉矶',forms:{wip:0,transit:620,avail:0,reserved:0}}]},{id:'leg3',kind:'leg',x:1046,y:444,w:204,h:204,icon:'truck',title:'目的港--目的仓',sub:'提柜 / 派送',carrier:'美西卡车行 · 4 车',prog:0.45,span:'09-30 提柜 · 预计 10-01 入仓',desc:'目的港到海外仓的派送在途段，按目的仓分车，入仓上架后才转为可用。',matrix:{wip:'none',transit:'main',avail:'none',reserved:'none'},groups:[{id:'t1',name:'拖车在途 · ONT8',role:'派送批次',city:'洛杉矶 → 加州',forms:{wip:0,transit:560,avail:0,reserved:0}},{id:'t2',name:'拖车在途 · NJ',role:'派送批次',city:'洛杉矶 → 新泽西',forms:{wip:0,transit:420,avail:0,reserved:0}},{id:'t3',name:'拖车在途 · Felixstowe',role:'派送批次',city:'洛杉矶 → 英国',forms:{wip:0,transit:320,avail:0,reserved:0}}]},{id:'ovwh',kind:'node',x:640,y:444,w:236,h:236,icon:'container',title:'目的仓',sub:'海外仓 / FBA · 3 仓',qtyLabel:'可用',desc:'海外仓承载可售库存与订单预留，是履约的最后一层库存；入库在途为次形态。',matrix:{wip:'none',transit:'minor',avail:'main',reserved:'main'},groups:[{id:'usW',name:'US-West FBA · ONT8',role:'海外仓 · FBA',city:'美国 加州',forms:{wip:0,transit:0,avail:520,reserved:20}},{id:'usE',name:'US-East 3PL · NJ',role:'海外仓 · 第三方',city:'美国 新泽西',forms:{wip:0,transit:0,avail:380,reserved:40}},{id:'ukS',name:'UK 3PL · Felixstowe',role:'海外仓 · 第三方',city:'英国 费利克斯托',forms:{wip:0,transit:0,avail:240,reserved:0}}]}];var RAW_DOCS=[['PO-2026-0813-A','采购订单','2026-08-13',3200,'已确认','宁波鸣鹤制衣',0,'supA'],['WO-2026-0816-A','生产工单','2026-08-16',3200,'生产中','宁波鸣鹤制衣',0,'supA'],['QC-2026-0905-A','验货报告','2026-09-05',1200,'合格','SGS 第三方验货',0,'supA'],['RSV-2026-0916-A','锁单预留单','2026-09-16',520,'已锁定','运营部',0,'supA'],['PO-2026-0820-B','采购订单','2026-08-20',1400,'已确认','Vinatex 越南',0,'supB'],['PI-2026-0820-B','形式发票','2026-08-20',1400,'已收到','Vinatex 越南',0,'supB'],['TMS-2026-0915-08','头程运单','2026-09-15',1200,'运输中','德邦物流',1,'d1'],['DN-2026-0915-A01','送货单','2026-09-15',720,'在途','宁波鸣鹤 → 华南仓',1,'d1'],['DN-2026-0915-B02','送货单','2026-09-15',480,'在途','Vinatex → 华东仓',1,'d2'],['PL-2026-0915-A','装箱单','2026-09-15',1200,'已确认','宁波鸣鹤制衣',1,'d1'],['IR-2026-0912-CN01','入库单','2026-09-12',1180,'已入库','华南仓',2,'cnS'],['ASN-2026-0917-CN','到仓预告','2026-09-17',380,'在途','德邦物流',2,'cnS'],['QC-2026-0912-CN01','抽检报告','2026-09-12',120,'合格','品控部',2,'cnS'],['SO-2026-0916-11','预留锁定单','2026-09-16',180,'已锁定','运营部',2,null],['IR-2026-0906-CN02','入库单','2026-09-06',680,'已入库','华东仓',2,'cnE'],['IV-2026-0916-CN','库存快照','2026-09-16',2420,'已记账','WMS',2,null],['DEC-2026-0917-04','出口报关单','2026-09-17',900,'审批中','深圳报关行',3,'tk1'],['TR-2026-0917-02','拖车派车单','2026-09-17',900,'运输中','盐田车队',3,'tk1'],['PL-2026-0917-02','装箱单','2026-09-17',900,'已确认','华南仓',3,'tk1'],['SC-2026-0917-01','场站收据','2026-09-17',900,'待换取','盐田港',3,'tk1'],['BL-2026-0918-77','海运提单','2026-09-18',1460,'在途','COSCO',4,null],['AN-2026-0928-01','到港通知','2026-09-28',620,'待清关','洛杉矶港代理',4,'portw'],['CD-2026-0929-03','进口清关单','2026-09-29',620,'申报中','美国清关行',4,'portw'],['DUTY-2026-0929-01','关税及增值税单','2026-09-29',620,'待缴纳','美国海关',4,'portw'],['ISA-2026-0930-11','入仓预约','2026-09-30',1300,'已预约','US-West FBA',5,null],['TRK-2026-0930-06','拖车派送单','2026-09-30',1300,'运输中','美西卡车行',5,null],['PL-2026-0930-06','装箱单','2026-09-30',1300,'已确认','洛杉矶仓',5,null],['RC-2026-0921-ONT8','入仓收据','2026-09-21',540,'已上架','US-West FBA',6,'usW'],['RC-2026-0919-NJ3','入仓收据','2026-09-19',420,'已上架','US-East 3PL',6,'usE'],['RC-2026-0915-UKF','入仓收据','2026-09-15',240,'已上架','UK 3PL',6,'ukS'],['SO-2026-0916-US','订单预留单','2026-09-16',60,'已预留','运营部',6,null],['INV-2026-0916-ALL','库存快照','2026-09-16',1200,'已记账','ERP',6,null]];var SPEC_LINES=[['黑色','M',0.375],['黑色','L',0.3125],['米白','M',0.1875],['米白','L',0.125]];var SHORT={supA:'鸣鹤',supB:'Vinatex',cnS:'华南仓',cnE:'华东仓',d1:'鸣鹤→华南',d2:'Vinatex→华东',tk1:'盐田拖车',sea:'COSCO 海上',portw:'洛杉矶在港',t1:'ONT8',t2:'NJ 3PL',t3:'UK 3PL',usW:'ONT8',usE:'NJ 3PL',ukS:'UK 3PL'};var STATUS_CLASS={'已确认':'s-ok','合格':'s-ok','已入库':'s-ok','已上架':'s-ok','已记账':'s-ok','已收到':'s-ok','生产中':'s-run','运输中':'s-run','在途':'s-run','申报中':'s-run','审批中':'s-run','待清关':'s-run','待缴纳':'s-wait','待换取':'s-wait','在港待清关':'s-wait','已锁定':'s-lock','已预留':'s-lock','已预约':'s-lock'};var DOCS=RAW_DOCS.map(function(d,i){return{idx:i,no:d[0],type:d[1],date:d[2],qty:d[3],status:d[4],party:d[5],stage:d[6],group:d[7]};});var state={unit:'pc',playing:true,mult:1,selectedStage:0,selectedGroup:null,selectedDoc:null,docScope:'stage',progress:0};function sumForms(list){var t={wip:0,transit:0,avail:0,reserved:0};list.forEach(function(f){t.wip+=f.wip;t.transit+=f.transit;t.avail+=f.avail;t.reserved+=f.reserved;});return t;}
+STAGES.forEach(function(st){st.forms=sumForms(st.groups.map(function(g){return g.forms;}));st.total=st.forms.wip+st.forms.transit+st.forms.avail+st.forms.reserved;st.groups.forEach(function(g){g.total=g.forms.wip+g.forms.transit+g.forms.avail+g.forms.reserved;g.docs=DOCS.filter(function(d){return d.stage===STAGES.indexOf(st)&&d.group===g.id;});});st.docs=DOCS.filter(function(d){return d.stage===STAGES.indexOf(st);});});var GRAND=sumForms(STAGES.map(function(s){return s.forms;}));var TOTAL=GRAND.wip+GRAND.transit+GRAND.avail+GRAND.reserved;function countStages(key){return STAGES.filter(function(s){return s.forms[key]>0;}).length;}
+function countGroups(key){var n=0;STAGES.forEach(function(s){s.groups.forEach(function(g){if(g.forms[key]>0)n++;});});return n;}
+var $=function(id){return document.getElementById(id);};function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function isBox(){return state.unit==='box';}
+function unitTxt(){return isBox()?'箱':'件';}
+function num(v){var n=isBox()?v/SKU.boxSize:v;n=Math.round(n);return n.toLocaleString('en-US');}
+function qty(v){return num(v)+' '+unitTxt();}
+function qty0(v){return v===0?'—':qty(v);}
+function pct(v){return(v/TOTAL*100).toFixed(1)+'%';}
+function textWidth(str,size){var w=0;for(var i=0;i<str.length;i++)w+=str.charCodeAt(i)>255?size:size*0.56;return w;}
+function docLines(q){var out=[],used=0;SPEC_LINES.forEach(function(s,i){var q2=i===SPEC_LINES.length-1?q-used:Math.round(q*s[2]);used+=q2;out.push({color:s[0],size:s[1],qty:q2,cost:SKU.cost,cur:s[0]===SKU.color&&s[1]===SKU.size});});return out;}
+function findDoc(no){for(var i=0;i<DOCS.length;i++)if(DOCS[i].no===no)return DOCS[i];return null;}
+function renderKpis(){var html='';html+='<div class="kpi total flash"><div class="accent" style="background:var(--brand)"></div>'+'<div class="k-label">SKU 总库存 <span style="color:#b9c6d4">= 在制 + 在途 + 可用 + 预留</span></div>'+'<div class="k-val">'+num(TOTAL)+'<small>'+unitTxt()+'</small></div>'+'<div class="stackbar">'+STATES.map(function(s){return'<i style="width:'+(GRAND[s.k]/TOTAL*100).toFixed(2)+'%;background:'+s.color+'"></i>';}).join('')+'</div>'+'<div class="stacklegend">'+STATES.map(function(s){return'<span><i style="background:'+s.color+'"></i>'+s.label+' <b>'+num(GRAND[s.k])+'</b> '+unitTxt()+' · '+pct(GRAND[s.k])+'</span>';}).join('')+'</div></div>';var noteTxt={wip:'在 '+countStages('wip')+' 个环节 · '+countGroups('wip')+' 个供应商工厂生产中',transit:'分属 '+countGroups('transit')+' 个在途批次 / 载具',avail:'分布在 '+countGroups('avail')+' 个实体仓 · 可直接履约',reserved:'已被 '+countGroups('reserved')+' 个实体的订单 / 计划锁定'};STATES.forEach(function(s){html+='<div class="kpi flash"><div class="accent" style="background:'+s.color+'"></div>'+'<div class="k-label"><span class="dotm" style="background:'+s.color+'"></span>'+s.label+'库存</div>'+'<div class="k-val">'+num(GRAND[s.k])+'<small>'+unitTxt()+'</small></div>'+'<div class="k-note">占总量 '+pct(GRAND[s.k])+' · 涉及 '+countStages(s.k)+' 个环节</div>'+'<div class="k-note" style="color:#a9b7c4">'+noteTxt[s.k]+'</div></div>';});$('kpis').innerHTML=html;$('headTotal').textContent=qty(TOTAL);$('headTransit').textContent=pct(GRAND.transit);}
+function kindMeta(kind){if(kind==='node')return{label:'节点',cls:'k-node-bg'};if(kind==='leg')return{label:'在途段',cls:'k-leg-bg'};return{label:'在港/在途',cls:'k-port-bg'};}
+var KIND_STYLE={node:{bg:'#e8f0f7',fg:'#1d6fa5'},leg:{bg:'#faf1e4',fg:'#b5731c'},port:{bg:'#e6f4f2',fg:'#0e8f7d'}};var LEG_CARD={w:204,h:204};function chipMarkup(x,y,text,bg,fg,anchorRight){var w=textWidth(text,9.5)+16;var rx=anchorRight?x-w:x;return'<g class="kind-chip"><rect x="'+rx.toFixed(1)+'" y="'+y+'" width="'+w.toFixed(1)+'" height="17" rx="8.5" fill="'+bg+'" style="opacity:.95"></rect>'+'<text x="'+(rx+w/2).toFixed(1)+'" y="'+(y+12)+'" fill="'+fg+'">'+esc(text)+'</text></g>';}
+function barMarkup(id,y,h,w,segs){var x0=-w/2,acc=0;var out='<clipPath id="'+id+'"><rect x="'+x0.toFixed(1)+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="'+(h/2).toFixed(1)+'"/></clipPath>'+'<rect class="bar-track" x="'+x0.toFixed(1)+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="'+(h/2).toFixed(1)+'"/>'+'<g clip-path="url(#'+id+')">';segs.forEach(function(s){if(s.v<=0)return;var sw=w*s.v;out+='<g>'+(s.label?'<title>'+esc(s.label)+'</title>':'')+'<rect x="'+(x0+acc).toFixed(1)+'" y="'+y+'" width="'+sw.toFixed(2)+'" height="'+h+'" fill="'+s.color+'"/></g>';acc+=sw;});return out+'</g>';}
+function g4Cell(x,yLabel,yVal,label,value,isMain){var cls='g4-v'+(value===0?' zero':'');var style=isMain&&value>0?' style="fill:#12212f"':'';return'<g transform="translate('+x+',0)">'+'<text class="g4-l" y="'+yLabel+'">'+esc(label)+'</text>'+'<text class="'+cls+'" y="'+yVal+'"'+style+'>'+(value===0?'—':num(value))+'</text>'+'</g>';}
+function renderStations(){var out=STAGES.map(function(st,i){var k=KIND_STYLE[st.kind];var active=state.selectedStage===i;var cls='st k-'+st.kind+(active?' is-active is-selected':'');var inner='';if(st.kind==='node'){var segs=st.groups.map(function(g,gi){return{v:g.total/(st.total||1),color:['#1d6fa5','#4d90bd','#8bb8d6','#c3d9e8'][gi%4],label:(SHORT[g.id]||g.name)+' · '+qty(g.total)};});var entLine=st.groups.map(function(g){return(SHORT[g.id]||g.name)+' '+num(g.total);}).join(' · ');var totalTxt=qty(st.total);var tcW=textWidth(totalTxt,10.5)+20;inner='<rect class="sel-ring" x="-124" y="-132" width="248" height="264" rx="22"/>'+'<rect class="st-card" x="-'+(st.w/2)+'" y="-'+(st.h/2)+'" width="'+st.w+'" height="'+st.h+'" rx="18"/>'+'<text class="st-idx" x="-102" y="-106" text-anchor="start">'+('0'+(i+1)).slice(-2)+'</text>'+
+chipMarkup(-84,-118,kindMeta(st.kind).label,k.bg,k.fg,false)+'<g class="total-chip"><rect x="'+(102-tcW).toFixed(1)+'" y="-120" width="'+tcW.toFixed(1)+'" height="20" rx="10"/><text x="100" y="-106" text-anchor="end">'+esc(totalTxt)+'</text></g>'+'<g class="ico" transform="translate(0,-78) scale(1.18) translate(-12,-12)"><path d="'+ICONS[st.icon]+'"/></g>'+'<text class="st-title" x="0" y="-44">'+esc(st.title)+'</text>'+'<text class="st-sub" x="0" y="-26">'+esc(st.sub)+'</text>'+'<line class="divider" x1="-98" x2="98" y1="-12" y2="-12"/>'+
+g4Cell(-58,10,26,'在制',st.forms.wip,st.matrix.wip==='main')+
+g4Cell(58,10,26,'在途',st.forms.transit,st.matrix.transit==='main')+
+g4Cell(-58,46,62,'可用',st.forms.avail,st.matrix.avail==='main')+
+g4Cell(58,46,62,'预留',st.forms.reserved,st.matrix.reserved==='main')+'<line class="divider" x1="-98" x2="98" y1="74" y2="74"/>'+'<text class="ent-line" x="0" y="90">'+esc(entLine)+'</text>'+
+barMarkup('bar'+i,102,10,180,segs);}else if(st.kind==='leg'){var q=st.forms.transit;var W=LEG_CARD.w,H=LEG_CARD.h;var fillW=(W-40)*st.prog;inner='<rect class="sel-ring" x="-'+(W/2+6)+'" y="-'+(H/2+6)+'" width="'+(W+12)+'" height="'+(H+12)+'" rx="16"/>'+'<rect class="st-card" x="-'+(W/2)+'" y="-'+(H/2)+'" width="'+W+'" height="'+H+'" rx="14"/>'+'<text class="st-idx" x="-'+(W/2-14)+'" y="-68" text-anchor="start">'+('0'+(i+1)).slice(-2)+'</text>'+
+chipMarkup(W/2-14,-81,kindMeta(st.kind).label,k.bg,k.fg,true)+'<g class="ico" transform="translate(0,-38) scale(1.0) translate(-12,-12)"><path d="'+ICONS[st.icon]+'"/></g>'+'<text class="st-title" x="0" y="-8">'+esc(st.title)+'</text>'+'<text class="main-qty" x="0" y="18">在途 <tspan class="n">'+num(q)+'</tspan> <tspan class="u">'+unitTxt()+'</tspan></text>'+'<text class="leg-meta" x="0" y="36">'+esc(st.carrier)+'</text>'+'<rect class="bar-track" x="-'+(W/2-20)+'" y="48" width="'+(W-40)+'" height="8" rx="4"/>'+'<rect class="leg-fill" x="-'+(W/2-20)+'" y="48" width="'+fillW.toFixed(1)+'" height="8" rx="4"/>'+'<text class="leg-note" x="0" y="72">'+esc(st.span)+'</text>';}else{var qt=st.forms.transit;inner='<rect class="sel-ring" x="-106" y="-106" width="212" height="212" rx="20"/>'+'<rect class="st-card" x="-'+(st.w/2)+'" y="-'+(st.h/2)+'" width="'+st.w+'" height="'+st.h+'" rx="16"/>'+'<text class="st-idx" x="-84" y="-82" text-anchor="start">'+('0'+(i+1)).slice(-2)+'</text>'+
+chipMarkup(84,-94,kindMeta(st.kind).label,k.bg,k.fg,true)+'<g class="ico" transform="translate(0,-52) scale(1.1) translate(-12,-12)"><path d="'+ICONS[st.icon]+'"/></g>'+'<text class="st-title" x="0" y="-22">'+esc(st.title)+'</text>'+'<text class="main-qty" x="0" y="8">在途 <tspan class="n">'+num(qt)+'</tspan> <tspan class="u">'+unitTxt()+'</tspan></text>'+
+st.subs.map(function(s,si){return'<text class="port-sub" x="0" y="'+(32+si*18)+'">'+esc(s[0])+' '+num(s[1])+' '+unitTxt()+'</text>';}).join('')+'<rect class="bar-track" x="-78" y="66" width="156" height="8" rx="4"/>'+'<rect class="leg-fill" x="-78" y="66" width="'+(156*st.prog).toFixed(1)+'" height="8" rx="4"/>'+'<text class="leg-note" x="0" y="90">'+esc(st.span)+'</text>';}
+return'<g class="'+cls+'" data-i="'+i+'" transform="translate('+st.x+','+st.y+')" tabindex="0" role="button" aria-label="'+esc(st.title)+'">'+'<g class="st-inner">'+inner+'</g></g>';}).join('');$('stations').innerHTML=out;}
+function renderMarkers(){var out='';for(var i=0;i<6;i++){out+='<g class="marker" data-m="'+i+'">'+'<rect x="-10" y="-7" width="20" height="14" rx="3"/>'+'<rect class="stripe" x="-6" y="-3" width="3.6" height="6" rx="1"/>'+'<rect class="stripe" x="2.4" y="-3" width="3.6" height="6" rx="1"/></g>';}
+$('markers').innerHTML=out;}
+function renderDeco(){var out='<g class="lg">';out+='<text x="40" y="26" font-size="10.5" fill="#8b9aab">'+'标记：\u2713 主形态　\u25B3 次形态　\u2014 无　·　点击节点或下表行查看该环节库存与关联单据</text>';out+='<text x="1416" y="26" font-size="10.5" fill="#8b9aab" text-anchor="end">'+'总库存 = 在制 + 在途 + 可用 + 预留　·　1 箱 = '+SKU.boxSize+' 件</text>';out+='</g>';$('deco').innerHTML=out;}
+function renderP1(){var st=STAGES[state.selectedStage];var k=KIND_STYLE[st.kind];$('p1tag').textContent=st.title;var html='<div class="stage-head"><span class="n">'+esc(st.title)+'</span>'+'<span class="kind k-'+st.kind+'">'+kindMeta(st.kind).label+'</span>'+'<span style="font-size:11.5px;color:#8b9aab;font-family:var(--mono)">环节合计 '+qty(st.total)+'</span></div>'+'<p class="stage-desc">'+esc(st.desc)+'</p>';html+='<div class="ents">';st.groups.forEach(function(g){var on=state.selectedGroup===g.id?' on':'';var segs=STATES.map(function(s){return{v:g.forms[s.k]/(g.total||1),color:s.color};}).filter(function(s){return s.v>0;});html+='<div class="ent'+on+'" data-g="'+g.id+'">'+'<div class="ent-h"><span class="n">'+esc(g.name)+'</span>'+'<span class="r">'+esc(g.role)+'</span>'+'<span class="c">'+esc(g.city)+'</span></div>'+'<div class="ent-f">'+STATES.map(function(s){var v=g.forms[s.k];return'<div class="c1"><div class="l">'+s.label+'</div>'+'<div class="v'+(v===0?' z':'')+'"'+(v>0?' style="color:'+s.color+'"':'')+'>'+
+(v===0?'—':num(v))+'</div></div>';}).join('')+'</div>'+'<div class="ent-bar">'+segs.map(function(s){return'<i style="width:'+(s.v*100).toFixed(2)+'%;background:'+s.color+'"></i>';}).join('')+'</div>'+'<div class="ent-ft"><span>实体合计 <b>'+qty(g.total)+'</b></span>'+'<span>关联单据 <b>'+g.docs.length+'</b> 张</span></div>'+'</div>';});html+='</div>';$('p1body').innerHTML=html;}
+function renderP2(){var list;if(state.docScope==='all'){list=DOCS.slice();}else{var st=STAGES[state.selectedStage];list=st.docs.slice();if(state.selectedGroup)list=list.filter(function(d){return d.group===state.selectedGroup;});}
+list=list.sort(function(a,b){return a.date<b.date?-1:1;});var scopeTxt=state.docScope==='all'?'全部环节':(STAGES[state.selectedStage].title+(state.selectedGroup?' · '+groupName(state.selectedGroup):''));var totalQty=list.reduce(function(a,d){return a+d.qty;},0);var html='<div class="doc-sum"><span>范围 <b>'+esc(scopeTxt)+'</b></span>'+'<span>单据 <b>'+list.length+'</b> 张</span>'+'<span>涉及数量 <b>'+qty(totalQty)+'</b></span></div>';if(!list.length){html+='<div class="empty">该范围暂无关联单据</div>';}else{html+='<ul class="docs">'+list.map(function(d){var on=state.selectedDoc===d.no?' on':'';return'<li class="doc'+on+'" data-no="'+d.no+'">'+'<div class="r1"><span class="dt">'+esc(d.type)+'</span>'+'<span class="dn">'+esc(d.no)+'</span></div>'+'<div class="dq">'+qty(d.qty)+'</div>'+'<div class="r2"><span class="ds '+(STATUS_CLASS[d.status]||'s-lock')+'">'+esc(d.status)+'</span>'+'<span>'+esc(d.date)+'</span>'+'<span class="party">'+esc(d.party)+'</span></div></li>';}).join('')+'</ul>';}
+$('p2body').innerHTML=html;}
+function groupName(gid){var n='';STAGES.forEach(function(st){st.groups.forEach(function(g){if(g.id===gid)n=g.name;});});return n;}
+function renderP3(){if(!state.selectedDoc){$('p3tag').textContent='未选择';$('p3body').innerHTML='<div class="empty">从左侧「关联单据」中点击一张单据<br>即可查看单号、往来方、数量与规格明细</div>';return;}
+var d=findDoc(state.selectedDoc);if(!d){$('p3tag').textContent='未选择';return;}
+var st=STAGES[d.stage];var g=null;st.groups.forEach(function(x){if(x.id===d.group)g=x;});var lines=docLines(d.qty);var amount=d.qty*SKU.cost;$('p3tag').textContent=d.no;var html='<div class="docbox"><div class="h">'+'<span class="dt">'+esc(d.type)+'</span>'+'<span class="no">'+esc(d.no)+'</span>'+'<span class="ds '+(STATUS_CLASS[d.status]||'s-lock')+'">'+esc(d.status)+'</span></div>'+'<dl>'+'<dt>单据日期</dt><dd>'+esc(d.date)+'</dd>'+'<dt>单据数量</dt><dd>'+qty(d.qty)+'</dd>'+'<dt>往来方</dt><dd>'+esc(d.party)+'</dd>'+'<dt>归属环节</dt><dd>'+esc(st.title)+'</dd>'+'<dt>归属对象</dt><dd>'+esc(g?g.name:'整环节')+'</dd>'+'<dt>本 SKU 占比</dt><dd>'+(SKU.color+' / '+SKU.size)+'</dd>'+'</dl></div>'+'<table class="lines"><thead><tr><th>规格</th><th class="r">数量</th><th class="r">单位成本</th><th class="r">金额</th></tr></thead><tbody>'+
+lines.map(function(l){return'<tr class="'+(l.cur?'cur':'')+'"><td>'+esc(l.color)+' / '+esc(l.size)+
+(l.cur?'<span class="cur-tag">本 SKU</span>':'')+'</td>'+'<td class="r">'+num(l.qty)+'</td><td class="r">¥'+l.cost.toFixed(2)+'</td>'+'<td class="r">¥'+(l.qty*l.cost).toLocaleString('en-US',{maximumFractionDigits:0})+'</td></tr>';}).join('')+'</tbody><tfoot><tr><td>合计</td><td class="r">'+num(d.qty)+' '+unitTxt()+'</td><td class="r">—</td>'+'<td class="r">¥'+amount.toLocaleString('en-US',{maximumFractionDigits:0})+'</td></tr></tfoot></table>';$('p3body').innerHTML=html;}
+function renderMatrix(){var head='<thead><tr><th style="width:29%">环节</th><th style="width:12%" class="c">环节性质</th>'+
+STATES.map(function(s){return'<th class="c">'+s.label+'库存</th>';}).join('')+'<th class="c" style="width:11%">环节合计</th></tr></thead>';var body='<tbody>'+STAGES.map(function(st,i){var mark={main:'&#10003;',minor:'△',none:'—'};var cls={main:'m-main',minor:'m-minor',none:'m-none'};var on=state.selectedStage===i?' on':'';return'<tr class="mtr'+on+'" data-i="'+i+'">'+'<td class="stg">'+esc(st.title)+' <small>'+esc(st.sub)+'</small></td>'+'<td class="c">'+kindMeta(st.kind).label+'</td>'+
+STATES.map(function(s){var f=st.matrix[s.k],v=st.forms[s.k];return'<td class="c"><div class="prop"><span class="m '+cls[f]+'">'+mark[f]+'</span>'+'<span class="q">'+(v===0?'—':num(v)+' '+unitTxt())+'</span></div></td>';}).join('')+'<td class="c" style="font-variant-numeric:tabular-nums">'+num(st.total)+'</td></tr>';}).join('')+'</tbody><tfoot><tr><td>合计</td><td class="c">7 个环节</td>'+
+STATES.map(function(s){return'<td class="c">'+num(GRAND[s.k])+'</td>';}).join('')+'<td class="c">'+num(TOTAL)+'</td></tr></tfoot>';$('mtab').innerHTML=head+body;}
+var svgPath,pathLen,markerEls=[],lastTs=0;function frame(ts){if(!lastTs)lastTs=ts;var dt=Math.min(0.05,(ts-lastTs)/1000);lastTs=ts;if(state.playing){state.progress+=0.05*state.mult*dt;if(state.progress>=1)state.progress-=1;}
+for(var i=0;i<markerEls.length;i++){var p=(state.progress+i*0.165)%1;var l=p*pathLen;var pt=svgPath.getPointAtLength(l);var pt2=svgPath.getPointAtLength(Math.min(pathLen,l+2));var ang=Math.atan2(pt2.y-pt.y,pt2.x-pt.x)*180/Math.PI;if(markerEls[i]){markerEls[i].setAttribute('transform','translate('+pt.x.toFixed(1)+','+pt.y.toFixed(1)+') rotate('+ang.toFixed(1)+')');}}
+requestAnimationFrame(frame);}
+function selectStage(i){state.selectedStage=i;state.selectedGroup=null;renderStations();renderP1();renderP2();renderP3();renderMatrix();}
+function bind(){$('stations').addEventListener('click',function(e){var g=e.target.closest?e.target.closest('.st'):null;if(!g)return;selectStage(parseInt(g.getAttribute('data-i'),10));});$('stations').addEventListener('keydown',function(e){if(e.key!=='Enter'&&e.key!==' ')return;var g=e.target.closest?e.target.closest('.st'):null;if(g)selectStage(parseInt(g.getAttribute('data-i'),10));});$('mtab').addEventListener('click',function(e){var tr=e.target.closest?e.target.closest('tr.mtr'):null;if(!tr)return;selectStage(parseInt(tr.getAttribute('data-i'),10));});$('p1body').addEventListener('click',function(e){var el=e.target.closest?e.target.closest('.ent'):null;if(!el)return;var gid=el.getAttribute('data-g');state.selectedGroup=state.selectedGroup===gid?null:gid;renderP1();renderP2();});$('p2body').addEventListener('click',function(e){var li=e.target.closest?e.target.closest('.doc'):null;if(!li)return;state.selectedDoc=li.getAttribute('data-no');renderP2();renderP3();});$('docFilter').addEventListener('click',function(e){var b=e.target.closest?e.target.closest('button'):null;if(!b)return;state.docScope=b.getAttribute('data-f');var bs=this.querySelectorAll('button');for(var i=0;i<bs.length;i++)bs[i].classList.toggle('on',bs[i]===b);renderP2();});$('unitSeg').addEventListener('click',function(e){var b=e.target.closest?e.target.closest('button'):null;if(!b)return;state.unit=b.getAttribute('data-unit');var bs=this.querySelectorAll('button');for(var i=0;i<bs.length;i++)bs[i].classList.toggle('on',bs[i]===b);renderKpis();renderStations();renderDeco();renderP1();renderP2();renderP3();renderMatrix();});$('playBtn').addEventListener('click',function(){state.playing=!state.playing;this.textContent=state.playing?'暂停':'继续';$('liveDot').classList.toggle('paused',!state.playing);});var sp=$('speed');function syncSpeed(){var v=parseFloat(sp.value);$('speedVal').textContent=v.toFixed(1)+'×';sp.style.setProperty('--p',((v-0.4)/2.6*100).toFixed(1)+'%');}
+sp.addEventListener('input',function(){state.mult=parseFloat(this.value);syncSpeed();});syncSpeed();$('resetBtn').addEventListener('click',function(){state.selectedGroup=null;state.selectedDoc=null;state.docScope='stage';var bs=$('docFilter').querySelectorAll('button');for(var i=0;i<bs.length;i++)bs[i].classList.toggle('on',bs[i].getAttribute('data-f')==='stage');selectStage(0);});}
+function init(){svgPath=$('flow').querySelector('.rail');pathLen=svgPath.getTotalLength();$('skuCode').textContent=SKU.code;$('snapTime').textContent=SKU.snapshot;renderMarkers();renderKpis();renderStations();renderDeco();renderP1();renderP2();renderP3();renderMatrix();var els=$('markers').querySelectorAll('.marker');markerEls=[];for(var i=0;i<els.length;i++)markerEls.push(els[i]);bind();requestAnimationFrame(frame);}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();})();</script>
 </body>
 </html>

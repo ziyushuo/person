@@ -4,515 +4,44 @@
 <meta data-page-node-id="LqzJtv9vtt5VeuRiUHwBvz" charset="UTF-8">
 <meta data-page-node-id="aLCEM8T4ItRjsCasXLIn8R" content="width=device-width, initial-scale=1" name="viewport">
 <title data-page-node-id="UPLXfigpfOqeDY4sIAD0to" data-pnid-children="zn8cAfshkkoCMBbJwrtZBX">跨境独立站 DIY 建站 · 高保真原型（Ant Design 风格）</title>
-<style data-page-node-id="mzAwc7Z3PpsfHTAbq07ipG" data-pnid-children="QDq3Xo7K3nL6ioBMV0VH2w">
-:root{
-  --primary:#1677ff;--primary-hover:#4096ff;--primary-active:#0958d9;
-  --success:#52c41a;--warning:#faad14;--error:#ff4d4f;
-  --text:rgba(0,0,0,.88);--text2:rgba(0,0,0,.65);--text3:rgba(0,0,0,.45);
-  --border:#d9d9d9;--split:rgba(5,5,5,.06);
-  --bg:#f5f5f5;
-  --shadow:0 1px 2px rgba(0,0,0,.03),0 1px 6px -1px rgba(0,0,0,.02),0 2px 4px rgba(0,0,0,.02);
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;font-size:14px;color:var(--text);background:var(--bg)}
-a{color:var(--primary);text-decoration:none;cursor:pointer}
-b{font-weight:600}
-.text3{color:var(--text3);font-size:12px}
-.app{display:flex;height:100vh;overflow:hidden}
-/* ---------- 侧边栏 ---------- */
-.sider{width:228px;background:#001529;color:rgba(255,255,255,.65);display:flex;flex-direction:column;flex-shrink:0}
-.logo{height:56px;display:flex;align-items:center;gap:10px;padding:0 18px;color:#fff;font-size:15px;font-weight:600;flex-shrink:0}
-.logo-badge{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#1677ff,#722ed1);display:flex;align-items:center;justify-content:center;font-size:15px}
-.menu{flex:1;overflow-y:auto;padding:6px 8px 12px}
-.menu::-webkit-scrollbar{width:4px}.menu::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}
-.menu-group{font-size:11px;color:rgba(255,255,255,.35);padding:14px 12px 6px;letter-spacing:.06em}
-.mi{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:6px;cursor:pointer;margin:2px 0;transition:all .15s;color:rgba(255,255,255,.65);font-size:14px}
-.mi:hover{color:#fff}
-.mi.active{background:var(--primary);color:#fff}
-.mi .ic{width:18px;text-align:center;font-size:15px;flex-shrink:0}
-.sider-foot{padding:10px;text-align:center;font-size:11px;color:rgba(255,255,255,.28);flex-shrink:0}
-/* ---------- 顶栏 + 主区 ---------- */
-.main{flex:1;display:flex;flex-direction:column;min-width:0}
-.header{height:56px;background:#fff;border-bottom:1px solid var(--split);display:flex;align-items:center;padding:0 24px;gap:16px;flex-shrink:0;position:relative;z-index:400}
-.crumb{color:var(--text3);font-size:13px}
-.crumb b{color:var(--text);font-weight:500}
-.header-right{margin-left:auto;display:flex;align-items:center;gap:12px;position:relative}
-.site-pick{display:flex;align-items:center;gap:6px;background:#f5f5f5;border-radius:6px;padding:5px 12px;cursor:pointer;font-size:13px;white-space:nowrap}
-.site-pick:hover{background:#ececec}
-.avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#1677ff,#722ed1);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
-.site-menu{position:absolute;top:42px;right:34px;width:250px;background:#fff;border-radius:8px;box-shadow:0 6px 16px rgba(0,0,0,.08),0 3px 6px -4px rgba(0,0,0,.12),0 9px 28px 8px rgba(0,0,0,.05);z-index:500;padding:6px;border:1px solid var(--split)}
-.sm-t{font-size:12px;color:var(--text3);padding:6px 10px 4px}
-.sm-i{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:6px;cursor:pointer;font-size:13px}
-.sm-i:hover{background:#f5f5f5}
-.sm-i.cur{background:#e6f4ff;color:var(--primary)}
-.content{flex:1;overflow:auto;padding:24px}
-.content.no-pad{padding:16px 20px;overflow:hidden}
-</style>
-<style data-page-node-id="nxl5d6dv2AWo8TPq0FgM5q" data-pnid-children="PkPw4jVlB3nU9hUonfx4VY">
-/* ---------- 按钮 ---------- */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:32px;padding:0 15px;border-radius:6px;border:1px solid var(--border);background:#fff;color:var(--text);font-size:14px;cursor:pointer;transition:all .2s;user-select:none;white-space:nowrap;font-family:inherit}
-.btn:hover{border-color:var(--primary);color:var(--primary)}
-.btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}
-.btn.primary:hover{background:var(--primary-hover);border-color:var(--primary-hover)}
-.btn.danger{border-color:var(--error);color:var(--error)}
-.btn.danger.solid{background:var(--error);color:#fff}
-.btn.sm{height:26px;padding:0 10px;font-size:13px;border-radius:4px}
-.btn.link{border:none;background:none;color:var(--primary);padding:0 4px;height:auto}
-.btn.link.danger{color:var(--error)}
-.btn.link:hover{background:rgba(5,145,255,.06)}
-.btn:disabled{color:var(--text3);border-color:var(--border);background:#f5f5f5;cursor:not-allowed}
-.btn+.btn{margin-left:8px}
-/* ---------- 标签 ---------- */
-.tag{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;background:#fafafa;border:1px solid var(--border);color:var(--text2);white-space:nowrap}
-.tag.blue{background:#e6f4ff;border-color:#91caff;color:#1677ff}
-.tag.green{background:#f6ffed;border-color:#b7eb8f;color:#389e0d}
-.tag.orange{background:#fff7e6;border-color:#ffd591;color:#d46b08}
-.tag.red{background:#fff2f0;border-color:#ffccc7;color:#cf1322}
-.tag.purple{background:#f9f0ff;border-color:#d3adf7;color:#722ed1}
-.tag.gray{background:#fafafa;border-color:var(--border);color:var(--text3)}
-/* ---------- 卡片 / 页头 ---------- */
-.card{background:#fff;border-radius:8px;box-shadow:var(--shadow)}
-.card-h{padding:14px 24px;border-bottom:1px solid var(--split);display:flex;align-items:center;gap:10px}
-.card-b{padding:24px}
-.page-h{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;gap:16px;flex-wrap:wrap}
-.page-h h2{font-size:20px;font-weight:600}
-.page-h p{color:var(--text3);font-size:13px;margin-top:4px}
-/* ---------- 表格 ---------- */
-.tbl-wrap{overflow-x:auto}
-table.tbl{width:100%;border-collapse:collapse;font-size:14px}
-.tbl th{text-align:left;font-weight:500;background:#fafafa;color:var(--text2);padding:12px 16px;border-bottom:1px solid var(--split);white-space:nowrap}
-.tbl td{padding:13px 16px;border-bottom:1px solid var(--split);vertical-align:middle}
-.tbl tbody tr:hover td{background:#fafafa}
-.tbl tr:last-child td{border-bottom:none}
-.tbl .ops .btn{margin-left:0;margin-right:4px}
-/* ---------- 表单 ---------- */
-.fi{margin-bottom:16px}
-.fi>label{display:block;color:var(--text2);margin-bottom:8px;font-size:13px}
-.req{color:var(--error);margin-right:4px}
-input.ipt,select.ipt,textarea.ipt{width:100%;height:32px;border:1px solid var(--border);border-radius:6px;padding:0 11px;font-size:14px;color:var(--text);background:#fff;outline:none;transition:.2s;font-family:inherit}
-textarea.ipt{height:auto;padding:8px 11px;resize:vertical;line-height:1.6}
-.ipt:focus{border-color:var(--primary);box-shadow:0 0 0 2px rgba(5,145,255,.1)}
-.ipt:disabled{background:#f5f5f5;color:var(--text3);cursor:not-allowed}
-.row{display:flex;gap:16px}.row .fi{flex:1;min-width:0}
-input[type=range]{accent-color:var(--primary);width:100%}
-input[type=color]{width:34px;height:26px;border:1px solid var(--border);border-radius:4px;padding:0;background:none;cursor:pointer;vertical-align:middle}
-input[type=checkbox],input[type=radio]{accent-color:var(--primary);margin-right:5px;vertical-align:-1px}
-.filter{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;align-items:center}
-.filter .fw{display:flex;align-items:center;gap:8px}
-.filter label{color:var(--text2);white-space:nowrap;font-size:13px}
-.filter .ipt{width:170px;height:32px}
-/* ---------- 开关 ---------- */
-.sw{position:relative;width:38px;height:20px;background:rgba(0,0,0,.25);border-radius:10px;cursor:pointer;transition:.2s;flex-shrink:0;display:inline-block;vertical-align:middle}
-.sw::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
-.sw.on{background:var(--primary)}
-.sw.on::after{left:20px}
-/* ---------- 弹窗 ---------- */
-#modal-root .mask{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding-top:8vh;animation:fadein .2s;overflow:auto}
-.modal{background:#fff;border-radius:8px;box-shadow:0 6px 16px rgba(0,0,0,.08),0 3px 6px -4px rgba(0,0,0,.12),0 9px 28px 8px rgba(0,0,0,.05);width:560px;max-width:94vw;max-height:84vh;display:flex;flex-direction:column;animation:zoomin .18s}
-.modal-h{padding:16px 24px;font-size:16px;font-weight:600;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
-.modal-x{cursor:pointer;color:var(--text3);font-size:15px;padding:2px 6px;border-radius:4px}
-.modal-x:hover{background:#f5f5f5;color:var(--text)}
-.modal-b{padding:8px 24px 24px;overflow:auto}
-.modal-f{padding:12px 16px;border-top:1px solid var(--split);display:flex;justify-content:flex-end;gap:8px;border-radius:0 0 8px 8px;flex-shrink:0}
-@keyframes zoomin{from{transform:scale(.96);opacity:0}to{transform:scale(1);opacity:1}}
-@keyframes fadein{from{opacity:0}to{opacity:1}}
-@keyframes slidein{from{transform:translateY(-8px);opacity:0}to{transform:none;opacity:1}}
-/* ---------- 全局提示 ---------- */
-#toast-root{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:2000;display:flex;flex-direction:column;gap:10px;align-items:center;pointer-events:none}
-.msg{display:flex;align-items:center;gap:8px;background:#fff;border-radius:8px;box-shadow:0 6px 16px rgba(0,0,0,.08),0 3px 6px -4px rgba(0,0,0,.12),0 9px 28px 8px rgba(0,0,0,.05);padding:9px 16px;font-size:14px;animation:slidein .25s;transition:opacity .3s}
-.msg .dot{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;flex-shrink:0}
-.msg.success .dot{background:var(--success)}
-.msg.error .dot{background:var(--error)}
-.msg.info .dot{background:var(--primary)}
-.msg.warning .dot{background:var(--warning)}
-/* ---------- 警告条 ---------- */
-.alert{display:flex;gap:10px;padding:9px 14px;border-radius:6px;font-size:13px;margin-bottom:16px;align-items:flex-start;line-height:1.7}
-.alert .ic{font-weight:700;flex-shrink:0}
-.alert.info{background:#e6f4ff;border:1px solid #91caff}
-.alert.warning{background:#fffbe6;border:1px solid #ffe58f}
-.alert.error{background:#fff2f0;border:1px solid #ffccc7}
-.alert.success{background:#f6ffed;border:1px solid #b7eb8f}
-/* ---------- 空态 / 分页 ---------- */
-.empty{padding:48px 0;text-align:center;color:var(--text3)}
-.empty .box{font-size:40px;margin-bottom:10px;opacity:.45}
-.pager{display:flex;justify-content:flex-end;align-items:center;gap:8px;padding:14px 4px 0;color:var(--text2);font-size:13px}
-.pg{min-width:28px;height:28px;border:1px solid var(--border);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;background:#fff;padding:0 6px}
-.pg.cur{border-color:var(--primary);color:var(--primary)}
-/* ---------- 分段器 / 页签 ---------- */
-.seg{display:inline-flex;background:rgba(0,0,0,.04);border-radius:6px;padding:2px;gap:2px}
-.seg .s{padding:4px 14px;border-radius:4px;cursor:pointer;font-size:13px;color:var(--text2);transition:.15s}
-.seg .s.active{background:#fff;color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.1);font-weight:500}
-.tabs{display:flex;gap:28px;border-bottom:1px solid var(--split)}
-.tabs .t{padding:10px 2px;cursor:pointer;color:var(--text2);position:relative;font-size:14px}
-.tabs .t.active{color:var(--primary);font-weight:500}
-.tabs .t.active::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--primary)}
-/* ---------- 统计卡 ---------- */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
-.stat{background:#fff;border-radius:8px;box-shadow:var(--shadow);padding:20px}
-.stat .v{font-size:26px;font-weight:600;margin:8px 0 2px}
-.stat .l{color:var(--text3);font-size:13px}
-.stat .ic{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px}
-</style>
-<style data-page-node-id="sbJvTqga4Gt9XgVXd9fXQg" data-pnid-children="henCffEBkEtgJzX7aG5g74">
-/* ---------- 编辑器布局 ---------- */
-.ed-top{background:#fff;border-radius:8px;box-shadow:var(--shadow);padding:11px 18px;display:flex;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap;flex-shrink:0}
-.ed-body{display:flex;gap:14px;height:calc(100vh - 168px);min-height:540px}
-.ed-panel{background:#fff;border-radius:8px;box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden}
-.ed-p-h{padding:12px 16px;border-bottom:1px solid var(--split);font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px;flex-shrink:0}
-.ed-left{width:250px;flex-shrink:0}
-.ed-left .scroll{flex:1;overflow-y:auto;padding:12px}
-.ed-canvas{flex:1;min-width:0;background:#f0f2f5;display:flex;align-items:stretch;justify-content:center;padding:20px 0}
-.ed-right{width:318px;flex-shrink:0}
-.ed-right .scroll{flex:1;overflow-y:auto;padding:16px}
-.scroll::-webkit-scrollbar{width:5px}.scroll::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:3px}
-.cat-t{font-size:12px;color:var(--text3);margin:12px 4px 7px;font-weight:600}
-.cat-t:first-child{margin-top:2px}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{width:calc(50% - 4px);border:1px solid var(--split);border-radius:6px;padding:8px 6px;display:flex;align-items:center;gap:7px;cursor:grab;background:#fff;font-size:12px;transition:.15s;user-select:none}
-.chip:hover{border-color:var(--primary);color:var(--primary);box-shadow:0 0 0 2px rgba(5,145,255,.08)}
-.chip .ci{font-size:16px;flex-shrink:0}
-.chip small{display:block;color:var(--text3);font-size:10px;font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-/* ---------- 手机画布 ---------- */
-.phone{width:375px;background:#fff;border-radius:20px;box-shadow:0 10px 36px rgba(0,0,0,.14);overflow:hidden;display:flex;flex-direction:column;border:7px solid #212121;flex-shrink:0}
-.pv .phone,.frame-wrap .phone{height:730px}
-.ed-canvas .phone{height:100%;margin:0 auto}
-.ph-status{height:30px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 20px;font-size:11px;color:var(--text);font-weight:600;flex-shrink:0;border-bottom:1px solid var(--split)}
-.ph-scr{flex:1;overflow-y:auto;position:relative;background:#f6f7f9}
-.ph-scr::-webkit-scrollbar{width:0}
-.add-slot{margin:8px;border:1.5px dashed var(--border);border-radius:8px;padding:9px;text-align:center;color:var(--text3);font-size:12px;cursor:pointer;flex-shrink:0}
-.add-slot:hover{border-color:var(--primary);color:var(--primary)}
-.cblock{position:relative;border:1.5px dashed transparent;cursor:pointer}
-.cblock:hover{border-color:#91caff}
-.cblock.sel{border-color:var(--primary);box-shadow:0 0 0 2px rgba(5,145,255,.15)}
-.cblock.db{box-shadow:0 -3px 0 0 var(--primary)}
-.cblock.da{box-shadow:0 3px 0 0 var(--primary)}
-.btools{position:absolute;top:-13px;right:8px;background:var(--primary);color:#fff;border-radius:6px;display:none;z-index:30;box-shadow:var(--shadow);overflow:hidden}
-.cblock.sel .btools,.cblock:hover .btools{display:flex}
-.btools span{padding:3px 9px;font-size:11px;cursor:pointer}
-.btools span:hover{background:rgba(255,255,255,.25)}
-.lock-badge{position:absolute;top:6px;left:6px;z-index:20;background:rgba(0,0,0,.55);color:#fff;font-size:10px;padding:2px 7px;border-radius:4px;display:flex;gap:4px;align-items:center}
-.lock-badge.warn{background:#cf1322}
-.locked-wrap{margin:6px 0;border:2px solid #2f54eb;border-radius:10px;overflow:hidden;position:relative}
-.locked-note{background:#f0f5ff;color:#2f54eb;font-size:11px;padding:4px 10px;display:flex;align-items:center;gap:5px}
-.zone{margin:12px 8px;border:1.5px dashed #9fb4d8;border-radius:10px;padding:10px 6px 6px;position:relative;min-height:52px}
-.zone .z-t{position:absolute;top:-9px;left:12px;background:#fff;padding:0 6px;font-size:11px;color:#2f54eb;font-weight:600}
-.zone.over{background:rgba(22,119,255,.05);border-color:var(--primary)}
-.z-empty{color:var(--text3);font-size:12px;text-align:center;padding:12px 0}
-/* ---------- H5 区块渲染 ---------- */
-.h5-header{background:linear-gradient(120deg,var(--tc1,#722ed1),var(--tc2,#1677ff));color:#fff;padding:11px 14px;display:flex;align-items:center;gap:12px;font-size:15px}
-.h5-banner{height:150px;position:relative;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:600;letter-spacing:1px;text-shadow:0 1px 3px rgba(0,0,0,.18)}
-.h5-dots{position:absolute;bottom:9px;left:0;right:0;display:flex;gap:4px;justify-content:center}
-.h5-dots i{width:5px;height:5px;border-radius:3px;background:rgba(255,255,255,.5)}
-.h5-dots i.on{background:#fff;width:14px}
-.h5-promo{color:#cf1322;font-size:12px;padding:8px 12px;display:flex;align-items:center;gap:6px;overflow:hidden;white-space:nowrap}
-.h5-grid{padding:12px;background:#f6f7f9}
-.p-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.p-card{background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.05)}
-.p-card .img{height:126px;position:relative;display:flex;align-items:center;justify-content:center;font-size:34px}
-.p-card .off{position:absolute;top:6px;left:6px;background:#cf1322;color:#fff;font-size:10px;padding:1px 6px;border-radius:3px}
-.p-card .body{padding:8px 10px}
-.p-card .t{font-size:12px;line-height:1.45;height:34px;overflow:hidden;color:var(--text)}
-.p-card .pr{color:#cf1322;font-weight:700;margin-top:5px;font-size:14px}
-.p-card .pr s{color:var(--text3);font-weight:400;font-size:11px;margin-left:5px}
-.h5-sect{background:#fff;padding:14px}
-.h5-sect h4{font-size:15px;margin-bottom:11px;font-weight:600}
-.h5-sect h4 .more{float:right;font-size:11px;color:var(--text3);font-weight:400;margin-top:3px}
-.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}
-.cat-grid .cg{background:#fff;border-radius:8px;padding:10px 4px;font-size:11px;color:var(--text2)}
-.cat-grid .cg i{font-style:normal;font-size:22px;display:block;margin-bottom:4px}
-.tst{background:#fff;border:1px solid var(--split);border-radius:8px;padding:11px;font-size:12px;color:var(--text2);margin-bottom:9px}
-.tst .who{display:flex;justify-content:space-between;margin-bottom:5px;font-size:11px;color:var(--text3)}
-.faq-i{border-bottom:1px solid var(--split);padding:11px 2px;font-size:13px;display:flex;justify-content:space-between;gap:8px}
-.faq-i:last-child{border-bottom:none}
-.trust{display:flex;justify-content:space-around;padding:13px;background:#fff;font-size:11px;color:var(--text2);text-align:center}
-.trust i{font-style:normal;font-size:20px;display:block;margin-bottom:4px}
-.h5-footer{background:#262626;color:rgba(255,255,255,.5);padding:16px 14px;font-size:11px;text-align:center;line-height:1.9}
-.cd-box{display:flex;gap:4px;align-items:center;justify-content:center;padding:10px;background:linear-gradient(90deg,#fff1f0,#fff7e6);color:#cf1322;font-size:13px}
-.cd-b{background:#cf1322;color:#fff;border-radius:4px;padding:2px 6px;font-weight:700;font-size:12px}
-.sp-item{display:flex;gap:9px;align-items:center;padding:7px 0;font-size:12px;color:var(--text2)}
-.rev{padding:11px 0;border-bottom:1px solid var(--split);font-size:12px;color:var(--text2)}
-.rev:last-child{border-bottom:none}
-.stars{color:#faad14;letter-spacing:1px}
-.spec-r{display:flex;font-size:12px;color:var(--text2);padding:7px 0;border-bottom:1px dashed var(--split)}
-.spec-r b{width:96px;flex-shrink:0;color:var(--text);font-weight:500}
-/* ---------- PDP ---------- */
-.pdp-gal{position:relative;height:300px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.2)}
-.pdp-thumbs{display:flex;gap:7px;padding:9px 12px;background:#fff;overflow:auto}
-.pdp-thumbs i{width:44px;height:44px;border-radius:6px;flex-shrink:0;border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-size:18px}
-.pdp-thumbs i.on{border-color:var(--primary)}
-.pdp-info{background:#fff;padding:13px 14px}
-.pdp-price{display:flex;align-items:baseline;gap:9px}
-.pdp-price .now{color:#cf1322;font-size:24px;font-weight:700}
-.pdp-price .old{color:var(--text3);text-decoration:line-through;font-size:13px}
-.pdp-title{font-size:15px;line-height:1.5;margin:9px 0 6px;font-weight:500}
-.sku-l{font-size:12px;color:var(--text2);margin:11px 0 7px}
-.swatch{display:inline-flex;width:30px;height:30px;border-radius:50%;border:2px solid #fff;outline:1px solid var(--border);margin-right:8px;cursor:pointer;align-items:center;justify-content:center;font-size:13px}
-.swatch.on{outline:2px solid var(--primary)}
-.size-chip{display:inline-flex;padding:5px 13px;border:1px solid var(--border);border-radius:6px;font-size:12px;margin:0 8px 8px 0;cursor:pointer}
-.size-chip.on{border-color:var(--primary);color:var(--primary);background:#e6f4ff}
-.qty{display:inline-flex;align-items:center;border:1px solid var(--border);border-radius:6px;overflow:hidden}
-.qty b{padding:5px 11px;cursor:pointer;color:var(--text2);font-weight:400;font-size:15px}
-.qty b:hover{background:#f5f5f5}
-.qty span{padding:5px 14px;border-left:1px solid var(--split);border-right:1px solid var(--split);font-weight:500}
-.buy-bar{position:sticky;bottom:0;display:flex;background:#fff;box-shadow:0 -2px 10px rgba(0,0,0,.07);z-index:10}
-.buy-bar .cart{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:#fff3e0;color:#fa8c16;font-weight:600;font-size:14px;padding:13px}
-.buy-bar .buy{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:linear-gradient(90deg,#ff7a45,#fa541c);color:#fff;font-weight:600;font-size:14px;padding:13px}
-/* ---------- 预览页 ---------- */
-.frame-wrap{display:flex;justify-content:center;padding:8px 0 24px;background:linear-gradient(180deg,#eef1f5,#e5e9ef)}
-.tpl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.tpl-card{background:#fff;border-radius:8px;box-shadow:var(--shadow);overflow:hidden;transition:.2s}
-.tpl-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.09)}
-.tpl-cover{height:170px;position:relative;display:flex;align-items:center;justify-content:center;color:#fff}
-.tpl-cover .tf{width:130px}
-.tf i{display:block;background:rgba(255,255,255,.85);border-radius:4px;margin-bottom:5px}
-.tf i.h{height:18px}.tf i.m{height:9px;width:70%}.tf i.b{height:26px}
-.tpl-body{padding:14px 16px 16px}
-.tpl-body h4{font-size:15px;margin-bottom:6px}
-.tpl-body p{font-size:12px;color:var(--text3);line-height:1.6;min-height:38px}
-.tpl-foot{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
-.kv{display:flex;font-size:13px;padding:7px 0}
-.kv b{width:110px;color:var(--text3);font-weight:400;flex-shrink:0}
-.img-thumb{position:relative;width:64px;height:64px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff}
-.img-thumb .x{position:absolute;top:-7px;right:-7px;width:18px;height:18px;border-radius:50%;background:var(--error);color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow)}
-.img-add{width:64px;height:64px;border:1.5px dashed var(--border);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--text3);font-size:11px;cursor:pointer;gap:2px}
-.img-add:hover{border-color:var(--primary);color:var(--primary)}
-.img-add .plus{font-size:18px}
-</style>
-<!--pnid:3PwRsYRIIj458LqEXq0dfG--><!--CSSMORE-->
+<style data-page-node-id="mzAwc7Z3PpsfHTAbq07ipG" data-pnid-children="QDq3Xo7K3nL6ioBMV0VH2w">:root{--primary:#1677ff;--primary-hover:#4096ff;--primary-active:#0958d9;--success:#52c41a;--warning:#faad14;--error:#ff4d4f;--text:rgba(0,0,0,.88);--text2:rgba(0,0,0,.65);--text3:rgba(0,0,0,.45);--border:#d9d9d9;--split:rgba(5,5,5,.06);--bg:#f5f5f5;--shadow:0 1px 2px rgba(0,0,0,.03),0 1px 6px -1px rgba(0,0,0,.02),0 2px 4px rgba(0,0,0,.02)}*{margin:0;padding:0;box-sizing:border-box}html,body{height:100%}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;font-size:14px;color:var(--text);background:var(--bg)}a{color:var(--primary);text-decoration:none;cursor:pointer}b{font-weight:600}.text3{color:var(--text3);font-size:12px}.app{display:flex;height:100vh;overflow:hidden}.sider{width:228px;background:#001529;color:rgba(255,255,255,.65);display:flex;flex-direction:column;flex-shrink:0}.logo{height:56px;display:flex;align-items:center;gap:10px;padding:0 18px;color:#fff;font-size:15px;font-weight:600;flex-shrink:0}.logo-badge{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#1677ff,#722ed1);display:flex;align-items:center;justify-content:center;font-size:15px}.menu{flex:1;overflow-y:auto;padding:6px 8px 12px}.menu::-webkit-scrollbar{width:4px}.menu::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}.menu-group{font-size:11px;color:rgba(255,255,255,.35);padding:14px 12px 6px;letter-spacing:.06em}.mi{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:6px;cursor:pointer;margin:2px 0;transition:all .15s;color:rgba(255,255,255,.65);font-size:14px}.mi:hover{color:#fff}.mi.active{background:var(--primary);color:#fff}.mi .ic{width:18px;text-align:center;font-size:15px;flex-shrink:0}.sider-foot{padding:10px;text-align:center;font-size:11px;color:rgba(255,255,255,.28);flex-shrink:0}.main{flex:1;display:flex;flex-direction:column;min-width:0}.header{height:56px;background:#fff;border-bottom:1px solid var(--split);display:flex;align-items:center;padding:0 24px;gap:16px;flex-shrink:0;position:relative;z-index:400}.crumb{color:var(--text3);font-size:13px}.crumb b{color:var(--text);font-weight:500}.header-right{margin-left:auto;display:flex;align-items:center;gap:12px;position:relative}.site-pick{display:flex;align-items:center;gap:6px;background:#f5f5f5;border-radius:6px;padding:5px 12px;cursor:pointer;font-size:13px;white-space:nowrap}.site-pick:hover{background:#ececec}.avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#1677ff,#722ed1);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}.site-menu{position:absolute;top:42px;right:34px;width:250px;background:#fff;border-radius:8px;box-shadow:0 6px 16px rgba(0,0,0,.08),0 3px 6px -4px rgba(0,0,0,.12),0 9px 28px 8px rgba(0,0,0,.05);z-index:500;padding:6px;border:1px solid var(--split)}.sm-t{font-size:12px;color:var(--text3);padding:6px 10px 4px}.sm-i{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:6px;cursor:pointer;font-size:13px}.sm-i:hover{background:#f5f5f5}.sm-i.cur{background:#e6f4ff;color:var(--primary)}.content{flex:1;overflow:auto;padding:24px}.content.no-pad{padding:16px 20px;overflow:hidden}</style>
+<style data-page-node-id="nxl5d6dv2AWo8TPq0FgM5q" data-pnid-children="PkPw4jVlB3nU9hUonfx4VY">.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:32px;padding:0 15px;border-radius:6px;border:1px solid var(--border);background:#fff;color:var(--text);font-size:14px;cursor:pointer;transition:all .2s;user-select:none;white-space:nowrap;font-family:inherit}.btn:hover{border-color:var(--primary);color:var(--primary)}.btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}.btn.primary:hover{background:var(--primary-hover);border-color:var(--primary-hover)}.btn.danger{border-color:var(--error);color:var(--error)}.btn.danger.solid{background:var(--error);color:#fff}.btn.sm{height:26px;padding:0 10px;font-size:13px;border-radius:4px}.btn.link{border:none;background:none;color:var(--primary);padding:0 4px;height:auto}.btn.link.danger{color:var(--error)}.btn.link:hover{background:rgba(5,145,255,.06)}.btn:disabled{color:var(--text3);border-color:var(--border);background:#f5f5f5;cursor:not-allowed}.btn+.btn{margin-left:8px}.tag{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;font-size:12px;background:#fafafa;border:1px solid var(--border);color:var(--text2);white-space:nowrap}.tag.blue{background:#e6f4ff;border-color:#91caff;color:#1677ff}.tag.green{background:#f6ffed;border-color:#b7eb8f;color:#389e0d}.tag.orange{background:#fff7e6;border-color:#ffd591;color:#d46b08}.tag.red{background:#fff2f0;border-color:#ffccc7;color:#cf1322}.tag.purple{background:#f9f0ff;border-color:#d3adf7;color:#722ed1}.tag.gray{background:#fafafa;border-color:var(--border);color:var(--text3)}.card{background:#fff;border-radius:8px;box-shadow:var(--shadow)}.card-h{padding:14px 24px;border-bottom:1px solid var(--split);display:flex;align-items:center;gap:10px}.card-b{padding:24px}.page-h{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;gap:16px;flex-wrap:wrap}.page-h h2{font-size:20px;font-weight:600}.page-h p{color:var(--text3);font-size:13px;margin-top:4px}.tbl-wrap{overflow-x:auto}table.tbl{width:100%;border-collapse:collapse;font-size:14px}.tbl th{text-align:left;font-weight:500;background:#fafafa;color:var(--text2);padding:12px 16px;border-bottom:1px solid var(--split);white-space:nowrap}.tbl td{padding:13px 16px;border-bottom:1px solid var(--split);vertical-align:middle}.tbl tbody tr:hover td{background:#fafafa}.tbl tr:last-child td{border-bottom:none}.tbl .ops .btn{margin-left:0;margin-right:4px}.fi{margin-bottom:16px}.fi>label{display:block;color:var(--text2);margin-bottom:8px;font-size:13px}.req{color:var(--error);margin-right:4px}input.ipt,select.ipt,textarea.ipt{width:100%;height:32px;border:1px solid var(--border);border-radius:6px;padding:0 11px;font-size:14px;color:var(--text);background:#fff;outline:none;transition:.2s;font-family:inherit}textarea.ipt{height:auto;padding:8px 11px;resize:vertical;line-height:1.6}.ipt:focus{border-color:var(--primary);box-shadow:0 0 0 2px rgba(5,145,255,.1)}.ipt:disabled{background:#f5f5f5;color:var(--text3);cursor:not-allowed}.row{display:flex;gap:16px}.row .fi{flex:1;min-width:0}input[type=range]{accent-color:var(--primary);width:100%}input[type=color]{width:34px;height:26px;border:1px solid var(--border);border-radius:4px;padding:0;background:none;cursor:pointer;vertical-align:middle}input[type=checkbox],input[type=radio]{accent-color:var(--primary);margin-right:5px;vertical-align:-1px}.filter{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;align-items:center}.filter .fw{display:flex;align-items:center;gap:8px}.filter label{color:var(--text2);white-space:nowrap;font-size:13px}.filter .ipt{width:170px;height:32px}.sw{position:relative;width:38px;height:20px;background:rgba(0,0,0,.25);border-radius:10px;cursor:pointer;transition:.2s;flex-shrink:0;display:inline-block;vertical-align:middle}.sw::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 2px rgba(0,0,0,.2)}.sw.on{background:var(--primary)}.sw.on::after{left:20px}#modal-root .mask{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding-top:8vh;animation:fadein .2s;overflow:auto}.modal{background:#fff;border-radius:8px;box-shadow:0 6px 16px rgba(0,0,0,.08),0 3px 6px -4px rgba(0,0,0,.12),0 9px 28px 8px rgba(0,0,0,.05);width:560px;max-width:94vw;max-height:84vh;display:flex;flex-direction:column;animation:zoomin .18s}.modal-h{padding:16px 24px;font-size:16px;font-weight:600;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}.modal-x{cursor:pointer;color:var(--text3);font-size:15px;padding:2px 6px;border-radius:4px}.modal-x:hover{background:#f5f5f5;color:var(--text)}.modal-b{padding:8px 24px 24px;overflow:auto}.modal-f{padding:12px 16px;border-top:1px solid var(--split);display:flex;justify-content:flex-end;gap:8px;border-radius:0 0 8px 8px;flex-shrink:0}@keyframes zoomin{from{transform:scale(.96);opacity:0}to{transform:scale(1);opacity:1}}@keyframes fadein{from{opacity:0}to{opacity:1}}@keyframes slidein{from{transform:translateY(-8px);opacity:0}to{transform:none;opacity:1}}#toast-root{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:2000;display:flex;flex-direction:column;gap:10px;align-items:center;pointer-events:none}.msg{display:flex;align-items:center;gap:8px;background:#fff;border-radius:8px;box-shadow:0 6px 16px rgba(0,0,0,.08),0 3px 6px -4px rgba(0,0,0,.12),0 9px 28px 8px rgba(0,0,0,.05);padding:9px 16px;font-size:14px;animation:slidein .25s;transition:opacity .3s}.msg .dot{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;flex-shrink:0}.msg.success .dot{background:var(--success)}.msg.error .dot{background:var(--error)}.msg.info .dot{background:var(--primary)}.msg.warning .dot{background:var(--warning)}.alert{display:flex;gap:10px;padding:9px 14px;border-radius:6px;font-size:13px;margin-bottom:16px;align-items:flex-start;line-height:1.7}.alert .ic{font-weight:700;flex-shrink:0}.alert.info{background:#e6f4ff;border:1px solid #91caff}.alert.warning{background:#fffbe6;border:1px solid #ffe58f}.alert.error{background:#fff2f0;border:1px solid #ffccc7}.alert.success{background:#f6ffed;border:1px solid #b7eb8f}.empty{padding:48px 0;text-align:center;color:var(--text3)}.empty .box{font-size:40px;margin-bottom:10px;opacity:.45}.pager{display:flex;justify-content:flex-end;align-items:center;gap:8px;padding:14px 4px 0;color:var(--text2);font-size:13px}.pg{min-width:28px;height:28px;border:1px solid var(--border);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;background:#fff;padding:0 6px}.pg.cur{border-color:var(--primary);color:var(--primary)}.seg{display:inline-flex;background:rgba(0,0,0,.04);border-radius:6px;padding:2px;gap:2px}.seg .s{padding:4px 14px;border-radius:4px;cursor:pointer;font-size:13px;color:var(--text2);transition:.15s}.seg .s.active{background:#fff;color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.1);font-weight:500}.tabs{display:flex;gap:28px;border-bottom:1px solid var(--split)}.tabs .t{padding:10px 2px;cursor:pointer;color:var(--text2);position:relative;font-size:14px}.tabs .t.active{color:var(--primary);font-weight:500}.tabs .t.active::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--primary)}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}.stat{background:#fff;border-radius:8px;box-shadow:var(--shadow);padding:20px}.stat .v{font-size:26px;font-weight:600;margin:8px 0 2px}.stat .l{color:var(--text3);font-size:13px}.stat .ic{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px}</style>
+<style data-page-node-id="sbJvTqga4Gt9XgVXd9fXQg" data-pnid-children="henCffEBkEtgJzX7aG5g74">.ed-top{background:#fff;border-radius:8px;box-shadow:var(--shadow);padding:11px 18px;display:flex;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap;flex-shrink:0}.ed-body{display:flex;gap:14px;height:calc(100vh - 168px);min-height:540px}.ed-panel{background:#fff;border-radius:8px;box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden}.ed-p-h{padding:12px 16px;border-bottom:1px solid var(--split);font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px;flex-shrink:0}.ed-left{width:250px;flex-shrink:0}.ed-left .scroll{flex:1;overflow-y:auto;padding:12px}.ed-canvas{flex:1;min-width:0;background:#f0f2f5;display:flex;align-items:stretch;justify-content:center;padding:20px 0}.ed-right{width:318px;flex-shrink:0}.ed-right .scroll{flex:1;overflow-y:auto;padding:16px}.scroll::-webkit-scrollbar{width:5px}.scroll::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:3px}.cat-t{font-size:12px;color:var(--text3);margin:12px 4px 7px;font-weight:600}.cat-t:first-child{margin-top:2px}.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{width:calc(50% - 4px);border:1px solid var(--split);border-radius:6px;padding:8px 6px;display:flex;align-items:center;gap:7px;cursor:grab;background:#fff;font-size:12px;transition:.15s;user-select:none}.chip:hover{border-color:var(--primary);color:var(--primary);box-shadow:0 0 0 2px rgba(5,145,255,.08)}.chip .ci{font-size:16px;flex-shrink:0}.chip small{display:block;color:var(--text3);font-size:10px;font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.phone{width:375px;background:#fff;border-radius:20px;box-shadow:0 10px 36px rgba(0,0,0,.14);overflow:hidden;display:flex;flex-direction:column;border:7px solid #212121;flex-shrink:0}.pv .phone,.frame-wrap .phone{height:730px}.ed-canvas .phone{height:100%;margin:0 auto}.ph-status{height:30px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 20px;font-size:11px;color:var(--text);font-weight:600;flex-shrink:0;border-bottom:1px solid var(--split)}.ph-scr{flex:1;overflow-y:auto;position:relative;background:#f6f7f9}.ph-scr::-webkit-scrollbar{width:0}.add-slot{margin:8px;border:1.5px dashed var(--border);border-radius:8px;padding:9px;text-align:center;color:var(--text3);font-size:12px;cursor:pointer;flex-shrink:0}.add-slot:hover{border-color:var(--primary);color:var(--primary)}.cblock{position:relative;border:1.5px dashed transparent;cursor:pointer}.cblock:hover{border-color:#91caff}.cblock.sel{border-color:var(--primary);box-shadow:0 0 0 2px rgba(5,145,255,.15)}.cblock.db{box-shadow:0 -3px 0 0 var(--primary)}.cblock.da{box-shadow:0 3px 0 0 var(--primary)}.btools{position:absolute;top:-13px;right:8px;background:var(--primary);color:#fff;border-radius:6px;display:none;z-index:30;box-shadow:var(--shadow);overflow:hidden}.cblock.sel .btools,.cblock:hover .btools{display:flex}.btools span{padding:3px 9px;font-size:11px;cursor:pointer}.btools span:hover{background:rgba(255,255,255,.25)}.lock-badge{position:absolute;top:6px;left:6px;z-index:20;background:rgba(0,0,0,.55);color:#fff;font-size:10px;padding:2px 7px;border-radius:4px;display:flex;gap:4px;align-items:center}.lock-badge.warn{background:#cf1322}.locked-wrap{margin:6px 0;border:2px solid #2f54eb;border-radius:10px;overflow:hidden;position:relative}.locked-note{background:#f0f5ff;color:#2f54eb;font-size:11px;padding:4px 10px;display:flex;align-items:center;gap:5px}.zone{margin:12px 8px;border:1.5px dashed #9fb4d8;border-radius:10px;padding:10px 6px 6px;position:relative;min-height:52px}.zone .z-t{position:absolute;top:-9px;left:12px;background:#fff;padding:0 6px;font-size:11px;color:#2f54eb;font-weight:600}.zone.over{background:rgba(22,119,255,.05);border-color:var(--primary)}.z-empty{color:var(--text3);font-size:12px;text-align:center;padding:12px 0}.h5-header{background:linear-gradient(120deg,var(--tc1,#722ed1),var(--tc2,#1677ff));color:#fff;padding:11px 14px;display:flex;align-items:center;gap:12px;font-size:15px}.h5-banner{height:150px;position:relative;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:600;letter-spacing:1px;text-shadow:0 1px 3px rgba(0,0,0,.18)}.h5-dots{position:absolute;bottom:9px;left:0;right:0;display:flex;gap:4px;justify-content:center}.h5-dots i{width:5px;height:5px;border-radius:3px;background:rgba(255,255,255,.5)}.h5-dots i.on{background:#fff;width:14px}.h5-promo{color:#cf1322;font-size:12px;padding:8px 12px;display:flex;align-items:center;gap:6px;overflow:hidden;white-space:nowrap}.h5-grid{padding:12px;background:#f6f7f9}.p-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}.p-card{background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.05)}.p-card .img{height:126px;position:relative;display:flex;align-items:center;justify-content:center;font-size:34px}.p-card .off{position:absolute;top:6px;left:6px;background:#cf1322;color:#fff;font-size:10px;padding:1px 6px;border-radius:3px}.p-card .body{padding:8px 10px}.p-card .t{font-size:12px;line-height:1.45;height:34px;overflow:hidden;color:var(--text)}.p-card .pr{color:#cf1322;font-weight:700;margin-top:5px;font-size:14px}.p-card .pr s{color:var(--text3);font-weight:400;font-size:11px;margin-left:5px}.h5-sect{background:#fff;padding:14px}.h5-sect h4{font-size:15px;margin-bottom:11px;font-weight:600}.h5-sect h4 .more{float:right;font-size:11px;color:var(--text3);font-weight:400;margin-top:3px}.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}.cat-grid .cg{background:#fff;border-radius:8px;padding:10px 4px;font-size:11px;color:var(--text2)}.cat-grid .cg i{font-style:normal;font-size:22px;display:block;margin-bottom:4px}.tst{background:#fff;border:1px solid var(--split);border-radius:8px;padding:11px;font-size:12px;color:var(--text2);margin-bottom:9px}.tst .who{display:flex;justify-content:space-between;margin-bottom:5px;font-size:11px;color:var(--text3)}.faq-i{border-bottom:1px solid var(--split);padding:11px 2px;font-size:13px;display:flex;justify-content:space-between;gap:8px}.faq-i:last-child{border-bottom:none}.trust{display:flex;justify-content:space-around;padding:13px;background:#fff;font-size:11px;color:var(--text2);text-align:center}.trust i{font-style:normal;font-size:20px;display:block;margin-bottom:4px}.h5-footer{background:#262626;color:rgba(255,255,255,.5);padding:16px 14px;font-size:11px;text-align:center;line-height:1.9}.cd-box{display:flex;gap:4px;align-items:center;justify-content:center;padding:10px;background:linear-gradient(90deg,#fff1f0,#fff7e6);color:#cf1322;font-size:13px}.cd-b{background:#cf1322;color:#fff;border-radius:4px;padding:2px 6px;font-weight:700;font-size:12px}.sp-item{display:flex;gap:9px;align-items:center;padding:7px 0;font-size:12px;color:var(--text2)}.rev{padding:11px 0;border-bottom:1px solid var(--split);font-size:12px;color:var(--text2)}.rev:last-child{border-bottom:none}.stars{color:#faad14;letter-spacing:1px}.spec-r{display:flex;font-size:12px;color:var(--text2);padding:7px 0;border-bottom:1px dashed var(--split)}.spec-r b{width:96px;flex-shrink:0;color:var(--text);font-weight:500}.pdp-gal{position:relative;height:300px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.2)}.pdp-thumbs{display:flex;gap:7px;padding:9px 12px;background:#fff;overflow:auto}.pdp-thumbs i{width:44px;height:44px;border-radius:6px;flex-shrink:0;border:2px solid transparent;display:flex;align-items:center;justify-content:center;font-size:18px}.pdp-thumbs i.on{border-color:var(--primary)}.pdp-info{background:#fff;padding:13px 14px}.pdp-price{display:flex;align-items:baseline;gap:9px}.pdp-price .now{color:#cf1322;font-size:24px;font-weight:700}.pdp-price .old{color:var(--text3);text-decoration:line-through;font-size:13px}.pdp-title{font-size:15px;line-height:1.5;margin:9px 0 6px;font-weight:500}.sku-l{font-size:12px;color:var(--text2);margin:11px 0 7px}.swatch{display:inline-flex;width:30px;height:30px;border-radius:50%;border:2px solid #fff;outline:1px solid var(--border);margin-right:8px;cursor:pointer;align-items:center;justify-content:center;font-size:13px}.swatch.on{outline:2px solid var(--primary)}.size-chip{display:inline-flex;padding:5px 13px;border:1px solid var(--border);border-radius:6px;font-size:12px;margin:0 8px 8px 0;cursor:pointer}.size-chip.on{border-color:var(--primary);color:var(--primary);background:#e6f4ff}.qty{display:inline-flex;align-items:center;border:1px solid var(--border);border-radius:6px;overflow:hidden}.qty b{padding:5px 11px;cursor:pointer;color:var(--text2);font-weight:400;font-size:15px}.qty b:hover{background:#f5f5f5}.qty span{padding:5px 14px;border-left:1px solid var(--split);border-right:1px solid var(--split);font-weight:500}.buy-bar{position:sticky;bottom:0;display:flex;background:#fff;box-shadow:0 -2px 10px rgba(0,0,0,.07);z-index:10}.buy-bar .cart{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:#fff3e0;color:#fa8c16;font-weight:600;font-size:14px;padding:13px}.buy-bar .buy{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:linear-gradient(90deg,#ff7a45,#fa541c);color:#fff;font-weight:600;font-size:14px;padding:13px}.frame-wrap{display:flex;justify-content:center;padding:8px 0 24px;background:linear-gradient(180deg,#eef1f5,#e5e9ef)}.tpl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}.tpl-card{background:#fff;border-radius:8px;box-shadow:var(--shadow);overflow:hidden;transition:.2s}.tpl-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.09)}.tpl-cover{height:170px;position:relative;display:flex;align-items:center;justify-content:center;color:#fff}.tpl-cover .tf{width:130px}.tf i{display:block;background:rgba(255,255,255,.85);border-radius:4px;margin-bottom:5px}.tf i.h{height:18px}.tf i.m{height:9px;width:70%}.tf i.b{height:26px}.tpl-body{padding:14px 16px 16px}.tpl-body h4{font-size:15px;margin-bottom:6px}.tpl-body p{font-size:12px;color:var(--text3);line-height:1.6;min-height:38px}.tpl-foot{display:flex;justify-content:space-between;align-items:center;margin-top:10px}.kv{display:flex;font-size:13px;padding:7px 0}.kv b{width:110px;color:var(--text3);font-weight:400;flex-shrink:0}.img-thumb{position:relative;width:64px;height:64px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff}.img-thumb .x{position:absolute;top:-7px;right:-7px;width:18px;height:18px;border-radius:50%;background:var(--error);color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow)}.img-add{width:64px;height:64px;border:1.5px dashed var(--border);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--text3);font-size:11px;cursor:pointer;gap:2px}.img-add:hover{border-color:var(--primary);color:var(--primary)}.img-add .plus{font-size:18px}</style>
 </head>
 <body data-page-node-id="GzOGXr3qTDKVaz2VLhpPiG">
 <div data-page-node-id="HPU03taL5H8KadDoHdPWG3" class="app">
-  <aside data-page-node-id="loS9un2BxaOqqwZFDb2E8Y" class="sider">
-    <div data-page-node-id="sq0dLtwlEmeEP66IEI7SKx" class="logo"><span data-page-node-id="1y9ryTivlcIjZgPyHuIcs3" class="logo-badge"><!--pnid:hN970JfPHE4G7XhSdhmG5I-->🛍️</span><span data-page-node-id="CSKrUue8tA74triQQQcnyq"><!--pnid:nDLAxZbIkGTAgAwpsMXuDB-->跨境 DIY 建站平台</span></div>
-    <nav data-page-node-id="uviYmLeopO2awDFDuTR7rE" class="menu" id="menu"></nav>
-    <div data-page-node-id="EnsAiKykT4M3EeEDaOdIRw" class="sider-foot"><!--pnid:vlM8EJPF0cBO6XkvePdder-->SRS V1.1 · 管理端高保真原型</div>
-  </aside>
-  <div data-page-node-id="XDbaVGGytojBFWZqpS1nS6" class="main">
-    <header data-page-node-id="Z7RQvFOIpYx3FJ17DEG9no" class="header">
-      <span data-page-node-id="3HCaH4A0uR7iOxvrrpWzez" class="crumb" id="crumb"></span>
-      <div data-page-node-id="uPT4UyQVldpOHQi5XfEP1C" class="header-right">
-        <div data-page-node-id="SskyJmYPIv6gUPRALG3tmi" class="site-pick" onclick="toggleSiteMenu(event)"><!--pnid:iusuuC7W97QYNsC7lmCkXn-->🏷️ <b data-page-node-id="1V1vWVa49qPo0a7WySyjzx" id="hdr-site"><!--pnid:PIaGvBwQizf8eLCQX2veax-->泰国美妆站</b><!--pnid:vWITHZQA8mB3lWBuBGIQkG--> ▾</div>
-        <div data-page-node-id="LEwC7hIOCbRG7eQ5X5plSa" class="site-menu" id="site-menu" style="display:none"></div>
-        <button data-page-node-id="LhW6x9fbsbeGJDkDCEkEYd" class="btn sm" onclick="go('#/preview/home')"><!--pnid:iPFD0dvgHi6h2sNRZ3na1o-->👁 预览独立站</button>
-        <div data-page-node-id="OWXjlcc5ssCPoTLayoIbMG" class="avatar"><!--pnid:IDv8z4ugPowfY7ChVaZw3B-->运</div>
-      </div>
-    </header>
-    <main data-page-node-id="nGvoV0T2JFD67oHgaLaK9D" class="content" id="view"></main>
-  </div>
+<aside data-page-node-id="loS9un2BxaOqqwZFDb2E8Y" class="sider">
+ <div data-page-node-id="sq0dLtwlEmeEP66IEI7SKx" class="logo"><span data-page-node-id="1y9ryTivlcIjZgPyHuIcs3" class="logo-badge">🛍️</span><span data-page-node-id="CSKrUue8tA74triQQQcnyq">跨境 DIY 建站平台</span></div>
+ <nav data-page-node-id="uviYmLeopO2awDFDuTR7rE" class="menu" id="menu"></nav>
+ <div data-page-node-id="EnsAiKykT4M3EeEDaOdIRw" class="sider-foot">SRS V1.1 · 管理端高保真原型</div>
+</aside>
+ <div data-page-node-id="XDbaVGGytojBFWZqpS1nS6" class="main">
+<header data-page-node-id="Z7RQvFOIpYx3FJ17DEG9no" class="header">
+ <span data-page-node-id="3HCaH4A0uR7iOxvrrpWzez" class="crumb" id="crumb"></span>
+ <div data-page-node-id="uPT4UyQVldpOHQi5XfEP1C" class="header-right">
+<div data-page-node-id="SskyJmYPIv6gUPRALG3tmi" class="site-pick" onclick="toggleSiteMenu(event)">🏷️ <b data-page-node-id="1V1vWVa49qPo0a7WySyjzx" id="hdr-site">泰国美妆站</b> ▾</div>
+<div data-page-node-id="LEwC7hIOCbRG7eQ5X5plSa" class="site-menu" id="site-menu" style="display:none"></div>
+ <button data-page-node-id="LhW6x9fbsbeGJDkDCEkEYd" class="btn sm" onclick="go('#/preview/home')">👁 预览独立站</button>
+ <div data-page-node-id="OWXjlcc5ssCPoTLayoIbMG" class="avatar">运</div>
+</div>
+ </header>
+<main data-page-node-id="nGvoV0T2JFD67oHgaLaK9D" class="content" id="view"></main>
+</div>
 </div>
 <div data-page-node-id="LRSwO3tbqmQ8mkqkzEbj4r" id="modal-root"></div>
 <div data-page-node-id="FTxDdHlJh0LtwZgtpZYTId" id="toast-root"></div>
-<script data-page-node-id="Gokng8niN4OF05Fx8f8zxa" data-pnid-children="tbZNVC8h5e46bU7ifOtS6t">
-/* ================= 数据模型（演示数据 · 对应 SRS V1.1） ================= */
-const state = {
-  unsaved:false, savedAt:'16:20:44', site:'S001', copyLang:'th 泰语', cfgTab:'prop', sel:'',
-  theme:{ main:'#722ed1', sub:'#1677ff', font:'默认字体（PingFang SC）', radius:'8px' },
-  sites:[
-    {id:'S001',name:'泰国美妆站',domain:'th-beauty.shopform.com',lang:'th 泰语',market:'泰国',status:'dirty',last:'2026-08-25 14:32',note:'主力投放站，Meta + TikTok 流量',cur:true},
-    {id:'S002',name:'波兰 3C 站',domain:'pl-tech.shopform.com',lang:'pl 波兰语',market:'波兰',status:'latest',last:'2026-08-20 09:12',note:''},
-    {id:'S003',name:'越南服饰站',domain:'',lang:'vi 越南语',market:'越南',status:'unpublished',last:'-',note:'筹备中'},
-    {id:'S004',name:'印尼家居站',domain:'id-home.shopform.com',lang:'id 印尼语',market:'印尼',status:'dirty',last:'2026-08-18 11:40',note:''},
-  ],
-  comps:[
-    {key:'site_header',name:'站点顶栏',cat:'导航',pages:['通用'],lock:false,on:true},
-    {key:'image_carousel',name:'图片轮播',cat:'营销',pages:['首页'],lock:false,on:true},
-    {key:'hero_banner',name:'首屏大图',cat:'布局',pages:['首页'],lock:false,on:true},
-    {key:'category_grid',name:'分类宫格',cat:'导航',pages:['首页'],lock:false,on:true},
-    {key:'product_grid',name:'商品网格',cat:'商品',pages:['首页'],lock:false,on:true},
-    {key:'product_slider',name:'商品横滑',cat:'商品',pages:['首页'],lock:false,on:true},
-    {key:'promo_bar',name:'促销条',cat:'营销',pages:['首页'],lock:false,on:true},
-    {key:'countdown',name:'倒计时',cat:'营销',pages:['通用'],lock:false,on:true},
-    {key:'coupon_banner',name:'优惠券横幅',cat:'营销',pages:['通用'],lock:false,on:false},
-    {key:'testimonial_slider',name:'评价轮播',cat:'信任',pages:['首页'],lock:false,on:true},
-    {key:'trust_badges',name:'信任徽章',cat:'信任',pages:['通用'],lock:false,on:true},
-    {key:'faq_accordion',name:'FAQ 折叠',cat:'内容',pages:['通用'],lock:false,on:true},
-    {key:'rich_text',name:'图文块',cat:'内容',pages:['通用'],lock:false,on:true},
-    {key:'site_footer',name:'站点页脚',cat:'页脚',pages:['通用'],lock:false,on:true},
-    {key:'service_widget',name:'客服悬浮',cat:'工具',pages:['通用'],lock:false,on:true},
-    {key:'cookie_tips',name:'Cookie 提示',cat:'工具',pages:['通用'],lock:false,on:true},
-    {key:'product_gallery',name:'商品主图画廊',cat:'转化',pages:['商品详情页'],lock:true,on:true},
-    {key:'product_variants',name:'规格选择器',cat:'转化',pages:['商品详情页'],lock:true,on:true},
-    {key:'buy_buttons',name:'加购 / 立即购买',cat:'转化',pages:['商品详情页'],lock:true,on:true},
-    {key:'selling_points',name:'卖点列表',cat:'信任',pages:['商品详情页'],lock:false,on:true},
-    {key:'review_summary',name:'评价汇总',cat:'信任',pages:['商品详情页'],lock:false,on:true},
-    {key:'review_list',name:'用户评价列表',cat:'信任',pages:['商品详情页'],lock:false,on:true},
-    {key:'spec_table',name:'规格参数表',cat:'内容',pages:['商品详情页'],lock:false,on:true},
-    {key:'related_products',name:'相关商品',cat:'商品',pages:['商品详情页'],lock:false,on:true},
-  ],
-  packs:[
-    {id:1,tpl:'Classic 转化经典版',lang:'英语 en',keys:42,upd:'2026-08-24 10:12',ok:true},
-    {id:2,tpl:'Classic 转化经典版',lang:'泰语 th',keys:42,upd:'2026-08-24 10:30',ok:true},
-    {id:3,tpl:'Classic 转化经典版',lang:'波兰语 pl',keys:31,upd:'2026-08-23 16:02',ok:false},
-    {id:4,tpl:'Fashion 时尚服饰',lang:'英语 en',keys:36,upd:'2026-08-22 09:44',ok:true},
-    {id:5,tpl:'Fashion 时尚服饰',lang:'越南语 vi',keys:28,upd:'2026-08-21 15:20',ok:false},
-    {id:6,tpl:'Tech 3C 数码',lang:'英语 en',keys:30,upd:'2026-08-19 11:05',ok:true},
-    {id:7,tpl:'Beauty 美妆个护',lang:'印尼语 id',keys:33,upd:'2026-08-18 09:58',ok:true},
-  ],
-  i18nKeys:[
-    {k:'btn.add_to_cart',en:'Add to cart',th:'เพิ่มลงตะกร้า'},
-    {k:'btn.buy_now',en:'Buy now',th:'ซื้อทันที'},
-    {k:'pdp.in_stock',en:'In stock',th:'มีสินค้า'},
-    {k:'pdp.only_left',en:'Only {n} left',th:'เหลือเพียง {n} ชิ้น'},
-    {k:'home.view_more',en:'View more',th:''},
-    {k:'cart.title',en:'Shopping cart',th:'ตะกร้าสินค้า'},
-    {k:'footer.copyright',en:'© 2026 My Store',th:''},
-  ],
-  templates:[
-    {id:'tpl-classic',name:'Classic 转化经典版',markets:['泰国','越南'],desc:'以转化为导向的经典结构：首屏大图 + 商品网格 + 信任徽章 + FAQ，适合通用类目快速起量。',cover:'linear-gradient(135deg,#1677ff,#722ed1)',blocks:28,
-     home:['site_header','image_carousel','promo_bar','category_grid','product_grid','testimonial_slider','trust_badges','faq_accordion','site_footer'],top:['countdown'],mid:['selling_points','review_summary'],bottom:['review_list','spec_table','related_products']},
-    {id:'tpl-fashion',name:'Fashion 时尚服饰',markets:['越南','印尼'],desc:'多图轮播突出上新节奏，搭配评价轮播与倒计时，服饰类目首选。',cover:'linear-gradient(135deg,#f472b6,#c084fc)',blocks:32,
-     home:['site_header','image_carousel','hero_banner','category_grid','product_slider','testimonial_slider','faq_accordion','site_footer'],top:['promo_bar'],mid:['selling_points'],bottom:['review_list','faq_accordion','related_products']},
-    {id:'tpl-tech',name:'Tech 3C 数码',markets:['波兰'],desc:'参数对比与卖点驱动，规格参数表前置，适合高客单价 3C 类目。',cover:'linear-gradient(135deg,#0ea5e9,#22d3ee)',blocks:26,
-     home:['site_header','hero_banner','category_grid','product_grid','trust_badges','faq_accordion','site_footer'],top:[],mid:['selling_points','spec_table'],bottom:['review_list','related_products']},
-    {id:'tpl-beauty',name:'Beauty 美妆个护',markets:['泰国'],desc:'评测内容前置强化信任，评价汇总 + 倒计时促销组合，美妆个护专用。',cover:'linear-gradient(135deg,#fb7185,#fbbf24)',blocks:30,
-     home:['site_header','image_carousel','hero_banner','product_grid','testimonial_slider','trust_badges','site_footer'],top:['countdown'],mid:['review_summary','selling_points'],bottom:['review_list','faq_accordion']},
-    {id:'tpl-home',name:'Home 家居生活',markets:['印尼'],desc:'场景化陈列 + 促销倒计时，信任徽章强化配送与售后保障。',cover:'linear-gradient(135deg,#34d399,#0ea5e9)',blocks:25,
-     home:['site_header','image_carousel','category_grid','product_grid','promo_bar','trust_badges','faq_accordion','site_footer'],top:[],mid:['selling_points'],bottom:['spec_table','related_products']},
-  ],
-  homeDraft:[
-    {uid:'h1',type:'site_header',props:{shop:'GLAMORA Thailand'}},
-    {uid:'h2',type:'image_carousel',props:{imgs:3,autoplay:true,link:''}},
-    {uid:'h3',type:'promo_bar',props:{text:'🎉 大促进行中：全场满 ฿1,500 减 ฿200 · 免运费',bg:'#fff1f0'}},
-    {uid:'h4',type:'hero_banner',props:{title:'NEW SEASON',sub:'焕新季 · 全场新品 8 折起',btn:'立即抢购'}},
-    {uid:'h5',type:'category_grid',props:{cols:4}},
-    {uid:'h6',type:'product_grid',props:{title:'本周热卖 TOP 10',count:6,cols:2}},
-    {uid:'h7',type:'coupon_banner',props:{text:'新客专享优惠券 · 立减 ฿100'},disabled:true},
-    {uid:'h8',type:'testimonial_slider',props:{title:'买家真实评价',n:3}},
-    {uid:'h9',type:'faq_accordion',props:{title:'常见问题'}},
-    {uid:'h10',type:'site_footer',props:{copy:'© 2026 GLAMORA. All rights reserved.'}},
-  ],
-  pdp:{
-    top:[{uid:'d1',type:'countdown',props:{until:'2026-09-01 20:00',text:'限时闪购结束倒计时'}}],
-    mid:[{uid:'d2',type:'selling_points',props:{title:'为什么选择我们'}},{uid:'d3',type:'review_summary',props:{}}],
-    bottom:[{uid:'d4',type:'review_list',props:{}},{uid:'d5',type:'spec_table',props:{title:'规格参数'}},{uid:'d6',type:'related_products',props:{title:'相关商品'}}],
-  },
-  history:[
-    {v:'V12',time:'2026-08-25 14:32',by:'somchai@glamora.co',scope:'全部',cur:true},
-    {v:'V11',time:'2026-08-18 10:05',by:'somchai@glamora.co',scope:'首页'},
-    {v:'V10',time:'2026-08-12 17:21',by:'ops@platform',scope:'商品详情页'},
-    {v:'V9',time:'2026-08-02 16:44',by:'somchai@glamora.co',scope:'全部'},
-    {v:'V8',time:'2026-07-21 09:30',by:'ops@platform',scope:'首页'},
-  ],
-  product:{title:'Glow Serum 维 C 精华 30ml · 焕亮套装',price:'฿1,290',old:'฿1,990',off:'-35%',rating:'4.8',reviews:'2,3k',sold:'5.6k+',stock:128},
-};
-const DEFPROPS={
-  site_header:{shop:'My Store'},image_carousel:{imgs:3,autoplay:true,link:''},
-  hero_banner:{title:'BIG SALE',sub:'全场新品 8 折起',btn:'立即抢购'},
-  category_grid:{cols:4},product_grid:{title:'热卖商品',count:6,cols:2},
-  product_slider:{title:'为你推荐',count:8},
-  promo_bar:{text:'🎉 新客下单立减 $5 · 全场满 $49 免运费',bg:'#fff1f0'},
-  countdown:{until:'2026-09-01 20:00',text:'限时特惠结束倒计时'},
-  coupon_banner:{text:'新客专享优惠券 · 点击领取'},
-  testimonial_slider:{title:'买家真实评价',n:3},trust_badges:{},
-  faq_accordion:{title:'常见问题'},rich_text:{title:'品牌故事',body:'这里是图文内容正文…'},
-  site_footer:{copy:'© 2026 My Store. All rights reserved.'},
-  selling_points:{title:'为什么选择我们'},review_summary:{},review_list:{},
-  spec_table:{title:'规格参数'},related_products:{title:'相关商品'},
-};
-const PRODS=[
-  {n:'Water Glow 精华水 150ml',p:'฿590',o:'฿890',e:'💧',g:0},
-  {n:'Silk 丝滑防晒霜 SPF50+',p:'฿420',o:'฿560',e:'🧴',g:1},
-  {n:'Rose 玫瑰晚安面膜 80g',p:'฿350',o:'฿480',e:'🌹',g:2},
-  {n:'Amino 氨基酸洁面乳',p:'฿280',o:'฿390',e:'🧼',g:3},
-  {n:'Pearl 珍珠焕颜精华',p:'฿790',o:'฿1,090',e:'✨',g:4},
-  {n:'Herb 草本舒缓爽肤水',p:'฿320',o:'฿420',e:'🌿',g:5},
-  {n:'Collagen 胶原眼霜 20g',p:'฿640',o:'฿850',e:'👁️',g:2},
-  {n:'Vitamin 维 C 面霜 50g',p:'฿520',o:'฿690',e:'🍊',g:1},
-];
-const GRADS=['linear-gradient(135deg,#a78bfa,#f0abfc)','linear-gradient(135deg,#60a5fa,#a7f3d0)','linear-gradient(135deg,#fbbf24,#fb7185)','linear-gradient(135deg,#34d399,#22d3ee)','linear-gradient(135deg,#f472b6,#c084fc)','linear-gradient(135deg,#f97316,#facc15)'];
-const COPYKEYS={
-  product_grid:['block.title','btn.view_more'],product_slider:['block.title','btn.view_all'],
-  testimonial_slider:['block.title'],faq_accordion:['block.title'],
-  countdown:['label.ends_in'],site_footer:['footer.copyright'],
-  rich_text:['block.title'],selling_points:['block.title'],spec_table:['block.title'],
-  related_products:['block.title'],review_list:['block.reviews'],site_header:['header.search_ph'],
-  promo_bar:['promo.text'],hero_banner:['banner.title','banner.btn'],coupon_banner:['coupon.text'],
-  image_carousel:['carousel.slide_1'],category_grid:['grid.title'],
-};
-const CATS=['布局','营销','商品','信任','内容','导航','页脚','工具'];
-const ICONS={site_header:'🛎️',image_carousel:'🖼️',hero_banner:'📐',category_grid:'🗺️',product_grid:'🛍️',product_slider:'↔️',promo_bar:'📣',countdown:'⏰',coupon_banner:'🎟️',testimonial_slider:'💬',trust_badges:'🛡️',faq_accordion:'❓',rich_text:'📝',site_footer:'🔻',service_widget:'💬',cookie_tips:'🍪',product_gallery:'🖼️',product_variants:'⚙️',buy_buttons:'🛒',selling_points:'⭐',review_summary:'⭐',review_list:'💬',spec_table:'📋',related_products:'🔗'};
-</script>
-<script data-page-node-id="H06oIc1fAGa7CQk6bIngO4" data-pnid-children="aBbfgrg8XPioztX0Trs7qd">
-/* ================= 基础工具 & 路由 ================= */
-window.PAGES={};
-const $=s=>document.querySelector(s);
-const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-const nowT=()=>new Date().toLocaleTimeString('zh-CN',{hour12:false});
-const nowDT=()=>new Date().toLocaleString('zh-CN',{hour12:false}).replace(/\//g,'-');
-const uid=()=>'b'+Math.random().toString(36).slice(2,8);
-const comp=k=>state.comps.find(c=>c.key===k);
-const compName=k=>(comp(k)||{}).name||k;
-const curSite=()=>state.sites.find(s=>s.id===state.site)||state.sites[0];
-function go(h){ if(location.hash===h){render()}else{location.hash=h} }
-function toast(msg,type){
-  type=type||'success';
-  const t=document.createElement('div');t.className='msg '+type;
-  const ic={success:'✓',error:'✕',info:'ℹ',warning:'!'}[type];
-  t.innerHTML='<span class="dot">'+ic+'</span>'+msg;
-  $('#toast-root').appendChild(t);
-  setTimeout(()=>{t.style.opacity=0;setTimeout(()=>t.remove(),300)},2400);
-}
-function modal(html,w){ $('#modal-root').innerHTML='<div class="mask" onclick="if(event.target===this)mClose()"><div class="modal" style="width:'+(w||560)+'px">'+html+'</div></div>'; }
-const mHead=t=>'<div class="modal-h"><span>'+t+'</span><span class="modal-x" onclick="mClose()">✕</span></div>';
-const mFoot=b=>'<div class="modal-f">'+b+'</div>';
-function mClose(){ $('#modal-root').innerHTML=''; }
-function askConfirm(title,body,okLabel,okFn,danger){
-  window.__ok=()=>{mClose();okFn&&okFn()};
-  modal(mHead(title)+'<div class="modal-b" style="padding-top:14px">'+body+'</div>'+mFoot('<button class="btn" onclick="mClose()">取消</button><button class="btn '+(danger?'danger solid':'primary')+'" onclick="__ok()">'+(okLabel||'确定')+'</button>'),470);
-}
-const stMap={unpublished:{t:'未发布',cls:'gray'},dirty:{t:'有未发布更改',cls:'orange'},latest:{t:'已是最新',cls:'green'}};
-const stTag=s=>stMap[s]||stMap.unpublished;
-/* ---------- 菜单 & 路由 ---------- */
-const MENU=[
-  {group:'概览',items:[{t:'系统首页',i:'🏠',h:'#/dashboard'}]},
-  {group:'站点管理',items:[
-    {t:'我的站点',i:'🗂️',h:'#/site/list'},
-    {t:'模板库',i:'🎨',h:'#/site/templates'},
-    {t:'页面装修 · 首页',i:'📱',h:'#/site/editor/home'},
-    {t:'页面装修 · 商品详情页',i:'🛒',h:'#/site/editor/product'},
-    {t:'发布历史',i:'🕓',h:'#/site/publish-history'},
-  ]},
-  {group:'DIY 配置',items:[
-    {t:'页面区块库',i:'🧩',h:'#/diy/components'},
-    {t:'语言包管理',i:'🌐',h:'#/diy/i18n'},
-  ]},
-  {group:'独立站预览',items:[
-    {t:'H5 首页',i:'👁️',h:'#/preview/home'},
-    {t:'商品详情页',i:'🔍',h:'#/preview/product'},
-  ]},
-];
-const CRUMBS={'dashboard':'系统首页','site/list':'站点管理 / 我的站点','site/templates':'站点管理 / 模板库','site/editor/home':'站点管理 / 页面装修 / 首页','site/editor/product':'站点管理 / 页面装修 / 商品详情页','site/publish-history':'站点管理 / 发布历史','diy/components':'DIY 配置 / 页面区块库','diy/i18n':'DIY 配置 / 语言包管理','preview/home':'独立站预览 / H5 首页','preview/product':'独立站预览 / 商品详情页'};
-function render(){
-  const h=location.hash||'#/dashboard';
-  const key=h.slice(2)||'dashboard';
-  $('#menu').innerHTML=MENU.map(g=>'<div class="menu-group">'+g.group+'</div>'+g.items.map(m=>'<div class="mi '+(('#/'+key===m.h)?'active':'')+'" onclick="go(\''+m.h+'\')"><span class="ic">'+m.i+'</span>'+m.t+'</div>').join('')).join('');
-  const s=curSite();
-  $('#crumb').innerHTML='<b>跨境 DIY 建站</b><span style="margin:0 8px;color:var(--split)">/</span>'+(CRUMBS[key]||'');
-  $('#hdr-site').textContent=s.name;
-  $('#site-menu').innerHTML='<div class="sm-t">切换当前站点（装修/发布均作用于该站点）</div>'+state.sites.map(x=>'<div class="sm-i '+(x.id===state.site?'cur':'')+'" onclick="switchSite(\''+x.id+'\')"><span>'+x.name+'</span><span class="text3">'+x.market+'</span></div>').join('');
-  const fn=PAGES[key]||PAGES['dashboard'];
-  $('#view').innerHTML=fn();
-  $('#view').className='content'+(key.indexOf('site/editor')===0?' no-pad':'');
-}
-window.addEventListener('hashchange',render);
-/* ---------- 站点切换 ---------- */
-function toggleSiteMenu(e){ e.stopPropagation(); const m=$('#site-menu'); m.style.display=m.style.display==='none'?'block':'none'; }
-document.addEventListener('click',()=>{ const m=$('#site-menu'); if(m)m.style.display='none'; });
-function switchSite(id){
-  if(id===state.site){ return; }
-  const doIt=()=>{ state.site=id; state.sites.forEach(s=>s.cur=s.id===id); state.unsaved=false; state.sel=''; render(); toast('已切换当前站点：'+state.sites.find(s=>s.id===id).name); };
-  if(state.unsaved){ askConfirm('切换站点','当前站点有<b>未保存的更改</b>，切换将放弃更改，是否继续？','继续切换',doIt,true); }
-  else doIt();
-}
-</script>
-<script data-page-node-id="DosscVhMhcorUQidxAlhmu" data-pnid-children="aiguTGWIyJ0WPq0JQWIVxm">
-/* ================= 系统首页 ================= */
-PAGES['dashboard']=()=>{
-  const s=curSite(),st=stTag(s.status);
-  const published=state.sites.filter(x=>x.status!=='unpublished').length;
-  const dirty=state.sites.filter(x=>x.status==='dirty').length;
-  return `
+<script data-page-node-id="Gokng8niN4OF05Fx8f8zxa" data-pnid-children="tbZNVC8h5e46bU7ifOtS6t">const state={unsaved:false,savedAt:'16:20:44',site:'S001',copyLang:'th 泰语',cfgTab:'prop',sel:'',theme:{main:'#722ed1',sub:'#1677ff',font:'默认字体（PingFang SC）',radius:'8px'},sites:[{id:'S001',name:'泰国美妆站',domain:'th-beauty.shopform.com',lang:'th 泰语',market:'泰国',status:'dirty',last:'2026-08-25 14:32',note:'主力投放站，Meta + TikTok 流量',cur:true},{id:'S002',name:'波兰 3C 站',domain:'pl-tech.shopform.com',lang:'pl 波兰语',market:'波兰',status:'latest',last:'2026-08-20 09:12',note:''},{id:'S003',name:'越南服饰站',domain:'',lang:'vi 越南语',market:'越南',status:'unpublished',last:'-',note:'筹备中'},{id:'S004',name:'印尼家居站',domain:'id-home.shopform.com',lang:'id 印尼语',market:'印尼',status:'dirty',last:'2026-08-18 11:40',note:''},],comps:[{key:'site_header',name:'站点顶栏',cat:'导航',pages:['通用'],lock:false,on:true},{key:'image_carousel',name:'图片轮播',cat:'营销',pages:['首页'],lock:false,on:true},{key:'hero_banner',name:'首屏大图',cat:'布局',pages:['首页'],lock:false,on:true},{key:'category_grid',name:'分类宫格',cat:'导航',pages:['首页'],lock:false,on:true},{key:'product_grid',name:'商品网格',cat:'商品',pages:['首页'],lock:false,on:true},{key:'product_slider',name:'商品横滑',cat:'商品',pages:['首页'],lock:false,on:true},{key:'promo_bar',name:'促销条',cat:'营销',pages:['首页'],lock:false,on:true},{key:'countdown',name:'倒计时',cat:'营销',pages:['通用'],lock:false,on:true},{key:'coupon_banner',name:'优惠券横幅',cat:'营销',pages:['通用'],lock:false,on:false},{key:'testimonial_slider',name:'评价轮播',cat:'信任',pages:['首页'],lock:false,on:true},{key:'trust_badges',name:'信任徽章',cat:'信任',pages:['通用'],lock:false,on:true},{key:'faq_accordion',name:'FAQ 折叠',cat:'内容',pages:['通用'],lock:false,on:true},{key:'rich_text',name:'图文块',cat:'内容',pages:['通用'],lock:false,on:true},{key:'site_footer',name:'站点页脚',cat:'页脚',pages:['通用'],lock:false,on:true},{key:'service_widget',name:'客服悬浮',cat:'工具',pages:['通用'],lock:false,on:true},{key:'cookie_tips',name:'Cookie 提示',cat:'工具',pages:['通用'],lock:false,on:true},{key:'product_gallery',name:'商品主图画廊',cat:'转化',pages:['商品详情页'],lock:true,on:true},{key:'product_variants',name:'规格选择器',cat:'转化',pages:['商品详情页'],lock:true,on:true},{key:'buy_buttons',name:'加购 / 立即购买',cat:'转化',pages:['商品详情页'],lock:true,on:true},{key:'selling_points',name:'卖点列表',cat:'信任',pages:['商品详情页'],lock:false,on:true},{key:'review_summary',name:'评价汇总',cat:'信任',pages:['商品详情页'],lock:false,on:true},{key:'review_list',name:'用户评价列表',cat:'信任',pages:['商品详情页'],lock:false,on:true},{key:'spec_table',name:'规格参数表',cat:'内容',pages:['商品详情页'],lock:false,on:true},{key:'related_products',name:'相关商品',cat:'商品',pages:['商品详情页'],lock:false,on:true},],packs:[{id:1,tpl:'Classic 转化经典版',lang:'英语 en',keys:42,upd:'2026-08-24 10:12',ok:true},{id:2,tpl:'Classic 转化经典版',lang:'泰语 th',keys:42,upd:'2026-08-24 10:30',ok:true},{id:3,tpl:'Classic 转化经典版',lang:'波兰语 pl',keys:31,upd:'2026-08-23 16:02',ok:false},{id:4,tpl:'Fashion 时尚服饰',lang:'英语 en',keys:36,upd:'2026-08-22 09:44',ok:true},{id:5,tpl:'Fashion 时尚服饰',lang:'越南语 vi',keys:28,upd:'2026-08-21 15:20',ok:false},{id:6,tpl:'Tech 3C 数码',lang:'英语 en',keys:30,upd:'2026-08-19 11:05',ok:true},{id:7,tpl:'Beauty 美妆个护',lang:'印尼语 id',keys:33,upd:'2026-08-18 09:58',ok:true},],i18nKeys:[{k:'btn.add_to_cart',en:'Add to cart',th:'เพิ่มลงตะกร้า'},{k:'btn.buy_now',en:'Buy now',th:'ซื้อทันที'},{k:'pdp.in_stock',en:'In stock',th:'มีสินค้า'},{k:'pdp.only_left',en:'Only {n} left',th:'เหลือเพียง {n} ชิ้น'},{k:'home.view_more',en:'View more',th:''},{k:'cart.title',en:'Shopping cart',th:'ตะกร้าสินค้า'},{k:'footer.copyright',en:'© 2026 My Store',th:''},],templates:[{id:'tpl-classic',name:'Classic 转化经典版',markets:['泰国','越南'],desc:'以转化为导向的经典结构：首屏大图 + 商品网格 + 信任徽章 + FAQ，适合通用类目快速起量。',cover:'linear-gradient(135deg,#1677ff,#722ed1)',blocks:28,home:['site_header','image_carousel','promo_bar','category_grid','product_grid','testimonial_slider','trust_badges','faq_accordion','site_footer'],top:['countdown'],mid:['selling_points','review_summary'],bottom:['review_list','spec_table','related_products']},{id:'tpl-fashion',name:'Fashion 时尚服饰',markets:['越南','印尼'],desc:'多图轮播突出上新节奏，搭配评价轮播与倒计时，服饰类目首选。',cover:'linear-gradient(135deg,#f472b6,#c084fc)',blocks:32,home:['site_header','image_carousel','hero_banner','category_grid','product_slider','testimonial_slider','faq_accordion','site_footer'],top:['promo_bar'],mid:['selling_points'],bottom:['review_list','faq_accordion','related_products']},{id:'tpl-tech',name:'Tech 3C 数码',markets:['波兰'],desc:'参数对比与卖点驱动，规格参数表前置，适合高客单价 3C 类目。',cover:'linear-gradient(135deg,#0ea5e9,#22d3ee)',blocks:26,home:['site_header','hero_banner','category_grid','product_grid','trust_badges','faq_accordion','site_footer'],top:[],mid:['selling_points','spec_table'],bottom:['review_list','related_products']},{id:'tpl-beauty',name:'Beauty 美妆个护',markets:['泰国'],desc:'评测内容前置强化信任，评价汇总 + 倒计时促销组合，美妆个护专用。',cover:'linear-gradient(135deg,#fb7185,#fbbf24)',blocks:30,home:['site_header','image_carousel','hero_banner','product_grid','testimonial_slider','trust_badges','site_footer'],top:['countdown'],mid:['review_summary','selling_points'],bottom:['review_list','faq_accordion']},{id:'tpl-home',name:'Home 家居生活',markets:['印尼'],desc:'场景化陈列 + 促销倒计时，信任徽章强化配送与售后保障。',cover:'linear-gradient(135deg,#34d399,#0ea5e9)',blocks:25,home:['site_header','image_carousel','category_grid','product_grid','promo_bar','trust_badges','faq_accordion','site_footer'],top:[],mid:['selling_points'],bottom:['spec_table','related_products']},],homeDraft:[{uid:'h1',type:'site_header',props:{shop:'GLAMORA Thailand'}},{uid:'h2',type:'image_carousel',props:{imgs:3,autoplay:true,link:''}},{uid:'h3',type:'promo_bar',props:{text:'🎉 大促进行中：全场满 ฿1,500 减 ฿200 · 免运费',bg:'#fff1f0'}},{uid:'h4',type:'hero_banner',props:{title:'NEW SEASON',sub:'焕新季 · 全场新品 8 折起',btn:'立即抢购'}},{uid:'h5',type:'category_grid',props:{cols:4}},{uid:'h6',type:'product_grid',props:{title:'本周热卖 TOP 10',count:6,cols:2}},{uid:'h7',type:'coupon_banner',props:{text:'新客专享优惠券 · 立减 ฿100'},disabled:true},{uid:'h8',type:'testimonial_slider',props:{title:'买家真实评价',n:3}},{uid:'h9',type:'faq_accordion',props:{title:'常见问题'}},{uid:'h10',type:'site_footer',props:{copy:'© 2026 GLAMORA. All rights reserved.'}},],pdp:{top:[{uid:'d1',type:'countdown',props:{until:'2026-09-01 20:00',text:'限时闪购结束倒计时'}}],mid:[{uid:'d2',type:'selling_points',props:{title:'为什么选择我们'}},{uid:'d3',type:'review_summary',props:{}}],bottom:[{uid:'d4',type:'review_list',props:{}},{uid:'d5',type:'spec_table',props:{title:'规格参数'}},{uid:'d6',type:'related_products',props:{title:'相关商品'}}],},history:[{v:'V12',time:'2026-08-25 14:32',by:'somchai@glamora.co',scope:'全部',cur:true},{v:'V11',time:'2026-08-18 10:05',by:'somchai@glamora.co',scope:'首页'},{v:'V10',time:'2026-08-12 17:21',by:'ops@platform',scope:'商品详情页'},{v:'V9',time:'2026-08-02 16:44',by:'somchai@glamora.co',scope:'全部'},{v:'V8',time:'2026-07-21 09:30',by:'ops@platform',scope:'首页'},],product:{title:'Glow Serum 维 C 精华 30ml · 焕亮套装',price:'฿1,290',old:'฿1,990',off:'-35%',rating:'4.8',reviews:'2,3k',sold:'5.6k+',stock:128},};const DEFPROPS={site_header:{shop:'My Store'},image_carousel:{imgs:3,autoplay:true,link:''},hero_banner:{title:'BIG SALE',sub:'全场新品 8 折起',btn:'立即抢购'},category_grid:{cols:4},product_grid:{title:'热卖商品',count:6,cols:2},product_slider:{title:'为你推荐',count:8},promo_bar:{text:'🎉 新客下单立减 $5 · 全场满 $49 免运费',bg:'#fff1f0'},countdown:{until:'2026-09-01 20:00',text:'限时特惠结束倒计时'},coupon_banner:{text:'新客专享优惠券 · 点击领取'},testimonial_slider:{title:'买家真实评价',n:3},trust_badges:{},faq_accordion:{title:'常见问题'},rich_text:{title:'品牌故事',body:'这里是图文内容正文…'},site_footer:{copy:'© 2026 My Store. All rights reserved.'},selling_points:{title:'为什么选择我们'},review_summary:{},review_list:{},spec_table:{title:'规格参数'},related_products:{title:'相关商品'},};const PRODS=[{n:'Water Glow 精华水 150ml',p:'฿590',o:'฿890',e:'💧',g:0},{n:'Silk 丝滑防晒霜 SPF50+',p:'฿420',o:'฿560',e:'🧴',g:1},{n:'Rose 玫瑰晚安面膜 80g',p:'฿350',o:'฿480',e:'🌹',g:2},{n:'Amino 氨基酸洁面乳',p:'฿280',o:'฿390',e:'🧼',g:3},{n:'Pearl 珍珠焕颜精华',p:'฿790',o:'฿1,090',e:'✨',g:4},{n:'Herb 草本舒缓爽肤水',p:'฿320',o:'฿420',e:'🌿',g:5},{n:'Collagen 胶原眼霜 20g',p:'฿640',o:'฿850',e:'👁️',g:2},{n:'Vitamin 维 C 面霜 50g',p:'฿520',o:'฿690',e:'🍊',g:1},];const GRADS=['linear-gradient(135deg,#a78bfa,#f0abfc)','linear-gradient(135deg,#60a5fa,#a7f3d0)','linear-gradient(135deg,#fbbf24,#fb7185)','linear-gradient(135deg,#34d399,#22d3ee)','linear-gradient(135deg,#f472b6,#c084fc)','linear-gradient(135deg,#f97316,#facc15)'];const COPYKEYS={product_grid:['block.title','btn.view_more'],product_slider:['block.title','btn.view_all'],testimonial_slider:['block.title'],faq_accordion:['block.title'],countdown:['label.ends_in'],site_footer:['footer.copyright'],rich_text:['block.title'],selling_points:['block.title'],spec_table:['block.title'],related_products:['block.title'],review_list:['block.reviews'],site_header:['header.search_ph'],promo_bar:['promo.text'],hero_banner:['banner.title','banner.btn'],coupon_banner:['coupon.text'],image_carousel:['carousel.slide_1'],category_grid:['grid.title'],};const CATS=['布局','营销','商品','信任','内容','导航','页脚','工具'];const ICONS={site_header:'🛎️',image_carousel:'🖼️',hero_banner:'📐',category_grid:'🗺️',product_grid:'🛍️',product_slider:'↔️',promo_bar:'📣',countdown:'⏰',coupon_banner:'🎟️',testimonial_slider:'💬',trust_badges:'🛡️',faq_accordion:'❓',rich_text:'📝',site_footer:'🔻',service_widget:'💬',cookie_tips:'🍪',product_gallery:'🖼️',product_variants:'⚙️',buy_buttons:'🛒',selling_points:'⭐',review_summary:'⭐',review_list:'💬',spec_table:'📋',related_products:'🔗'};</script>
+<script data-page-node-id="H06oIc1fAGa7CQk6bIngO4" data-pnid-children="aBbfgrg8XPioztX0Trs7qd">window.PAGES={};const $=s=>document.querySelector(s);const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');const nowT=()=>new Date().toLocaleTimeString('zh-CN',{hour12:false});const nowDT=()=>new Date().toLocaleString('zh-CN',{hour12:false}).replace(/\//g,'-');const uid=()=>'b'+Math.random().toString(36).slice(2,8);const comp=k=>state.comps.find(c=>c.key===k);const compName=k=>(comp(k)||{}).name||k;const curSite=()=>state.sites.find(s=>s.id===state.site)||state.sites[0];function go(h){if(location.hash===h){render()}else{location.hash=h}}
+function toast(msg,type){type=type||'success';const t=document.createElement('div');t.className='msg '+type;const ic={success:'✓',error:'✕',info:'ℹ',warning:'!'}[type];t.innerHTML='<span class="dot">'+ic+'</span>'+msg;$('#toast-root').appendChild(t);setTimeout(()=>{t.style.opacity=0;setTimeout(()=>t.remove(),300)},2400);}
+function modal(html,w){$('#modal-root').innerHTML='<div class="mask" onclick="if(event.target===this)mClose()"><div class="modal" style="width:'+(w||560)+'px">'+html+'</div></div>';}
+const mHead=t=>'<div class="modal-h"><span>'+t+'</span><span class="modal-x" onclick="mClose()">✕</span></div>';const mFoot=b=>'<div class="modal-f">'+b+'</div>';function mClose(){$('#modal-root').innerHTML='';}
+function askConfirm(title,body,okLabel,okFn,danger){window.__ok=()=>{mClose();okFn&&okFn()};modal(mHead(title)+'<div class="modal-b" style="padding-top:14px">'+body+'</div>'+mFoot('<button class="btn" onclick="mClose()">取消</button><button class="btn '+(danger?'danger solid':'primary')+'" onclick="__ok()">'+(okLabel||'确定')+'</button>'),470);}
+const stMap={unpublished:{t:'未发布',cls:'gray'},dirty:{t:'有未发布更改',cls:'orange'},latest:{t:'已是最新',cls:'green'}};const stTag=s=>stMap[s]||stMap.unpublished;const MENU=[{group:'概览',items:[{t:'系统首页',i:'🏠',h:'#/dashboard'}]},{group:'站点管理',items:[{t:'我的站点',i:'🗂️',h:'#/site/list'},{t:'模板库',i:'🎨',h:'#/site/templates'},{t:'页面装修 · 首页',i:'📱',h:'#/site/editor/home'},{t:'页面装修 · 商品详情页',i:'🛒',h:'#/site/editor/product'},{t:'发布历史',i:'🕓',h:'#/site/publish-history'},]},{group:'DIY 配置',items:[{t:'页面区块库',i:'🧩',h:'#/diy/components'},{t:'语言包管理',i:'🌐',h:'#/diy/i18n'},]},{group:'独立站预览',items:[{t:'H5 首页',i:'👁️',h:'#/preview/home'},{t:'商品详情页',i:'🔍',h:'#/preview/product'},]},];const CRUMBS={'dashboard':'系统首页','site/list':'站点管理 / 我的站点','site/templates':'站点管理 / 模板库','site/editor/home':'站点管理 / 页面装修 / 首页','site/editor/product':'站点管理 / 页面装修 / 商品详情页','site/publish-history':'站点管理 / 发布历史','diy/components':'DIY 配置 / 页面区块库','diy/i18n':'DIY 配置 / 语言包管理','preview/home':'独立站预览 / H5 首页','preview/product':'独立站预览 / 商品详情页'};function render(){const h=location.hash||'#/dashboard';const key=h.slice(2)||'dashboard';$('#menu').innerHTML=MENU.map(g=>'<div class="menu-group">'+g.group+'</div>'+g.items.map(m=>'<div class="mi '+(('#/'+key===m.h)?'active':'')+'" onclick="go(\''+m.h+'\')"><span class="ic">'+m.i+'</span>'+m.t+'</div>').join('')).join('');const s=curSite();$('#crumb').innerHTML='<b>跨境 DIY 建站</b><span style="margin:0 8px;color:var(--split)">/</span>'+(CRUMBS[key]||'');$('#hdr-site').textContent=s.name;$('#site-menu').innerHTML='<div class="sm-t">切换当前站点（装修/发布均作用于该站点）</div>'+state.sites.map(x=>'<div class="sm-i '+(x.id===state.site?'cur':'')+'" onclick="switchSite(\''+x.id+'\')"><span>'+x.name+'</span><span class="text3">'+x.market+'</span></div>').join('');const fn=PAGES[key]||PAGES['dashboard'];$('#view').innerHTML=fn();$('#view').className='content'+(key.indexOf('site/editor')===0?' no-pad':'');}
+window.addEventListener('hashchange',render);function toggleSiteMenu(e){e.stopPropagation();const m=$('#site-menu');m.style.display=m.style.display==='none'?'block':'none';}
+document.addEventListener('click',()=>{const m=$('#site-menu');if(m)m.style.display='none';});function switchSite(id){if(id===state.site){return;}
+const doIt=()=>{state.site=id;state.sites.forEach(s=>s.cur=s.id===id);state.unsaved=false;state.sel='';render();toast('已切换当前站点：'+state.sites.find(s=>s.id===id).name);};if(state.unsaved){askConfirm('切换站点','当前站点有<b>未保存的更改</b>，切换将放弃更改，是否继续？','继续切换',doIt,true);}
+else doIt();}</script>
+<script data-page-node-id="DosscVhMhcorUQidxAlhmu" data-pnid-children="aiguTGWIyJ0WPq0JQWIVxm">PAGES['dashboard']=()=>{const s=curSite(),st=stTag(s.status);const published=state.sites.filter(x=>x.status!=='unpublished').length;const dirty=state.sites.filter(x=>x.status==='dirty').length;return`
   <div class="page-h"><div><h2>系统首页</h2><p>跨境独立站 DIY 建站 · 管理端工作台（SRS V1.1 · 高保真原型）</p></div>
   <div><button class="btn primary" onclick="siteForm()">＋ 新建站点</button></div></div>
   <div class="stats">
@@ -536,41 +65,17 @@ PAGES['dashboard']=()=>{
     <table class="tbl"><thead><tr><th>站点</th><th>版本</th><th>发布时间</th><th>发布人</th><th>页面范围</th></tr></thead><tbody>
     ${state.sites.filter(x=>x.last!=='-').map((x,i)=>`<tr><td>${esc(x.name)}${x.cur?' <span class="tag blue">当前</span>':''}</td><td><span class="tag purple">V${10-i}</span></td><td>${x.last}</td><td>somchai@glamora.co</td><td>${i%2?'首页':'全部'}</td></tr>`).join('')}
     </tbody></table>
-  </div></div>`;
-};
-/* ================= 我的站点 ================= */
-PAGES['site/list']=()=>`
+  </div></div>`;};PAGES['site/list']=()=>`
   <div class="page-h"><div><h2>我的站点</h2><p>同一商户可拥有多个独立站 · 装修、模板复制、发布均作用于<b>当前选定站点</b></p></div>
   <div><button class="btn primary" onclick="siteForm()">＋ 新建站点</button></div></div>
   <div class="alert info"><span class="ic">ℹ️</span><div>平台运营可查看全部商户站点并代建站点；商户仅可管理所属商户下的站点。站点配额默认 10 个。</div></div>
   <div class="card"><div class="card-b">
     <table class="tbl"><thead><tr><th>站点名称</th><th>绑定域名</th><th>默认语言</th><th>目标市场</th><th>发布状态</th><th>最后发布时间</th><th>当前站点</th><th style="width:230px">操作</th></tr></thead><tbody>
-    ${state.sites.map(s=>{const st=stTag(s.status);return `
-      <tr>
-        <td><b>${esc(s.name)}</b>${s.note?'<div class="text3">'+esc(s.note)+'</div>':''}</td>
-        <td>${s.domain?'<a>'+s.domain+'</a>':'<span class="tag gray">待绑定</span>'}</td>
-        <td>${s.lang}</td><td>${s.market}</td>
-        <td><span class="tag ${st.cls}">${st.t}</span></td>
-        <td>${s.last}</td>
-        <td>${s.cur?'<span class="tag blue">当前</span>':'<span class="text3">—</span>'}</td>
-        <td class="ops">
-          ${s.cur?'<button class="btn sm" disabled>已是当前</button>':'<button class="btn sm primary" onclick="switchSite(\''+s.id+'\')">切换为当前</button>'}
-          <button class="btn sm" onclick="siteForm('${s.id}')">编辑</button>
-          <button class="btn sm" onclick="enterEdit('${s.id}')">进入装修</button>
-        </td>
-      </tr>`}).join('')}
+    ${state.sites.map(s=>{const st=stTag(s.status);return `<tr><td><b>${esc(s.name)}</b>${s.note?'<div class="text3">'+esc(s.note)+'</div>':''}</td><td>${s.domain?'<a>'+s.domain+'</a>':'<span class="tag gray">待绑定</span>'}</td><td>${s.lang}</td><td>${s.market}</td><td><span class="tag ${st.cls}">${st.t}</span></td><td>${s.last}</td><td>${s.cur?'<span class="tag blue">当前</span>':'<span class="text3">—</span>'}</td><td class="ops">${s.cur?'<button class="btn sm" disabled>已是当前</button>':'<button class="btn sm primary" onclick="switchSite(\''+s.id+'\')">切换为当前</button>'}<button class="btn sm"onclick="siteForm('${s.id}')">编辑</button><button class="btn sm"onclick="enterEdit('${s.id}')">进入装修</button></td></tr>`}).join('')}
     </tbody></table>
     <div class="pager"><span>共 ${state.sites.length} 条</span><span class="pg">‹</span><span class="pg cur">1</span><span class="pg">›</span></div>
-  </div></div>`;
-function enterEdit(id){
-  const doIt=()=>{ if(state.site!==id){ state.site=id; state.sites.forEach(x=>x.cur=x.id===id); state.unsaved=false; state.sel=''; } go('#/site/editor/home'); };
-  if(state.unsaved&&state.site!==id){ askConfirm('切换站点','当前站点有<b>未保存的更改</b>，切换将放弃更改，是否继续？','继续切换',doIt,true); } else doIt();
-}
-/* ---------- 新建 / 编辑站点 ---------- */
-const MKTS=['泰国','越南','波兰','印尼','马来西亚'],LANGS=['th 泰语','vi 越南语','pl 波兰语','id 印尼语','en 英语'];
-function siteForm(id){
-  const s=id?state.sites.find(x=>x.id===id):{name:'',market:'泰国',lang:'th 泰语',domain:'',note:''};
-  modal(mHead(id?'编辑站点':'新建站点')+`
+  </div></div>`;function enterEdit(id){const doIt=()=>{if(state.site!==id){state.site=id;state.sites.forEach(x=>x.cur=x.id===id);state.unsaved=false;state.sel='';}go('#/site/editor/home');};if(state.unsaved&&state.site!==id){askConfirm('切换站点','当前站点有<b>未保存的更改</b>，切换将放弃更改，是否继续？','继续切换',doIt,true);}else doIt();}
+const MKTS=['泰国','越南','波兰','印尼','马来西亚'],LANGS=['th 泰语','vi 越南语','pl 波兰语','id 印尼语','en 英语'];function siteForm(id){const s=id?state.sites.find(x=>x.id===id):{name:'',market:'泰国',lang:'th 泰语',domain:'',note:''};modal(mHead(id?'编辑站点':'新建站点')+`
   <div class="modal-b" style="padding-top:14px">
     <div class="fi"><label><span class="req">*</span>站点名称（2–50 字，商户内唯一）</label><input class="ipt" id="f-name" value="${esc(s.name)}" placeholder="如：泰国美妆站"></div>
     <div class="row">
@@ -578,33 +83,18 @@ function siteForm(id){
       <div class="fi"><label><span class="req">*</span>默认语言</label><select class="ipt" id="f-lang">${LANGS.map(l=>`<option ${l===s.lang?'selected':''}>${l}</option>`).join('')}</select></div>
     </div>
     <div class="fi"><label>绑定域名（可后续编辑，格式校验）</label><input class="ipt" id="f-dom" value="${esc(s.domain)}" placeholder="如 th-beauty.shopform.com"></div>
-    <div class="fi"><label>站点备注（≤200 字）</label><textarea class="ipt" id="f-note" rows="3" placeholder="内部备注，不对外展示">${esc(s.note||'')}</textarea></div>
-  </div>`+mFoot(`<button class="btn" onclick="mClose()">取消</button><button class="btn primary" onclick="saveSite('${id||''}')">${id?'保 存':'创 建'}</button>`),560);
-}
-function saveSite(id){
-  const name=$('#f-name').value.trim(),mkt=$('#f-mkt').value,lang=$('#f-lang').value,dom=$('#f-dom').value.trim(),note=$('#f-note').value;
-  if(name.length<2){toast('请输入至少 2 个字的站点名称','error');return;}
-  if(state.sites.some(s=>s.name===name&&s.id!==id)){toast('站点名称【'+name+'】已存在，请更换','error');return;}
-  if(id){
-    Object.assign(state.sites.find(s=>s.id===id),{name,market:mkt,lang,domain:dom,note});
-    toast('站点已更新');mClose();render();return;
-  }
-  if(state.sites.length>=10){toast('已达站点数量上限，请联系平台开通','error');return;}
-  const nid='S'+(100+state.sites.length);
-  state.sites.push({id:nid,name,market:mkt,lang,domain:dom,note,status:'unpublished',last:'-'});
-  state.site=nid;state.sites.forEach(s=>s.cur=s.id===nid);state.sel='';
-  mClose();render();
-  modal(mHead('站点已创建')+`
+    <div class="fi"><label>站点备注（≤200 字）</label> PH0 </div>
+  </div>`+mFoot(`<button class="btn" onclick="mClose()">取消</button><button class="btn primary" onclick="saveSite('${id||''}')">${id?'保 存':'创 建'}</button>`),560);}
+function saveSite(id){const name=$('#f-name').value.trim(),mkt=$('#f-mkt').value,lang=$('#f-lang').value,dom=$('#f-dom').value.trim(),note=$('#f-note').value;if(name.length<2){toast('请输入至少 2 个字的站点名称','error');return;}
+if(state.sites.some(s=>s.name===name&&s.id!==id)){toast('站点名称【'+name+'】已存在，请更换','error');return;}
+if(id){Object.assign(state.sites.find(s=>s.id===id),{name,market:mkt,lang,domain:dom,note});toast('站点已更新');mClose();render();return;}
+if(state.sites.length>=10){toast('已达站点数量上限，请联系平台开通','error');return;}
+const nid='S'+(100+state.sites.length);state.sites.push({id:nid,name,market:mkt,lang,domain:dom,note,status:'unpublished',last:'-'});state.site=nid;state.sites.forEach(s=>s.cur=s.id===nid);state.sel='';mClose();render();modal(mHead('站点已创建')+`
   <div class="modal-b" style="padding-top:14px">
     <p>站点「<b>${esc(name)}</b>」已创建，并已自动切换为<b style="color:var(--primary)">当前站点</b>。</p>
     <p class="text3" style="margin-top:8px">建议：从官方模板复制一套完整配置，30 分钟内即可完成修改并发布上线。</p>
-  </div>`+mFoot(`<button class="btn" onclick="mClose();go('#/site/templates')">先逛逛模板库</button><button class="btn primary" onclick="mClose();go('#/site/editor/home')">进入页面装修</button>`),480);
-}
-</script>
-<script data-page-node-id="SuXkNBkEKucwuxoCPENWyu" data-pnid-children="GrAjsN0wZBhFKv3v3UvObn">
-/* ================= 页面区块库 ================= */
-const CAT_ALL=['布局','营销','商品','信任','转化','内容','导航','页脚','工具'];
-PAGES['diy/components']=()=>`
+  </div>`+mFoot(`<button class="btn" onclick="mClose();go('#/site/templates')">先逛逛模板库</button><button class="btn primary" onclick="mClose();go('#/site/editor/home')">进入页面装修</button>`),480);}</script>
+<script data-page-node-id="SuXkNBkEKucwuxoCPENWyu" data-pnid-children="GrAjsN0wZBhFKv3v3UvObn">const CAT_ALL=['布局','营销','商品','信任','转化','内容','导航','页脚','工具'];PAGES['diy/components']=()=>`
   <div class="page-h"><div><h2>页面区块库</h2><p>平台运营维护装修可用区块 · 商户装修时仅可选用<b>已上架</b>区块</p></div>
   <div><button class="btn primary" onclick="compForm()">＋ 新增区块</button></div></div>
   <div class="alert warning"><span class="ic">⚠️</span><div>已停用区块不会出现在商户装修面板；但若某站点草稿仍引用该区块，发布校验将不通过，直至替换。</div></div>
@@ -621,13 +111,7 @@ PAGES['diy/components']=()=>`
       <tbody id="comp-rows">${compRows()}</tbody>
     </table></div>
     <div class="pager"><span>共 <span id="comp-n">${''}</span> 条</span><span class="pg">‹</span><span class="pg cur">1</span><span class="pg">2</span><span class="pg">›</span></div>
-  </div></div>`;
-function compRows(){
-  const q=($('#cf-q')&&$('#cf-q').value.trim())||'',cat=($('#cf-cat')&&$('#cf-cat').value)||'',st=($('#cf-st')&&$('#cf-st').value)||'',pg=($('#cf-pg')&&$('#cf-pg').value)||'';
-  const list=state.comps.filter(c=>(!q||c.name.includes(q)||c.key.includes(q))&&(!cat||c.cat===cat)&&(st===''||String(+c.on)===st)&&(!pg||c.pages.includes(pg)));
-  setTimeout(()=>{const n=document.getElementById('comp-n');if(n)n.textContent=list.length;},0);
-  if(!list.length)return '<tr><td colspan="7"><div class="empty"><div class="box">🧩</div>暂无页面区块数据<div style="margin-top:12px"><button class="btn primary sm" onclick="compForm()">＋ 新增</button></div></div></td></tr>';
-  return list.map(c=>`
+  </div></div>`;function compRows(){const q=($('#cf-q')&&$('#cf-q').value.trim())||'',cat=($('#cf-cat')&&$('#cf-cat').value)||'',st=($('#cf-st')&&$('#cf-st').value)||'',pg=($('#cf-pg')&&$('#cf-pg').value)||'';const list=state.comps.filter(c=>(!q||c.name.includes(q)||c.key.includes(q))&&(!cat||c.cat===cat)&&(st===''||String(+c.on)===st)&&(!pg||c.pages.includes(pg)));setTimeout(()=>{const n=document.getElementById('comp-n');if(n)n.textContent=list.length;},0);if(!list.length)return'<tr><td colspan="7"><div class="empty"><div class="box">🧩</div>暂无页面区块数据<div style="margin-top:12px"><button class="btn primary sm" onclick="compForm()">＋ 新增</button></div></div></td></tr>';return list.map(c=>`
     <tr>
       <td><code style="background:#f5f5f5;padding:2px 6px;border-radius:4px;font-size:12px">${c.key}</code></td>
       <td>${ICONS[c.key]||'🧩'} ${c.name}</td>
@@ -637,39 +121,17 @@ function compRows(){
       <td><span class="tag ${c.on?'green':'gray'}">${c.on?'已上架':'已停用'}</span></td>
       <td class="ops">
         <button class="btn sm" onclick="compForm('${c.key}')">编辑</button>
-        ${c.on?`<button class="btn sm danger" onclick="compToggle('${c.key}')">停用</button>`:`<button class="btn sm primary" onclick="compToggle('${c.key}')">上架</button>`}
+        ${c.on?`<button class="btn sm danger"onclick="compToggle('${c.key}')">停用</button>`:`<button class="btn sm primary"onclick="compToggle('${c.key}')">上架</button>`}
       </td>
-    </tr>`).join('');
-}
-function compApply(){ $('#comp-rows').innerHTML=compRows(); }
-function compReset(){ $('#cf-q').value='';$('#cf-cat').value='';$('#cf-st').value='';$('#cf-pg').value='';compApply(); }
-function compToggle(key){
-  const c=comp(key);
-  if(c.on){
-    askConfirm('停用区块',`停用后，已引用该区块的<b>草稿将无法发布</b>，是否继续？<br><span class="text3">已发布线上版本仍按原配置展示，不受影响。</span>`,'确认停用',()=>{c.on=false;toast('区块已停用');render();},true);
-  }else{ c.on=true; toast('区块已上架'); render(); }
-}
-let defRowN=0;
-function defRows(kind,arr){
-  defRowN=Math.max(defRowN,arr.length);
-  return `<div id="defrows-${kind}">${arr.map((r,i)=>`
-    <div style="display:flex;gap:6px;margin-bottom:6px">
-      <input class="ipt d-${kind}-n" style="flex:1" placeholder="名称，如：图片列表" value="${esc(r.n)}">
-      <select class="ipt d-${kind}-t" style="width:110px">${['文本','图片上传','开关','商品选择','日期时间','数字','色值'].map(t=>`<option ${t===r.t?'selected':''}>${t}</option>`).join('')}</select>
-    </div>`).join('')}</div>
-  <button class="btn sm" onclick="addDefRow('${kind}')">＋ 添加${kind==='prop'?'属性':'样式'}项</button>`;
-}
-function addDefRow(kind){
-  const box=document.getElementById('defrows-'+kind);
-  box.insertAdjacentHTML('beforeend',`<div style="display:flex;gap:6px;margin-bottom:6px"><input class="ipt d-${kind}-n" style="flex:1" placeholder="名称"><select class="ipt d-${kind}-t" style="width:110px">${['文本','图片上传','开关','商品选择','日期时间','数字','色值'].map(t=>`<option>${t}</option>`).join('')}</select></div>`);
-}
-function collectDef(kind){
-  return [...document.querySelectorAll('.d-'+kind+'-n')].map((el,i)=>({n:el.value,t:document.querySelectorAll('.d-'+kind+'-t')[i].value}));
-}
-function compForm(key){
-  const DEFD={propDef:[{n:'标题',t:'文本'},{n:'图片列表',t:'图片上传'}],styleDef:[{n:'背景色',t:'色值'},{n:'上下间距',t:'数字'}],i18n:''};
-  const c=key?Object.assign({},DEFD,comp(key)):{key:'',name:'',cat:'营销',pages:['首页'],lock:false,propDef:DEFD.propDef,styleDef:DEFD.styleDef,i18n:''};
-  modal(mHead(key?'编辑区块定义':'新增页面区块')+`
+    </tr>`).join('');}
+function compApply(){$('#comp-rows').innerHTML=compRows();}
+function compReset(){$('#cf-q').value='';$('#cf-cat').value='';$('#cf-st').value='';$('#cf-pg').value='';compApply();}
+function compToggle(key){const c=comp(key);if(c.on){askConfirm('停用区块',`停用后，已引用该区块的<b>草稿将无法发布</b>，是否继续？<br><span class="text3">已发布线上版本仍按原配置展示，不受影响。</span>`,'确认停用',()=>{c.on=false;toast('区块已停用');render();},true);}else{c.on=true;toast('区块已上架');render();}}
+let defRowN=0;function defRows(kind,arr){defRowN=Math.max(defRowN,arr.length);return`<div id="defrows-${kind}">${arr.map((r,i)=>`<div style="display:flex;gap:6px;margin-bottom:6px"><input class="ipt d-${kind}-n"style="flex:1"placeholder="名称，如：图片列表"value="${esc(r.n)}"><select class="ipt d-${kind}-t"style="width:110px">${['文本','图片上传','开关','商品选择','日期时间','数字','色值'].map(t=>`<option ${t===r.t?'selected':''}>${t}</option>`).join('')}</select></div>`).join('')}</div>
+  <button class="btn sm" onclick="addDefRow('${kind}')">＋ 添加${kind==='prop'?'属性':'样式'}项</button>`;}
+function addDefRow(kind){const box=document.getElementById('defrows-'+kind);box.insertAdjacentHTML('beforeend',`<div style="display:flex;gap:6px;margin-bottom:6px"><input class="ipt d-${kind}-n" style="flex:1" placeholder="名称"><select class="ipt d-${kind}-t" style="width:110px">${['文本','图片上传','开关','商品选择','日期时间','数字','色值'].map(t=>`<option>${t}</option>`).join('')}</select></div>`);}
+function collectDef(kind){return[...document.querySelectorAll('.d-'+kind+'-n')].map((el,i)=>({n:el.value,t:document.querySelectorAll('.d-'+kind+'-t')[i].value}));}
+function compForm(key){const DEFD={propDef:[{n:'标题',t:'文本'},{n:'图片列表',t:'图片上传'}],styleDef:[{n:'背景色',t:'色值'},{n:'上下间距',t:'数字'}],i18n:''};const c=key?Object.assign({},DEFD,comp(key)):{key:'',name:'',cat:'营销',pages:['首页'],lock:false,propDef:DEFD.propDef,styleDef:DEFD.styleDef,i18n:''};modal(mHead(key?'编辑区块定义':'新增页面区块')+`
   <div class="modal-b" style="padding-top:14px">
     <div class="row">
       <div class="fi"><label><span class="req">*</span>区块标识（英文小写+下划线，唯一）</label><input class="ipt" id="c-key" value="${c.key}" ${key?'disabled':''} placeholder="如 image_carousel"></div>
@@ -679,7 +141,7 @@ function compForm(key){
       <div class="fi"><label><span class="req">*</span>区块分类</label><select class="ipt" id="c-cat">${CAT_ALL.map(x=>`<option ${x===c.cat?'selected':''}>${x}</option>`).join('')}</select></div>
       <div class="fi"><label><span class="req">*</span>适用页面（多选）</label>
         <div style="padding-top:6px">
-          ${['首页','商品详情页','通用'].map(p=>`<label style="margin-right:14px"><input type="checkbox" class="c-pg" value="${p}" ${c.pages.includes(p)?'checked':''}>${p}</label>`).join('')}
+          ${['首页','商品详情页','通用'].map(p=>`<label style="margin-right:14px"><input type="checkbox"class="c-pg"value="${p}"${c.pages.includes(p)?'checked':''}>${p}</label>`).join('')}
         </div>
       </div>
     </div>
@@ -688,28 +150,17 @@ function compForm(key){
     </div>
     <div class="fi"><label><span class="req">*</span>可配属性定义（商户可填写的业务属性项）</label>${defRows('prop',c.propDef)}</div>
     <div class="fi"><label><span class="req">*</span>样式项定义（商户可调整的样式项）</label>${defRows('style',c.styleDef)}</div>
-    <div class="fi"><label>多语言键名列表（关联语言包，每行一个，≤50 项）</label><textarea class="ipt" id="c-i18n" rows="3" placeholder="btn.buy_now&#10;pdp.in_stock">${esc(c.i18n||'')}</textarea></div>
-  </div>`+mFoot(`<button class="btn" onclick="mClose()">取消</button><button class="btn primary" onclick="saveComp('${key||''}')">${key?'保 存':'创 建'}</button>`),640);
-}
-function saveComp(key){
-  const k=$('#c-key').value.trim(),name=$('#c-name').value.trim();
-  const pages=[...document.querySelectorAll('.c-pg')].filter(x=>x.checked).map(x=>x.value);
-  const lock=document.querySelector('.c-lock:checked').value==='1';
-  const propDef=collectDef('prop'),styleDef=collectDef('style');
-  if(!/^[a-z][a-z_]{1,63}$/.test(k)){toast('区块标识须为 2–64 位英文小写与下划线','error');return;}
-  if(name.length<2){toast('请输入区块名称（至少 2 字）','error');return;}
-  if(!pages.length){toast('请至少选择一个适用页面','error');return;}
-  if(!propDef.filter(r=>r.n).length||!styleDef.filter(r=>r.n).length){toast('配置格式有误，请检查后重试','error');return;}
-  if(!key&&state.comps.some(c=>c.key===k)){toast('区块标识【'+k+'】已存在，请更换','error');return;}
-  const i18n=$('#c-i18n').value;
-  if(key){Object.assign(comp(key),{name,cat:$('#c-cat').value,pages,lock,propDef,styleDef,i18n});toast('区块已更新');}
-  else{state.comps.push({key:k,name,cat:$('#c-cat').value,pages,lock,propDef,styleDef,i18n,on:true});toast('区块已保存');}
-  mClose();render();
-}
-</script>
-<script data-page-node-id="KdmeLCnjkgn7sEhZJo4eop" data-pnid-children="iRDNUBlgzZJrh13jLoxDne">
-/* ================= 语言包管理 ================= */
-PAGES['diy/i18n']=()=>`
+    <div class="fi"><label>多语言键名列表（关联语言包，每行一个，≤50 项）</label> PH1 </div>
+  </div>`+mFoot(`<button class="btn" onclick="mClose()">取消</button><button class="btn primary" onclick="saveComp('${key||''}')">${key?'保 存':'创 建'}</button>`),640);}
+function saveComp(key){const k=$('#c-key').value.trim(),name=$('#c-name').value.trim();const pages=[...document.querySelectorAll('.c-pg')].filter(x=>x.checked).map(x=>x.value);const lock=document.querySelector('.c-lock:checked').value==='1';const propDef=collectDef('prop'),styleDef=collectDef('style');if(!/^[a-z][a-z_]{1,63}$/.test(k)){toast('区块标识须为 2–64 位英文小写与下划线','error');return;}
+if(name.length<2){toast('请输入区块名称（至少 2 字）','error');return;}
+if(!pages.length){toast('请至少选择一个适用页面','error');return;}
+if(!propDef.filter(r=>r.n).length||!styleDef.filter(r=>r.n).length){toast('配置格式有误，请检查后重试','error');return;}
+if(!key&&state.comps.some(c=>c.key===k)){toast('区块标识【'+k+'】已存在，请更换','error');return;}
+const i18n=$('#c-i18n').value;if(key){Object.assign(comp(key),{name,cat:$('#c-cat').value,pages,lock,propDef,styleDef,i18n});toast('区块已更新');}
+else{state.comps.push({key:k,name,cat:$('#c-cat').value,pages,lock,propDef,styleDef,i18n,on:true});toast('区块已保存');}
+mClose();render();}</script>
+<script data-page-node-id="KdmeLCnjkgn7sEhZJo4eop" data-pnid-children="iRDNUBlgzZJrh13jLoxDne">PAGES['diy/i18n']=()=>`
   <div class="page-h"><div><h2>语言包管理</h2><p>按官方模板维护多语言默认文案 · MVP 支持 en / th / pl / vi / id</p></div></div>
   <div class="alert info"><span class="ic">ℹ️</span><div>渲染合并规则：商户覆盖文案 ＞ 平台默认文案 ＞ 英语兜底（缺失语言回退 en）。<b>待翻译</b> 语言在买家端将展示英语内容。</div></div>
   <div class="card"><div class="card-b">
@@ -721,12 +172,7 @@ PAGES['diy/i18n']=()=>`
     <table class="tbl"><thead><tr><th>模板名称</th><th>语言</th><th>键值数量</th><th>覆盖状态</th><th>最后更新</th><th style="width:110px">操作</th></tr></thead>
     <tbody id="i18n-rows">${i18nRows()}</tbody></table>
     <div class="pager"><span>共 ${state.packs.length} 条</span><span class="pg">‹</span><span class="pg cur">1</span><span class="pg">›</span></div>
-  </div></div>`;
-function i18nRows(){
-  const t=$('#ip-tpl')?$('#ip-tpl').value:'',l=$('#ip-lang')?$('#ip-lang').value:'';
-  const list=state.packs.filter(p=>(!t||p.tpl===t)&&(!l||p.lang===l));
-  if(!list.length)return '<tr><td colspan="6"><div class="empty"><div class="box">🌐</div>暂无语言包数据</div></td></tr>';
-  return list.map(p=>`
+  </div></div>`;function i18nRows(){const t=$('#ip-tpl')?$('#ip-tpl').value:'',l=$('#ip-lang')?$('#ip-lang').value:'';const list=state.packs.filter(p=>(!t||p.tpl===t)&&(!l||p.lang===l));if(!list.length)return'<tr><td colspan="6"><div class="empty"><div class="box">🌐</div>暂无语言包数据</div></td></tr>';return list.map(p=>`
     <tr>
       <td><b>${p.tpl}</b></td>
       <td><span class="tag ${p.lang.includes('en')?'blue':p.lang.includes('th')?'purple':p.lang.includes('pl')?'cyan':'orange'}">${p.lang}</span>${p.lang.includes('en')?' <span class="tag">默认回退</span>':''}</td>
@@ -734,14 +180,9 @@ function i18nRows(){
       <td>${p.ok?'<span class="tag green">已完整翻译</span>':'<span class="tag orange">待翻译 · 英语兜底</span>'}</td>
       <td>${p.upd}</td>
       <td class="ops"><button class="btn sm" onclick="packForm(${p.id})">编辑</button></td>
-    </tr>`).join('');
-}
-function i18nApply(){ $('#i18n-rows').innerHTML=i18nRows(); }
-function packForm(id){
-  const p=state.packs.find(x=>x.id===id);
-  const langKey=p.lang.split(' ')[1];
-  const filled=state.i18nKeys.filter(k=>k[langKey]).length;
-  modal(mHead('编辑语言包 · '+p.tpl)+`
+    </tr>`).join('');}
+function i18nApply(){$('#i18n-rows').innerHTML=i18nRows();}
+function packForm(id){const p=state.packs.find(x=>x.id===id);const langKey=p.lang.split(' ')[1];const filled=state.i18nKeys.filter(k=>k[langKey]).length;modal(mHead('编辑语言包 · '+p.tpl)+`
   <div class="modal-b" style="padding-top:14px">
     <div class="row">
       <div class="fi"><label>模板</label><select class="ipt" disabled><option>${p.tpl}</option></select></div>
@@ -751,73 +192,17 @@ function packForm(id){
     <div class="fi"><label>文案键值（单值 ≤ 200 字，支持变量占位符 {n}）</label>
       <div class="tbl-wrap"><table class="tbl">
         <thead><tr><th style="width:150px">键名</th><th>默认文案</th><th style="width:80px">状态</th></tr></thead>
-        <tbody>${state.i18nKeys.map((k,i)=>`
-          <tr>
-            <td><code style="font-size:12px;background:#f5f5f5;padding:2px 6px;border-radius:4px">${k.k}</code></td>
-            <td><input class="ipt pk-v" data-k="${k.k}" value="${esc(k[langKey]||k.en)}" placeholder="${esc(k.en)}"></td>
-            <td>${k[langKey]?'<span class="tag green">已翻译</span>':'<span class="tag orange">待翻译</span>'}</td>
-          </tr>`).join('')}
+        <tbody>${state.i18nKeys.map((k,i)=>`<tr><td><code style="font-size:12px;background:#f5f5f5;padding:2px 6px;border-radius:4px">${k.k}</code></td><td><input class="ipt pk-v"data-k="${k.k}"value="${esc(k[langKey]||k.en)}"placeholder="${esc(k.en)}"></td><td>${k[langKey]?'<span class="tag green">已翻译</span>':'<span class="tag orange">待翻译</span>'}</td></tr>`).join('')}
         </tbody>
       </table></div>
     </div>
-  </div>`+mFoot(`<button class="btn" onclick="mClose()">取消</button><button class="btn primary" onclick="savePack(${p.id},'${langKey}',${filled})">保 存</button>`),640);
-}
-function savePack(id,langKey,filled){
-  const p=state.packs.find(x=>x.id===id);
-  document.querySelectorAll('.pk-v').forEach(el=>{
-    const k=state.i18nKeys.find(x=>x.k===el.dataset.k);
-    if(k)k[langKey]=el.value;
-  });
-  const n=state.i18nKeys.filter(k=>k[langKey]).length;
-  p.keys=langKey==='en'?state.i18nKeys.length:n;
-  p.ok=(n>=state.i18nKeys.length);
-  p.upd=nowDT();
-  toast('语言包已保存');mClose();render();
-}
-</script>
-<script data-page-node-id="3JO1dgNIqbOrG0tILdwNuN" data-pnid-children="cei5GgNIJT3wwWd0HeFd6t">
-/* ================= H5 区块渲染器 ================= */
-const grad=i=>GRADS[i%GRADS.length];
-function h5Block(b,mode){
-  const p=b.props||{},pad=p.pad!=null?p.pad:12,db=(k)=>mode==='edit'?` data-bind="${b.uid}.${k}"`:'';
-  switch(b.type){
-    case 'site_header':return `<div class="h5-header" style="background:linear-gradient(120deg,${state.theme.main},${state.theme.sub})"><span style="flex:1;font-weight:700"${db('shop')}>${esc(p.shop||'My Store')}</span><span style="opacity:.9">🔍</span><span style="opacity:.9;position:relative">🛒<span style="position:absolute;top:-6px;right:-8px;background:#cf1322;color:#fff;border-radius:8px;font-size:9px;padding:0 4px">2</span></span></div>`;
-    case 'image_carousel':return `<div class="h5-banner" style="background:${grad(0)};margin:${pad}px">🖼️ 新品首发<div class="h5-dots">${Array.from({length:p.imgs||3}).map((_,i)=>`<i class="${i===0?'on':''}"></i>`).join('')}</div></div>`;
-    case 'hero_banner':return `<div class="h5-banner" style="background:${grad(4)};height:180px;flex-direction:column;gap:8px;margin:${pad}px"><div style="font-size:22px"${db('title')}>${esc(p.title||'BIG SALE')}</div><div style="font-size:12px;font-weight:400"${db('sub')}>${esc(p.sub||'')}</div><div style="background:#fff;color:#cf1322;font-size:12px;font-weight:600;padding:6px 18px;border-radius:16px"${db('btn')}>${esc(p.btn||'立即抢购')}</div></div>`;
-    case 'category_grid':return `<div style="padding:${pad}px"><div class="cat-grid">${[['💄','彩妆'],['🧴','护肤'],['🎁','套装'],['🔥','热销']].map(c=>`<div class="cg"><i>${c[0]}</i>${c[1]}</div>`).join('')}</div></div>`;
-    case 'product_grid':return `<div class="h5-grid" style="padding:${pad}px"><div class="h5-sect" style="padding:12px;margin-bottom:10px"><h4${db('title')}>${esc(p.title||'热卖商品')}<span class="more">查看全部 ›</span></h4><div class="p-cards">${PRODS.slice(0,p.count||6).map(x=>pCard(x)).join('')}</div></div></div>`;
-    case 'product_slider':return `<div style="padding:${pad}px 0"><div class="h5-sect" style="padding:12px"><h4${db('title')}>${esc(p.title||'为你推荐')}<span class="more">更多 ›</span></h4><div style="display:flex;gap:10px;overflow:hidden">${PRODS.slice(0,5).map(x=>`<div class="p-card" style="width:110px;flex-shrink:0">${pCard(x,true)}</div>`).join('')}</div></div></div>`;
-    case 'promo_bar':return `<div class="h5-promo" style="background:${p.bg||'#fff1f0'};margin:${pad}px"><span style="flex-shrink:0">📢</span><span style="flex:1;overflow:hidden;text-overflow:ellipsis"${db('text')}>${esc(p.text||'')}</span></div>`;
-    case 'countdown':return `<div style="padding:${pad}px"><div class="cd-box"><span${db('text')}>${esc(p.text||'')}</span>&nbsp;→&nbsp;<span class="cd-b">02</span>:<span class="cd-b">18</span>:<span class="cd-b">45</span><span class="text3" style="margin-left:4px">${esc(p.until||'')}</span></div></div>`;
-    case 'coupon_banner':return `<div style="padding:${pad}px"><div style="border:1.5px dashed #cf1322;background:#fff2f0;border-radius:8px;padding:12px;display:flex;align-items:center;gap:10px"><span style="font-size:22px">🎟️</span><div style="flex:1"${db('text')}>${esc(p.text||'')}</div><span style="background:#cf1322;color:#fff;font-size:11px;padding:4px 10px;border-radius:12px">领取</span></div></div>`;
-    case 'testimonial_slider':return `<div style="padding:${pad}px"><div class="h5-sect" style="padding:12px"><h4${db('title')}>${esc(p.title||'买家真实评价')}</h4>${[['Nicha K.','泰国 · 已验证购买'],['Tran M.','越南 · 已验证购买'],['Anna W.','波兰 · 已验证购买']].slice(0,p.n||3).map(x=>`<div class="tst"><div class="who"><span>😊 ${x[0]}</span><span class="stars">★★★★★</span></div>${x[1]}，物流很快，包装完好，会回购！</div>`).join('')}</div></div>`;
-    case 'trust_badges':return `<div class="trust" style="margin:${pad}px">${[['🚚','免运费'],['🛡️','正品保障'],['↩️','7 天退换'],['🔒','安全支付']].map(x=>`<div><i>${x[0]}</i>${x[1]}</div>`).join('')}</div>`;
-    case 'faq_accordion':return `<div style="padding:${pad}px"><div class="h5-sect"><h4${db('title')}>${esc(p.title||'常见问题')}</h4>${[['多久可以收到货？','一般 5–9 个工作日送达'],['支持哪些支付方式？','支持 COD / 信用卡 / 电子钱包'],['可以退货吗？','签收后 7 天内支持无理由退货']].map(f=>`<div class="faq-i"><span>${f[0]}</span><span style="color:var(--text3)">▾</span></div>`).join('')}</div></div>`;
-    case 'rich_text':return `<div style="padding:${pad}px"><div class="h5-sect"><h4${db('title')}>${esc(p.title||'')}</h4><div style="height:90px;background:${grad(1)};border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;margin-bottom:10px">品 牌 形 象 图</div><p style="font-size:12px;color:var(--text2);line-height:1.8"${db('body')}>${esc(p.body||'')}</p></div></div>`;
-    case 'site_footer':return `<div class="h5-footer" style="margin-top:${pad}px"><div${db('copy')}>${esc(p.copy||'')}</div><div style="margin-top:6px">Terms · Privacy · Refund Policy</div></div>`;
-    case 'selling_points':return `<div style="padding:${pad}px"><div class="h5-sect"><h4${db('title')}>${esc(p.title||'为什么选择我们')}</h4>${[['✅','成分安全温和，敏感肌可用'],['🧪','第三方实验室质检认证'],['🚚','泰国仓直发 · 48 小时出库'],['💬','泰语客服 1 对 1 售后']].map(s=>`<div class="sp-item"><span style="font-size:16px">${s[0]}</span>${s[1]}</div>`).join('')}</div></div>`;
-    case 'review_summary':return `<div style="padding:${pad}px"><div class="h5-sect"><div style="display:flex;align-items:center;gap:12px"><div style="text-align:center"><div style="font-size:26px;font-weight:700;color:#cf1322">${state.product.rating}</div><div class="stars">★★★★★</div></div><div style="flex:1">${[92,6,1,1,0].map((v,i)=>`<div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--text3);margin:2px 0"><span>${5-i}★</span><div style="flex:1;height:4px;background:#f0f0f0;border-radius:2px"><div style="width:${v}%;height:100%;background:#faad14;border-radius:2px"></div></div><span>${v}%</span></div>`).join('')}</div></div><div class="text3" style="margin-top:8px">共 ${state.product.reviews} 条评价 · ${state.product.sold} 已售</div></div></div>`;
-    case 'review_list':return `<div style="padding:${pad}px"><div class="h5-sect"><h4>用户评价（${state.product.reviews}）</h4>${[['Ploy T.','02/08'],['Mali S.','28/07'],['Kanokwan R.','21/07']].map(r=>`<div class="rev"><div class="tst" style="border:none;padding:0;margin:0"><div class="who"><span>😊 ${r[0]}</span><span>${r[1]}</span></div><span class="stars">★★★★★</span><div style="margin:4px 0">精华质地清爽不粘腻，用了两周肤色明显提亮，回购第二瓶！</div></div></div>`).join('')}</div></div>`;
-    case 'spec_table':return `<div style="padding:${pad}px"><div class="h5-sect"><h4${db('title')}>${esc(p.title||'规格参数')}</h4>${[['品牌','GLAMORA'],['产地','泰国'],['净含量','30ml'],['保质期','3 年'],['适用肤质','所有肤质']].map(s=>`<div class="spec-r"><b>${s[0]}</b>${s[1]}</div>`).join('')}</div></div>`;
-    case 'related_products':return `<div style="padding:${pad}px"><div class="h5-sect"><h4${db('title')}>${esc(p.title||'相关商品')}<span class="more">更多 ›</span></h4><div class="p-cards">${PRODS.slice(2,6).map(x=>pCard(x)).join('')}</div></div></div>`;
-    case 'service_widget':return `<div style="position:absolute;right:12px;bottom:80px;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#1677ff,#722ed1);color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;box-shadow:0 4px 12px rgba(0,0,0,.2);z-index:9">💬</div>`;
-    case 'cookie_tips':return `<div style="background:rgba(0,0,0,.8);color:#fff;font-size:11px;padding:10px 12px;display:flex;align-items:center;gap:8px;position:sticky;bottom:0">🍪 我们使用 Cookie 优化体验<span style="flex:1"></span><span style="background:#1677ff;padding:3px 10px;border-radius:4px">知道了</span></div>`;
-    default:return `<div style="padding:24px;text-align:center;color:var(--text3);background:#fff;margin:${pad}px">${compName(b.type)} 区块预览</div>`;
-  }
-}
-function pCard(x,mini){
-  return `<div class="${mini?'':'p-card'}"><div class="img" style="background:${grad(x.g)};${mini?'height:100px;border-radius:8px 8px 0 0':''}"><span style="position:relative">${x.e}</span>${x.o?'<span class="off">-'+Math.round((1-parseFloat(x.p.replace(/[^\d.]/g,''))/parseFloat(x.o.replace(/[^\d.]/g,'')))*100)+'%</span>':''}</div><div class="body"><div class="t">${x.n}</div><div class="pr">${x.p}<s>${x.o}</s></div></div></div>`;
-}
-</script>
-<script data-page-node-id="rf7p24jisRt5wnTQBjsqA3" data-pnid-children="ufXUoQlYfiYmQsSbi2UZp2">
-/* ================= PDP 锁定购买区域渲染 ================= */
-function pdpGallery(mode){
-  return `<div class="pdp-gal" style="background:${grad(0)}">💧 Glow Serum 维 C 精华<div style="position:absolute;bottom:10px;right:12px;background:rgba(0,0,0,.4);color:#fff;font-size:10px;padding:2px 8px;border-radius:10px">1 / 4</div></div>
-  <div class="pdp-thumbs">${[0,1,2,3].map(i=>`<i class="${i===0?'on':''}" style="background:${grad(i)}">${['💧','📦','🌿','✨'][i]}</i>`).join('')}</div>`;
-}
-function pdpInfo(mode){
-  const P=state.product;
-  return `<div class="pdp-info">
+  </div>`+mFoot(`<button class="btn" onclick="mClose()">取消</button><button class="btn primary" onclick="savePack(${p.id},'${langKey}',${filled})">保 存</button>`),640);}
+function savePack(id,langKey,filled){const p=state.packs.find(x=>x.id===id);document.querySelectorAll('.pk-v').forEach(el=>{const k=state.i18nKeys.find(x=>x.k===el.dataset.k);if(k)k[langKey]=el.value;});const n=state.i18nKeys.filter(k=>k[langKey]).length;p.keys=langKey==='en'?state.i18nKeys.length:n;p.ok=(n>=state.i18nKeys.length);p.upd=nowDT();toast('语言包已保存');mClose();render();}</script>
+<script data-page-node-id="3JO1dgNIqbOrG0tILdwNuN" data-pnid-children="cei5GgNIJT3wwWd0HeFd6t">const grad=i=>GRADS[i%GRADS.length];function h5Block(b,mode){const p=b.props||{},pad=p.pad!=null?p.pad:12,db=(k)=>mode==='edit'?` data-bind="${b.uid}.${k}"`:'';switch(b.type){case'site_header':return`<div class="h5-header" style="background:linear-gradient(120deg,${state.theme.main},${state.theme.sub})"><span style="flex:1;font-weight:700"${db('shop')}>${esc(p.shop||'My Store')}</span><span style="opacity:.9">🔍</span><span style="opacity:.9;position:relative">🛒<span style="position:absolute;top:-6px;right:-8px;background:#cf1322;color:#fff;border-radius:8px;font-size:9px;padding:0 4px">2</span></span></div>`;case'image_carousel':return`<div class="h5-banner" style="background:${grad(0)};margin:${pad}px">🖼️ 新品首发<div class="h5-dots">${Array.from({length:p.imgs||3}).map((_,i)=>`<i class="${i===0?'on':''}"></i>`).join('')}</div></div>`;case'hero_banner':return`<div class="h5-banner" style="background:${grad(4)};height:180px;flex-direction:column;gap:8px;margin:${pad}px"><div style="font-size:22px"${db('title')}>${esc(p.title||'BIG SALE')}</div><div style="font-size:12px;font-weight:400"${db('sub')}>${esc(p.sub||'')}</div><div style="background:#fff;color:#cf1322;font-size:12px;font-weight:600;padding:6px 18px;border-radius:16px"${db('btn')}>${esc(p.btn||'立即抢购')}</div></div>`;case'category_grid':return`<div style="padding:${pad}px"><div class="cat-grid">${[['💄','彩妆'],['🧴','护肤'],['🎁','套装'],['🔥','热销']].map(c=>`<div class="cg"><i>${c[0]}</i>${c[1]}</div>`).join('')}</div></div>`;case'product_grid':return`<div class="h5-grid" style="padding:${pad}px"><div class="h5-sect" style="padding:12px;margin-bottom:10px"><h4${db('title')}>${esc(p.title||'热卖商品')}<span class="more">查看全部 ›</span></h4><div class="p-cards">${PRODS.slice(0,p.count||6).map(x=>pCard(x)).join('')}</div></div></div>`;case'product_slider':return`<div style="padding:${pad}px 0"><div class="h5-sect" style="padding:12px"><h4${db('title')}>${esc(p.title||'为你推荐')}<span class="more">更多 ›</span></h4><div style="display:flex;gap:10px;overflow:hidden">${PRODS.slice(0,5).map(x=>`<div class="p-card"style="width:110px;flex-shrink:0">${pCard(x,true)}</div>`).join('')}</div></div></div>`;case'promo_bar':return`<div class="h5-promo" style="background:${p.bg||'#fff1f0'};margin:${pad}px"><span style="flex-shrink:0">📢</span><span style="flex:1;overflow:hidden;text-overflow:ellipsis"${db('text')}>${esc(p.text||'')}</span></div>`;case'countdown':return`<div style="padding:${pad}px"><div class="cd-box"><span${db('text')}>${esc(p.text||'')}</span>&nbsp;→&nbsp;<span class="cd-b">02</span>:<span class="cd-b">18</span>:<span class="cd-b">45</span><span class="text3" style="margin-left:4px">${esc(p.until||'')}</span></div></div>`;case'coupon_banner':return`<div style="padding:${pad}px"><div style="border:1.5px dashed #cf1322;background:#fff2f0;border-radius:8px;padding:12px;display:flex;align-items:center;gap:10px"><span style="font-size:22px">🎟️</span><div style="flex:1"${db('text')}>${esc(p.text||'')}</div><span style="background:#cf1322;color:#fff;font-size:11px;padding:4px 10px;border-radius:12px">领取</span></div></div>`;case'testimonial_slider':return`<div style="padding:${pad}px"><div class="h5-sect" style="padding:12px"><h4${db('title')}>${esc(p.title||'买家真实评价')}</h4>${[['Nicha K.','泰国 · 已验证购买'],['Tran M.','越南 · 已验证购买'],['Anna W.','波兰 · 已验证购买']].slice(0,p.n||3).map(x=>`<div class="tst"><div class="who"><span>😊 ${x[0]}</span><span class="stars">★★★★★</span></div>${x[1]}，物流很快，包装完好，会回购！</div>`).join('')}</div></div>`;case'trust_badges':return`<div class="trust" style="margin:${pad}px">${[['🚚','免运费'],['🛡️','正品保障'],['↩️','7 天退换'],['🔒','安全支付']].map(x=>`<div><i>${x[0]}</i>${x[1]}</div>`).join('')}</div>`;case'faq_accordion':return`<div style="padding:${pad}px"><div class="h5-sect"><h4${db('title')}>${esc(p.title||'常见问题')}</h4>${[['多久可以收到货？','一般 5–9 个工作日送达'],['支持哪些支付方式？','支持 COD / 信用卡 / 电子钱包'],['可以退货吗？','签收后 7 天内支持无理由退货']].map(f=>`<div class="faq-i"><span>${f[0]}</span><span style="color:var(--text3)">▾</span></div>`).join('')}</div></div>`;case'rich_text':return`<div style="padding:${pad}px"><div class="h5-sect"><h4${db('title')}>${esc(p.title||'')}</h4><div style="height:90px;background:${grad(1)};border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;margin-bottom:10px">品 牌 形 象 图</div><p style="font-size:12px;color:var(--text2);line-height:1.8"${db('body')}>${esc(p.body||'')}</p></div></div>`;case'site_footer':return`<div class="h5-footer" style="margin-top:${pad}px"><div${db('copy')}>${esc(p.copy||'')}</div><div style="margin-top:6px">Terms · Privacy · Refund Policy</div></div>`;case'selling_points':return`<div style="padding:${pad}px"><div class="h5-sect"><h4${db('title')}>${esc(p.title||'为什么选择我们')}</h4>${[['✅','成分安全温和，敏感肌可用'],['🧪','第三方实验室质检认证'],['🚚','泰国仓直发 · 48 小时出库'],['💬','泰语客服 1 对 1 售后']].map(s=>`<div class="sp-item"><span style="font-size:16px">${s[0]}</span>${s[1]}</div>`).join('')}</div></div>`;case'review_summary':return`<div style="padding:${pad}px"><div class="h5-sect"><div style="display:flex;align-items:center;gap:12px"><div style="text-align:center"><div style="font-size:26px;font-weight:700;color:#cf1322">${state.product.rating}</div><div class="stars">★★★★★</div></div><div style="flex:1">${[92,6,1,1,0].map((v,i)=>`<div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--text3);margin:2px 0"><span>${5-i}★</span><div style="flex:1;height:4px;background:#f0f0f0;border-radius:2px"><div style="width:${v}%;height:100%;background:#faad14;border-radius:2px"></div></div><span>${v}%</span></div>`).join('')}</div></div><div class="text3" style="margin-top:8px">共 ${state.product.reviews} 条评价 · ${state.product.sold} 已售</div></div></div>`;case'review_list':return`<div style="padding:${pad}px"><div class="h5-sect"><h4>用户评价（${state.product.reviews}）</h4>${[['Ploy T.','02/08'],['Mali S.','28/07'],['Kanokwan R.','21/07']].map(r=>`<div class="rev"><div class="tst"style="border:none;padding:0;margin:0"><div class="who"><span>😊 ${r[0]}</span><span>${r[1]}</span></div><span class="stars">★★★★★</span><div style="margin:4px 0">精华质地清爽不粘腻，用了两周肤色明显提亮，回购第二瓶！</div></div></div>`).join('')}</div></div>`;case'spec_table':return`<div style="padding:${pad}px"><div class="h5-sect"><h4${db('title')}>${esc(p.title||'规格参数')}</h4>${[['品牌','GLAMORA'],['产地','泰国'],['净含量','30ml'],['保质期','3 年'],['适用肤质','所有肤质']].map(s=>`<div class="spec-r"><b>${s[0]}</b>${s[1]}</div>`).join('')}</div></div>`;case'related_products':return`<div style="padding:${pad}px"><div class="h5-sect"><h4${db('title')}>${esc(p.title||'相关商品')}<span class="more">更多 ›</span></h4><div class="p-cards">${PRODS.slice(2,6).map(x=>pCard(x)).join('')}</div></div></div>`;case'service_widget':return`<div style="position:absolute;right:12px;bottom:80px;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#1677ff,#722ed1);color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;box-shadow:0 4px 12px rgba(0,0,0,.2);z-index:9">💬</div>`;case'cookie_tips':return`<div style="background:rgba(0,0,0,.8);color:#fff;font-size:11px;padding:10px 12px;display:flex;align-items:center;gap:8px;position:sticky;bottom:0">🍪 我们使用 Cookie 优化体验<span style="flex:1"></span><span style="background:#1677ff;padding:3px 10px;border-radius:4px">知道了</span></div>`;default:return`<div style="padding:24px;text-align:center;color:var(--text3);background:#fff;margin:${pad}px">${compName(b.type)} 区块预览</div>`;}}
+function pCard(x,mini){return`<div class="${mini?'':'p-card'}"><div class="img" style="background:${grad(x.g)};${mini?'height:100px;border-radius:8px 8px 0 0':''}"><span style="position:relative">${x.e}</span>${x.o?'<span class="off">-'+Math.round((1-parseFloat(x.p.replace(/[^\d.]/g,''))/parseFloat(x.o.replace(/[^\d.]/g,'')))*100)+'%</span>':''}</div><div class="body"><div class="t">${x.n}</div><div class="pr">${x.p}<s>${x.o}</s></div></div></div>`;}</script>
+<script data-page-node-id="rf7p24jisRt5wnTQBjsqA3" data-pnid-children="ufXUoQlYfiYmQsSbi2UZp2">function pdpGallery(mode){return`<div class="pdp-gal" style="background:${grad(0)}">💧 Glow Serum 维 C 精华<div style="position:absolute;bottom:10px;right:12px;background:rgba(0,0,0,.4);color:#fff;font-size:10px;padding:2px 8px;border-radius:10px">1 / 4</div></div>
+  <div class="pdp-thumbs">${[0,1,2,3].map(i=>`<i class="${i===0?'on':''}"style="background:${grad(i)}">${['💧','📦','🌿','✨'][i]}</i>`).join('')}</div>`;}
+function pdpInfo(mode){const P=state.product;return`<div class="pdp-info">
     <div class="pdp-price"><span class="now">${P.price}</span><span class="old">${P.old}</span><span class="tag red" style="height:20px">${P.off}</span></div>
     <div class="pdp-title">${P.title}</div>
     <div style="font-size:11px;color:var(--text3)"><span class="stars">★★★★★</span> ${P.rating} · ${P.reviews} 条评价 · 已售 ${P.sold}</div>
@@ -827,19 +212,11 @@ function pdpInfo(mode){
     <div><span class="size-chip on">30ml 套装</span><span class="size-chip">50ml 套装</span></div>
     <div class="sku-l">数量</div>
     <div style="display:flex;align-items:center;gap:12px"><div class="qty"><b onclick="qtyD(-1)">−</b><span id="q-n">1</span><b onclick="qtyD(1)">＋</b></div><span class="text3">库存 ${P.stock} 件 · 现货秒发</span></div>
-  </div>`;
-}
-function pdpBuyBar(mode){
-  return `<div class="buy-bar"><div class="cart" ${mode==='edit'?'style="cursor:not-allowed"':''} onclick="${mode==='edit'?'event.stopPropagation()':"toast('已加入购物车（演示）')"}">🛒 ${state.copyLang.indexOf('th')===0?'เพิ่มลงตะกร้า':'加入购物车'}</div><div class="buy" ${mode==='edit'?'style="cursor:not-allowed"':''} onclick="${mode==='edit'?'event.stopPropagation()':"toast('跳转结账流程（携带所选规格与数量）','info')"}">⚡ ${state.copyLang.indexOf('th')===0?'ซื้อทันที':'立即购买'}</div></div>`;
-}
-function pdpDesc(mode){
-  return `<div style="background:#fff;margin:8px 0;padding:14px"><div style="font-weight:600;font-size:14px;margin-bottom:10px">商品详情描述</div><div style="height:110px;background:${grad(2)};border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;margin-bottom:10px">商 品 详 情 长 图</div><div style="font-size:12px;color:var(--text2);line-height:1.9">蕴含 15% 维 C 衍生物，温和焕亮肌肤；建议早晚洁面后使用，避开眼周…</div></div>`;
-}
-function qtyD(d){ const el=document.getElementById('q-n'); if(!el)return; let v=Math.max(1,Math.min(state.product.stock,+el.textContent+d)); el.textContent=v; }
-/* ================= 页面装修 · 通用 ================= */
-function edToolbar(page){
-  const s=curSite();
-  return `<div class="ed-top">
+  </div>`;}
+function pdpBuyBar(mode){return`<div class="buy-bar"><div class="cart" ${mode==='edit'?'style="cursor:not-allowed"':''} onclick="${mode==='edit'?'event.stopPropagation()':"toast('已加入购物车（演示）')"}">🛒 ${state.copyLang.indexOf('th')===0?'เพิ่มลงตะกร้า':'加入购物车'}</div><div class="buy" ${mode==='edit'?'style="cursor:not-allowed"':''} onclick="${mode==='edit'?'event.stopPropagation()':"toast('跳转结账流程（携带所选规格与数量）','info')"}">⚡ ${state.copyLang.indexOf('th')===0?'ซื้อทันที':'立即购买'}</div></div>`;}
+function pdpDesc(mode){return`<div style="background:#fff;margin:8px 0;padding:14px"><div style="font-weight:600;font-size:14px;margin-bottom:10px">商品详情描述</div><div style="height:110px;background:${grad(2)};border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;margin-bottom:10px">商 品 详 情 长 图</div><div style="font-size:12px;color:var(--text2);line-height:1.9">蕴含 15% 维 C 衍生物，温和焕亮肌肤；建议早晚洁面后使用，避开眼周…</div></div>`;}
+function qtyD(d){const el=document.getElementById('q-n');if(!el)return;let v=Math.max(1,Math.min(state.product.stock,+el.textContent+d));el.textContent=v;}
+function edToolbar(page){const s=curSite();return`<div class="ed-top">
     <b style="font-size:14px">🛠️ 页面装修</b>
     <span class="site-pick" onclick="toggleSiteMenu(event)">🏷️ <b>${esc(s.name)}</b> ▾</span>
     <div class="seg"><span class="s ${page==='home'?'active':''}" onclick="enterEditor('home')">首页</span><span class="s ${page==='product'?'active':''}" onclick="enterEditor('product')">商品详情页</span></div>
@@ -849,55 +226,24 @@ function edToolbar(page){
     <button class="btn sm" onclick="go('#/preview/${page==='home'?'home':'product'}')">👁 预览</button>
     <button class="btn sm primary" onclick="publish()">🚀 发布上线</button>
     <button class="btn sm" onclick="go('#/site/publish-history')">🕓 历史版本</button>
-  </div>`;
-}
-function enterEditor(k){ if(state.unsaved){ askConfirm('切换页面','当前页面有<b>未保存的更改</b>，切换将放弃更改，是否继续？','继续切换',()=>{state.unsaved=false;state.sel='';go('#/site/editor/'+k)},true); } else { state.sel='';go('#/site/editor/'+k); } }
-let saveTimer=null;
-function markSaved(){
-  state.unsaved=true;
-  const el=document.getElementById('save-ind'); if(el)el.innerHTML='● 保存中…';
-  clearTimeout(saveTimer);
-  saveTimer=setTimeout(()=>{ state.unsaved=false; state.savedAt=nowT(); const e2=document.getElementById('save-ind'); if(e2)e2.innerHTML='✓ 已自动保存 '+state.savedAt; },1200);
-}
-function saveDraft(){ state.unsaved=false; state.savedAt=nowT(); toast('草稿已保存'); const el=document.getElementById('save-ind'); if(el)el.innerHTML='✓ 已自动保存 '+state.savedAt; }
-function setProp(uidStr,key,val){
-  const b=state.homeDraft.find(x=>x.uid===uidStr)||['top','mid','bottom'].reduce((a,z)=>a||state.pdp[z].find(x=>x.uid===uidStr),null);
-  if(b){ b.props[key]=val; markSaved(); document.querySelectorAll('[data-bind="'+uidStr+'.'+key+'"]').forEach(el=>el.textContent=val); }
-}
-function usePage(c,page){ return c.pages.includes('通用')||c.pages.includes(page==='home'?'首页':'商品详情页'); }
-function leftChips(page){
-  const av=state.comps.filter(c=>c.on&&!c.lock&&usePage(c,page));
-  return CATS.filter(cat=>av.some(c=>c.cat===cat)).map(cat=>`<div class="cat-t">${cat}</div><div class="chips">${av.filter(c=>c.cat===cat).map(c=>`<div class="chip" draggable="true" ondragstart="chipDrag(event,'${c.key}')" title="${c.key}"><span class="ci">${ICONS[c.key]||'🧩'}</span><span>${c.name}<small>${c.key}</small></span></div>`).join('')}</div>`).join('')||'<div class="empty" style="padding:20px 0"><div class="box">🧩</div>暂无可用区块</div>';
-}
-/* ---------- 拖拽 ---------- */
-let drag=null,dropAt=null;
-function chipDrag(e,type){ drag={kind:'new',type}; e.dataTransfer.effectAllowed='copy'; e.dataTransfer.setData('text/plain',type); }
-function blkDrag(e,uidStr,zone){ drag={kind:'move',uid:uidStr,zone:zone||'home'}; }
-function blkOver(e,i){ e.preventDefault(); e.stopPropagation(); const r=e.currentTarget.getBoundingClientRect(); const before=(e.clientY-r.top)<r.height/2; e.currentTarget.classList.remove('db','da'); e.currentTarget.classList.add(before?'db':'da'); dropAt=before?i:i+1; }
-function canvasOver(e){ e.preventDefault(); if(e.target===e.currentTarget)dropAt=null; }
-function clearInd(){ document.querySelectorAll('.db,.da').forEach(el=>el.classList.remove('db','da')); }
-function dropInsert(list,page,zone){
-  let idx=dropAt==null?list.length:dropAt;
-  if(drag.kind==='new'){
-    if(page==='home'&&list.length>=50){toast('首页区块已达上限 50 个','warning');return;}
-    list.splice(idx,0,mkBlock(drag.type));
-    toast('已添加区块「'+compName(drag.type)+'」');
-  }else{
-    const fromZone=drag.zone;
-    const src=fromZone==='home'?state.homeDraft:state.pdp[fromZone];
-    const fi=src.findIndex(b=>b.uid===drag.uid);
-    if(fromZone===zone||zone==='home'&&fromZone==='home'){ const it=src.splice(fi,1)[0]; if(fi<idx)idx--; list.splice(idx,0,it); }
-    else{ const it=src.splice(fi,1)[0]; list.splice(idx,0,it); toast('区块已移动至新区域'); }
-  }
-  state.sel=list[Math.min(idx,list.length-1)]?list[Math.min(idx,list.length-1)].uid:'';
-  state.unsaved=true; dropAt=null; drag=null; render();
-}
-function mkBlock(type){ return {uid:uid(),type,props:JSON.parse(JSON.stringify(DEFPROPS[type]||{}))}; }
-</script>
-<script data-page-node-id="P4fM72FfER0csPOKcZbPLe" data-pnid-children="HlEouauMdPQNDkGwOEBVdh">
-/* ================= 页面装修 · 首页 ================= */
-PAGES['site/editor/home']=()=>{
-  return edToolbar('home')+`<div class="ed-body">
+  </div>`;}
+function enterEditor(k){if(state.unsaved){askConfirm('切换页面','当前页面有<b>未保存的更改</b>，切换将放弃更改，是否继续？','继续切换',()=>{state.unsaved=false;state.sel='';go('#/site/editor/'+k)},true);}else{state.sel='';go('#/site/editor/'+k);}}
+let saveTimer=null;function markSaved(){state.unsaved=true;const el=document.getElementById('save-ind');if(el)el.innerHTML='● 保存中…';clearTimeout(saveTimer);saveTimer=setTimeout(()=>{state.unsaved=false;state.savedAt=nowT();const e2=document.getElementById('save-ind');if(e2)e2.innerHTML='✓ 已自动保存 '+state.savedAt;},1200);}
+function saveDraft(){state.unsaved=false;state.savedAt=nowT();toast('草稿已保存');const el=document.getElementById('save-ind');if(el)el.innerHTML='✓ 已自动保存 '+state.savedAt;}
+function setProp(uidStr,key,val){const b=state.homeDraft.find(x=>x.uid===uidStr)||['top','mid','bottom'].reduce((a,z)=>a||state.pdp[z].find(x=>x.uid===uidStr),null);if(b){b.props[key]=val;markSaved();document.querySelectorAll('[data-bind="'+uidStr+'.'+key+'"]').forEach(el=>el.textContent=val);}}
+function usePage(c,page){return c.pages.includes('通用')||c.pages.includes(page==='home'?'首页':'商品详情页');}
+function leftChips(page){const av=state.comps.filter(c=>c.on&&!c.lock&&usePage(c,page));return CATS.filter(cat=>av.some(c=>c.cat===cat)).map(cat=>`<div class="cat-t">${cat}</div><div class="chips">${av.filter(c=>c.cat===cat).map(c=>`<div class="chip"draggable="true"ondragstart="chipDrag(event,'${c.key}')"title="${c.key}"><span class="ci">${ICONS[c.key]||'🧩'}</span><span>${c.name}<small>${c.key}</small></span></div>`).join('')}</div>`).join('')||'<div class="empty" style="padding:20px 0"><div class="box">🧩</div>暂无可用区块</div>';}
+let drag=null,dropAt=null;function chipDrag(e,type){drag={kind:'new',type};e.dataTransfer.effectAllowed='copy';e.dataTransfer.setData('text/plain',type);}
+function blkDrag(e,uidStr,zone){drag={kind:'move',uid:uidStr,zone:zone||'home'};}
+function blkOver(e,i){e.preventDefault();e.stopPropagation();const r=e.currentTarget.getBoundingClientRect();const before=(e.clientY-r.top)<r.height/2;e.currentTarget.classList.remove('db','da');e.currentTarget.classList.add(before?'db':'da');dropAt=before?i:i+1;}
+function canvasOver(e){e.preventDefault();if(e.target===e.currentTarget)dropAt=null;}
+function clearInd(){document.querySelectorAll('.db,.da').forEach(el=>el.classList.remove('db','da'));}
+function dropInsert(list,page,zone){let idx=dropAt==null?list.length:dropAt;if(drag.kind==='new'){if(page==='home'&&list.length>=50){toast('首页区块已达上限 50 个','warning');return;}
+list.splice(idx,0,mkBlock(drag.type));toast('已添加区块「'+compName(drag.type)+'」');}else{const fromZone=drag.zone;const src=fromZone==='home'?state.homeDraft:state.pdp[fromZone];const fi=src.findIndex(b=>b.uid===drag.uid);if(fromZone===zone||zone==='home'&&fromZone==='home'){const it=src.splice(fi,1)[0];if(fi<idx)idx--;list.splice(idx,0,it);}
+else{const it=src.splice(fi,1)[0];list.splice(idx,0,it);toast('区块已移动至新区域');}}
+state.sel=list[Math.min(idx,list.length-1)]?list[Math.min(idx,list.length-1)].uid:'';state.unsaved=true;dropAt=null;drag=null;render();}
+function mkBlock(type){return{uid:uid(),type,props:JSON.parse(JSON.stringify(DEFPROPS[type]||{}))};}</script>
+<script data-page-node-id="P4fM72FfER0csPOKcZbPLe" data-pnid-children="HlEouauMdPQNDkGwOEBVdh">PAGES['site/editor/home']=()=>{return edToolbar('home')+`<div class="ed-body">
     <div class="ed-panel ed-left"><div class="ed-p-h">🧩 区块面板<span class="text3">拖入画布</span></div><div class="scroll">${leftChips('home')}</div></div>
     <div class="ed-panel ed-canvas">
       <div class="phone"><div class="ph-status"><span>9:41</span><span>📶 🔋</span></div>
@@ -909,227 +255,85 @@ PAGES['site/editor/home']=()=>{
       </div>
     </div>
     <div class="ed-panel ed-right"><div class="ed-p-h">${cfgTabsHead()}</div><div class="scroll" id="cfg">${cfgBody('home')}</div></div>
-  </div>`;
-};
-function homeCanvasBlock(b,i){
-  const c=comp(b.type);
-  return `<div class="cblock ${state.sel===b.uid?'sel':''}" draggable="true" ondragstart="blkDrag(event,'${b.uid}','home')" ondragover="blkOver(event,${i})" ondragleave="event.currentTarget.classList.remove('db','da')" ondrop="event.preventDefault();event.stopPropagation();clearInd();if(drag)dropInsert(state.homeDraft,'home','home')" onclick="selectBlk('${b.uid}')">
+  </div>`;};function homeCanvasBlock(b,i){const c=comp(b.type);return`<div class="cblock ${state.sel===b.uid?'sel':''}" draggable="true" ondragstart="blkDrag(event,'${b.uid}','home')" ondragover="blkOver(event,${i})" ondragleave="event.currentTarget.classList.remove('db','da')" ondrop="event.preventDefault();event.stopPropagation();clearInd();if(drag)dropInsert(state.homeDraft,'home','home')" onclick="selectBlk('${b.uid}')">
     <div class="btools"><span title="上移" onclick="event.stopPropagation();moveBlk('${b.uid}',-1)">↑</span><span title="下移" onclick="event.stopPropagation();moveBlk('${b.uid}',1)">↓</span><span title="删除" onclick="event.stopPropagation();delBlk('${b.uid}')">🗑</span></div>
     ${(!c||!c.on)?'<div class="lock-badge warn">⚠️ 已停用区块 · 发布将被阻断</div>':''}
     ${h5Block(b,'edit')}
-  </div>`;
-}
-function selectBlk(u){ state.sel=u; state.cfgTab='prop'; render(); }
-function moveBlk(u,d){
-  const i=state.homeDraft.findIndex(b=>b.uid===u),j=i+d;
-  if(j<0||j>=state.homeDraft.length)return;
-  const it=state.homeDraft.splice(i,1)[0]; state.homeDraft.splice(j,0,it);
-  state.unsaved=true; render();
-}
-function delBlk(u){
-  askConfirm('删除区块','确定删除该区块？','删除',()=>{
-    state.homeDraft=state.homeDraft.filter(b=>b.uid!==u);
-    if(state.sel===u)state.sel='';
-    state.unsaved=true; render();
-  },true);
-}
-/* ================= 发布 ================= */
-function publish(){
-  const s=curSite(),problems=[];
-  state.homeDraft.forEach(b=>{const c=comp(b.type); if(!c||!c.on)problems.push({page:'首页',name:c?c.name:b.type,uid:b.uid});});
-  ['top','mid','bottom'].forEach(z=>state.pdp[z].forEach(b=>{const c=comp(b.type); if(!c||!c.on)problems.push({page:'商品详情页',name:c?c.name:b.type,uid:b.uid});}));
-  if(problems.length){
-    modal(mHead('无法发布：有 '+problems.length+' 处需要修改')+`
+  </div>`;}
+function selectBlk(u){state.sel=u;state.cfgTab='prop';render();}
+function moveBlk(u,d){const i=state.homeDraft.findIndex(b=>b.uid===u),j=i+d;if(j<0||j>=state.homeDraft.length)return;const it=state.homeDraft.splice(i,1)[0];state.homeDraft.splice(j,0,it);state.unsaved=true;render();}
+function delBlk(u){askConfirm('删除区块','确定删除该区块？','删除',()=>{state.homeDraft=state.homeDraft.filter(b=>b.uid!==u);if(state.sel===u)state.sel='';state.unsaved=true;render();},true);}
+function publish(){const s=curSite(),problems=[];state.homeDraft.forEach(b=>{const c=comp(b.type);if(!c||!c.on)problems.push({page:'首页',name:c?c.name:b.type,uid:b.uid});});['top','mid','bottom'].forEach(z=>state.pdp[z].forEach(b=>{const c=comp(b.type);if(!c||!c.on)problems.push({page:'商品详情页',name:c?c.name:b.type,uid:b.uid});}));if(problems.length){modal(mHead('无法发布：有 '+problems.length+' 处需要修改')+`
     <div class="modal-b" style="padding-top:14px">
       <div class="alert error"><span class="ic">✕</span><div>发布校验未通过：页面使用了<b>已停用的区块</b>，请替换后重试。</div></div>
-      ${problems.map(p=>`<div style="display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px dashed var(--split)">
-        <span class="tag ${p.page==='首页'?'cyan':'purple'}">${p.page}</span><span>区块「${p.name}」已停用</span><span style="flex:1"></span>
-        <button class="btn sm" onclick="mClose();locate('${p.uid}')">📍 定位</button>
-      </div>`).join('')}
+      ${problems.map(p=>`<div style="display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px dashed var(--split)"><span class="tag ${p.page==='首页'?'cyan':'purple'}">${p.page}</span><span>区块「${p.name}」已停用</span><span style="flex:1"></span><button class="btn sm"onclick="mClose();locate('${p.uid}')">📍 定位</button></div>`).join('')}
       <div class="text3" style="margin-top:12px">提示：也可前往「DIY 配置 → 页面区块库」重新上架该区块。</div>
-    </div>`+mFoot(`<button class="btn" onclick="mClose();go('#/diy/components')">去区块库</button><button class="btn primary" onclick="mClose()">知道了</button>`),540);
-    return;
-  }
-  askConfirm('发布上线',`将把「<b>${esc(s.name)}</b>」当前草稿发布为新的<b>线上版本</b>，买家访问独立站域名将读取新版本。<br><span class="text3">发布后仍可随时在发布历史中回滚；操作将记入审计日志。</span>`,'确认发布',()=>{
-    const nums=state.history.map(h=>+h.v.slice(1));
-    state.history.unshift({v:'V'+(Math.max(...nums)+1),time:nowDT(),by:'somchai@glamora.co',scope:'全部',cur:true});
-    state.history.forEach((h,i)=>h.cur=i===0);
-    if(state.history.length>20)state.history.length=20;
-    s.status='latest'; s.last=nowDT(); state.unsaved=false;
-    toast('已发布，独立站已更新'); render();
-    modal(mHead('已发布，独立站已更新')+`
+    </div>`+mFoot(`<button class="btn" onclick="mClose();go('#/diy/components')">去区块库</button><button class="btn primary" onclick="mClose()">知道了</button>`),540);return;}
+askConfirm('发布上线',`将把「<b>${esc(s.name)}</b>」当前草稿发布为新的<b>线上版本</b>，买家访问独立站域名将读取新版本。<br><span class="text3">发布后仍可随时在发布历史中回滚；操作将记入审计日志。</span>`,'确认发布',()=>{const nums=state.history.map(h=>+h.v.slice(1));state.history.unshift({v:'V'+(Math.max(...nums)+1),time:nowDT(),by:'somchai@glamora.co',scope:'全部',cur:true});state.history.forEach((h,i)=>h.cur=i===0);if(state.history.length>20)state.history.length=20;s.status='latest';s.last=nowDT();state.unsaved=false;toast('已发布，独立站已更新');render();modal(mHead('已发布，独立站已更新')+`
     <div class="modal-b" style="padding-top:14px">
       <div class="alert success"><span class="ic">✅</span><div>新版本已生成，买家端 <b>5 分钟内</b>可读取新内容。</div></div>
       <div style="background:#f5f5f5;padding:11px 14px;border-radius:6px;font-size:13px">🔗 线上地址：<a onclick="mClose();go('#/preview/home')">${s.domain||'preview-'+s.id.toLowerCase()+'.shopform.com'}</a></div>
-    </div>`+mFoot(`<button class="btn" onclick="mClose();go('#/site/publish-history')">查看发布历史</button><button class="btn primary" onclick="mClose()">完成</button>`),480);
-  });
-}
-function locate(u){ state.sel=u; state.cfgTab='prop'; if(location.hash!=='#/site/editor/home'){location.hash='#/site/editor/home';} else {render();} }
-</script>
-<script data-page-node-id="nqE6lmb6ZexsQFxAUKsWDh" data-pnid-children="noIB5CJK0rDqyoyIJaPunD">
-/* ================= 右侧配置面板 ================= */
-const LOCKED={'L-gallery':{name:'商品主图画廊'},'L-info':{name:'商品信息（标题 / 价格 / 规格 / 数量 / 库存）'},'L-buy':{name:'加入购物车 / 立即购买按钮'},'L-desc':{name:'商品详情描述'}};
-const findSel=()=>state.homeDraft.find(x=>x.uid===state.sel)||['top','mid','bottom'].reduce((a,z)=>a||state.pdp[z].find(x=>x.uid===state.sel),null);
-function cfgTabsHead(){
-  const locked=LOCKED[state.sel];
-  const tabs=locked?[['style','🎨 样式'],['copy','✏️ 文案']]:[['prop','⚙️ 属性'],['style','🎨 样式'],['copy','✏️ 文案'],['theme','🖌️ 主题']];
-  return '<div class="tabs" style="border-bottom:none;margin:0;gap:16px">'+tabs.map(t=>`<div class="t ${state.cfgTab===t[0]?'active':''}" onclick="setCfgTab('${t[0]}')">${t[1]}</div>`).join('')+'</div>';
-}
-function setCfgTab(t){ state.cfgTab=t; render(); }
-function cfgBody(page){
-  if(state.cfgTab==='theme')return themeForm();
-  const locked=LOCKED[state.sel],b=findSel();
-  const nm=locked?locked.name:(b?compName(b.type):null);
-  if(!nm)return `<div class="empty" style="padding:44px 0"><div class="box">👆</div>未选中区块<div class="text3" style="margin-top:6px;line-height:2">点击画布中的区块进行配置<br>或在「主题」页签配置站点主题</div></div>`;
-  let head='';
-  if(locked)head=`<div class="alert warning"><span class="ic">🔒</span><div><b>${locked.name}</b><br>此区域为转化核心，仅可修改样式和文案，<b>不可删除或调整顺序</b>。</div></div>`;
-  head+=`<div style="font-weight:600;margin-bottom:14px;font-size:14px">${ICONS[b?b.type:'']||'🔒'} ${nm}${b?'<span class="text3" style="font-weight:400;margin-left:8px;font-size:12px">'+b.type+'</span>':''}</div>`;
-  let body='';
-  if(state.cfgTab==='prop')body=locked?'<p class="text3">锁定区块由平台定义，无业务属性配置。</p>':propForm(b);
-  else if(state.cfgTab==='style')body=styleForm(b);
-  else body=copyForm(b,page);
-  return head+body;
-}
-function refreshCanvas(){
-  const page=location.hash.indexOf('product')>-1?'product':'home';
-  const el=document.getElementById('canvas');
-  if(el&&page==='home')el.innerHTML=state.homeDraft.map((b,i)=>homeCanvasBlock(b,i)).join('')+(state.homeDraft.length?'':'<div class="empty"><div class="box">📱</div>从左侧拖入第一个区块，开始搭建首页</div>');
-  const el2=document.getElementById('pcanvas');
-  if(el2&&page==='product')el2.innerHTML=pdCanvasInner();
-}
-function setStyleProp(u,k,v){
-  const b=findSel()||state.homeDraft.find(x=>x.uid===u)||['top','mid','bottom'].reduce((a,z)=>a||state.pdp[z].find(x=>x.uid===u),null);
-  if(b){b.props[k]=v;markSaved();refreshCanvas();}
-}
-function togSw(id,u,k){ const el=document.getElementById(id); el.classList.toggle('on'); setProp(u,k,el.classList.contains('on')); }
-function imgsEditor(b){
-  const n=b.props.imgs||3;
-  return `<div style="display:flex;gap:8px;flex-wrap:wrap">
-    ${Array.from({length:n}).map((_,i)=>`<div class="img-thumb" style="background:${grad(i)}">🖼️<span class="x" onclick="imgChg('${b.uid}',-1)">✕</span></div>`).join('')}
-    ${n<5?`<div class="img-add" onclick="imgChg('${b.uid}',1)"><span class="plus">＋</span>上传</div>`:''}
-  </div><div class="text3" style="margin-top:8px">最多 5 张 · 单张 ≤10MB · jpg / png / webp${n>=5?' · 已达上限':''}</div>`;
-}
-function imgChg(u,d){
-  const b=state.homeDraft.find(x=>x.uid===u)||['top','mid','bottom'].reduce((a,z)=>a||state.pdp[z].find(x=>x.uid===u),null);
-  if(!b)return;
-  const n=(b.props.imgs||3)+d;
-  if(n<1||n>5)return;
-  b.props.imgs=n; markSaved(); refreshCanvas();
-  const c=document.getElementById('cfg'); if(c)c.innerHTML=cfgBody(location.hash.indexOf('product')>-1?'product':'home');
-}
-function pickProduct(u){
-  const b=findSel()||state.homeDraft.find(x=>x.uid===u);
-  const cur=b.props.count||6;
-  modal(mHead('选择商品 · 来源于商品管理已上架商品')+`
+    </div>`+mFoot(`<button class="btn" onclick="mClose();go('#/site/publish-history')">查看发布历史</button><button class="btn primary" onclick="mClose()">完成</button>`),480);});}
+function locate(u){state.sel=u;state.cfgTab='prop';if(location.hash!=='#/site/editor/home'){location.hash='#/site/editor/home';}else{render();}}</script>
+<script data-page-node-id="nqE6lmb6ZexsQFxAUKsWDh" data-pnid-children="noIB5CJK0rDqyoyIJaPunD">const LOCKED={'L-gallery':{name:'商品主图画廊'},'L-info':{name:'商品信息（标题 / 价格 / 规格 / 数量 / 库存）'},'L-buy':{name:'加入购物车 / 立即购买按钮'},'L-desc':{name:'商品详情描述'}};const findSel=()=>state.homeDraft.find(x=>x.uid===state.sel)||['top','mid','bottom'].reduce((a,z)=>a||state.pdp[z].find(x=>x.uid===state.sel),null);function cfgTabsHead(){const locked=LOCKED[state.sel];const tabs=locked?[['style','🎨 样式'],['copy','✏️ 文案']]:[['prop','⚙️ 属性'],['style','🎨 样式'],['copy','✏️ 文案'],['theme','🖌️ 主题']];return'<div class="tabs" style="border-bottom:none;margin:0;gap:16px">'+tabs.map(t=>`<div class="t ${state.cfgTab===t[0]?'active':''}" onclick="setCfgTab('${t[0]}')">${t[1]}</div>`).join('')+'</div>';}
+function setCfgTab(t){state.cfgTab=t;render();}
+function cfgBody(page){if(state.cfgTab==='theme')return themeForm();const locked=LOCKED[state.sel],b=findSel();const nm=locked?locked.name:(b?compName(b.type):null);if(!nm)return`<div class="empty" style="padding:44px 0"><div class="box">👆</div>未选中区块<div class="text3" style="margin-top:6px;line-height:2">点击画布中的区块进行配置<br>或在「主题」页签配置站点主题</div></div>`;let head='';if(locked)head=`<div class="alert warning"><span class="ic">🔒</span><div><b>${locked.name}</b><br>此区域为转化核心，仅可修改样式和文案，<b>不可删除或调整顺序</b>。</div></div>`;head+=`<div style="font-weight:600;margin-bottom:14px;font-size:14px">${ICONS[b?b.type:'']||'🔒'} ${nm}${b?'<span class="text3" style="font-weight:400;margin-left:8px;font-size:12px">'+b.type+'</span>':''}</div>`;let body='';if(state.cfgTab==='prop')body=locked?'<p class="text3">锁定区块由平台定义，无业务属性配置。</p>':propForm(b);else if(state.cfgTab==='style')body=styleForm(b);else body=copyForm(b,page);return head+body;}
+function refreshCanvas(){const page=location.hash.indexOf('product')>-1?'product':'home';const el=document.getElementById('canvas');if(el&&page==='home')el.innerHTML=state.homeDraft.map((b,i)=>homeCanvasBlock(b,i)).join('')+(state.homeDraft.length?'':'<div class="empty"><div class="box">📱</div>从左侧拖入第一个区块，开始搭建首页</div>');const el2=document.getElementById('pcanvas');if(el2&&page==='product')el2.innerHTML=pdCanvasInner();}
+function setStyleProp(u,k,v){const b=findSel()||state.homeDraft.find(x=>x.uid===u)||['top','mid','bottom'].reduce((a,z)=>a||state.pdp[z].find(x=>x.uid===u),null);if(b){b.props[k]=v;markSaved();refreshCanvas();}}
+function togSw(id,u,k){const el=document.getElementById(id);el.classList.toggle('on');setProp(u,k,el.classList.contains('on'));}
+function imgsEditor(b){const n=b.props.imgs||3;return`<div style="display:flex;gap:8px;flex-wrap:wrap">
+    ${Array.from({length:n}).map((_,i)=>`<div class="img-thumb"style="background:${grad(i)}">🖼️<span class="x"onclick="imgChg('${b.uid}',-1)">✕</span></div>`).join('')}
+    ${n<5?`<div class="img-add"onclick="imgChg('${b.uid}',1)"><span class="plus">＋</span>上传</div>`:''}
+  </div><div class="text3" style="margin-top:8px">最多 5 张 · 单张 ≤10MB · jpg / png / webp${n>=5?' · 已达上限':''}</div>`;}
+function imgChg(u,d){const b=state.homeDraft.find(x=>x.uid===u)||['top','mid','bottom'].reduce((a,z)=>a||state.pdp[z].find(x=>x.uid===u),null);if(!b)return;const n=(b.props.imgs||3)+d;if(n<1||n>5)return;b.props.imgs=n;markSaved();refreshCanvas();const c=document.getElementById('cfg');if(c)c.innerHTML=cfgBody(location.hash.indexOf('product')>-1?'product':'home');}
+function pickProduct(u){const b=findSel()||state.homeDraft.find(x=>x.uid===u);const cur=b.props.count||6;modal(mHead('选择商品 · 来源于商品管理已上架商品')+`
   <div class="modal-b" style="padding-top:14px">
     <div class="text3" style="margin-bottom:10px">已选 <b id="pk-n" style="color:var(--primary)">${cur}</b> / 20 个</div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
-      ${PRODS.map((x,i)=>`<label style="border:1px solid var(--split);border-radius:8px;padding:8px;display:flex;gap:6px;align-items:center;cursor:pointer;font-size:11px"><input type="checkbox" class="pk-c" ${i<cur?'checked':''} onchange="document.getElementById('pk-n').textContent=document.querySelectorAll('.pk-c:checked').length"><span class="img-thumb" style="width:30px;height:30px;font-size:14px;background:${grad(x.g)}">${x.e}</span><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${x.n}</span></label>`).join('')}
+      ${PRODS.map((x,i)=>`<label style="border:1px solid var(--split);border-radius:8px;padding:8px;display:flex;gap:6px;align-items:center;cursor:pointer;font-size:11px"><input type="checkbox"class="pk-c"${i<cur?'checked':''}onchange="document.getElementById('pk-n').textContent=document.querySelectorAll('.pk-c:checked').length"><span class="img-thumb"style="width:30px;height:30px;font-size:14px;background:${grad(x.g)}">${x.e}</span><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${x.n}</span></label>`).join('')}
     </div>
-  </div>`+mFoot(`<button class="btn" onclick="mClose()">取消</button><button class="btn primary" onclick="pkOk('${u}')">确 定</button>`),600);
-}
-function pkOk(u){
-  const b=state.homeDraft.find(x=>x.uid===u)||['top','mid','bottom'].reduce((a,z)=>a||state.pdp[z].find(x=>x.uid===u),null);
-  const n=Math.max(1,document.querySelectorAll('.pk-c:checked').length);
-  if(b){b.props.count=n;markSaved();}
-  mClose();refreshCanvas();
-  const c=document.getElementById('cfg'); if(c)c.innerHTML=cfgBody(location.hash.indexOf('product')>-1?'product':'home');
-  toast('已选择 '+n+' 个商品');
-}
-/* ---------- 属性表单 ---------- */
-function propForm(b){
-  const p=b.props,id=b.uid;
-  const F=(l,inner)=>`<div class="fi"><label>${l}</label>${inner}</div>`;
-  switch(b.type){
-    case 'image_carousel':return F('图片列表（≤5 张）',imgsEditor(b))
-      +F('跳转链接（可选）',`<input class="ipt" value="${esc(p.link||'')}" placeholder="https://…" oninput="setProp('${id}','link',this.value)">`)
-      +F('自动播放 <span class="text3">默认开启</span>',`<div class="sw ${p.autoplay?'on':''}" id="sw-ap" onclick="togSw('sw-ap','${id}','autoplay')"></div>`);
-    case 'hero_banner':return F('主标题（≤100 字）',`<input class="ipt" value="${esc(p.title||'')}" oninput="setProp('${id}','title',this.value)">`)
-      +F('副标题',`<input class="ipt" value="${esc(p.sub||'')}" oninput="setProp('${id}','sub',this.value)">`)
-      +F('按钮文案',`<input class="ipt" value="${esc(p.btn||'')}" oninput="setProp('${id}','btn',this.value)">`);
-    case 'product_grid':case 'product_slider':return F('区块标题',`<input class="ipt" value="${esc(p.title||'')}" oninput="setProp('${id}','title',this.value)">`)
-      +F('展示商品（来源于商品管理，≤20 个）',`<div style="display:flex;align-items:center;gap:10px"><span class="tag blue">已选 ${p.count||6} 个商品</span><button class="btn sm" onclick="pickProduct('${id}')">选择商品</button></div>`)
-      +(b.type==='product_grid'?F('每行数量',`<select class="ipt" onchange="setStyleProp('${id}','cols',+this.value);"><option ${p.cols===2?'selected':''} value="2">2 个 / 行</option><option ${p.cols===3?'selected':''} value="3">3 个 / 行</option></select>`):'');
-    case 'promo_bar':case 'coupon_banner':return F('文案（≤200 字）',`<input class="ipt" value="${esc(p.text||'')}" oninput="setProp('${id}','text',this.value)">`);
-    case 'countdown':return F('截止时间（必填）',`<input class="ipt" type="datetime-local" value="${esc(p.until||'2026-09-01T20:00')}" onchange="setProp('${id}','until',this.value)">`)
-      +F('文案',`<input class="ipt" value="${esc(p.text||'')}" oninput="setProp('${id}','text',this.value)">`);
-    case 'site_header':return F('店铺名称',`<input class="ipt" value="${esc(p.shop||'')}" oninput="setProp('${id}','shop',this.value)">`);
-    case 'site_footer':return F('版权文案',`<input class="ipt" value="${esc(p.copy||'')}" oninput="setProp('${id}','copy',this.value)">`);
-    case 'faq_accordion':case 'testimonial_slider':case 'selling_points':case 'spec_table':case 'related_products':case 'rich_text':{
-      let h=F('区块标题（≤100 字）',`<input class="ipt" value="${esc(p.title||'')}" oninput="setProp('${id}','title',this.value)">`);
-      if(b.type==='testimonial_slider')h+=F('展示条数：'+(p.n||3),`<input type="range" min="2" max="5" value="${p.n||3}" oninput="this.closest('.fi').querySelector('label').textContent='展示条数：'+this.value;setProp('${id}','n',+this.value)">`);
-      if(b.type==='rich_text')h+=F('正文（≤2000 字）',`<textarea class="ipt" rows="4" oninput="setProp('${id}','body',this.value)">${esc(p.body||'')}</textarea>`);
-      if(b.type==='faq_accordion')h+=F('FAQ 项',`<div class="text3" style="line-height:2.2">${['多久可以收到货？','支持哪些支付方式？','可以退货吗？'].map(q=>'▾ '+q).join('<br>')}</div><button class="btn sm" style="margin-top:8px" onclick="toast('演示原型：FAQ 项维护','info')">管理 FAQ 项</button>`);
-      return h;
-    }
-    default:return '<p class="text3" style="line-height:2">该区块暂无可配业务属性。<br>可切换「样式」「文案」页签进行配置。</p>';
-  }
-}
-/* ---------- 样式表单 ---------- */
-function styleForm(b){
-  const p=(b&&b.props)||{},id=b?b.uid:'';
-  return `<div class="fi"><label>上下间距：<b id="rg-l">${p.pad!=null?p.pad:12}px</b></label><input type="range" min="0" max="40" value="${p.pad!=null?p.pad:12}" oninput="this.closest('.fi').querySelector('b').textContent=this.value+'px';setStyleProp('${id}','pad',+this.value)"></div>
+  </div>`+mFoot(`<button class="btn" onclick="mClose()">取消</button><button class="btn primary" onclick="pkOk('${u}')">确 定</button>`),600);}
+function pkOk(u){const b=state.homeDraft.find(x=>x.uid===u)||['top','mid','bottom'].reduce((a,z)=>a||state.pdp[z].find(x=>x.uid===u),null);const n=Math.max(1,document.querySelectorAll('.pk-c:checked').length);if(b){b.props.count=n;markSaved();}
+mClose();refreshCanvas();const c=document.getElementById('cfg');if(c)c.innerHTML=cfgBody(location.hash.indexOf('product')>-1?'product':'home');toast('已选择 '+n+' 个商品');}
+function propForm(b){const p=b.props,id=b.uid;const F=(l,inner)=>`<div class="fi"><label>${l}</label>${inner}</div>`;switch(b.type){case'image_carousel':return F('图片列表（≤5 张）',imgsEditor(b))
++F('跳转链接（可选）',`<input class="ipt" value="${esc(p.link||'')}" placeholder="https://…" oninput="setProp('${id}','link',this.value)">`)
++F('自动播放 <span class="text3">默认开启</span>',`<div class="sw ${p.autoplay?'on':''}" id="sw-ap" onclick="togSw('sw-ap','${id}','autoplay')"></div>`);case'hero_banner':return F('主标题（≤100 字）',`<input class="ipt" value="${esc(p.title||'')}" oninput="setProp('${id}','title',this.value)">`)
++F('副标题',`<input class="ipt" value="${esc(p.sub||'')}" oninput="setProp('${id}','sub',this.value)">`)
++F('按钮文案',`<input class="ipt" value="${esc(p.btn||'')}" oninput="setProp('${id}','btn',this.value)">`);case'product_grid':case'product_slider':return F('区块标题',`<input class="ipt" value="${esc(p.title||'')}" oninput="setProp('${id}','title',this.value)">`)
++F('展示商品（来源于商品管理，≤20 个）',`<div style="display:flex;align-items:center;gap:10px"><span class="tag blue">已选 ${p.count||6} 个商品</span><button class="btn sm" onclick="pickProduct('${id}')">选择商品</button></div>`)
++(b.type==='product_grid'?F('每行数量',`<select class="ipt" onchange="setStyleProp('${id}','cols',+this.value);"><option ${p.cols===2?'selected':''} value="2">2 个 / 行</option><option ${p.cols===3?'selected':''} value="3">3 个 / 行</option></select>`):'');case'promo_bar':case'coupon_banner':return F('文案（≤200 字）',`<input class="ipt" value="${esc(p.text||'')}" oninput="setProp('${id}','text',this.value)">`);case'countdown':return F('截止时间（必填）',`<input class="ipt" type="datetime-local" value="${esc(p.until||'2026-09-01T20:00')}" onchange="setProp('${id}','until',this.value)">`)
++F('文案',`<input class="ipt" value="${esc(p.text||'')}" oninput="setProp('${id}','text',this.value)">`);case'site_header':return F('店铺名称',`<input class="ipt" value="${esc(p.shop||'')}" oninput="setProp('${id}','shop',this.value)">`);case'site_footer':return F('版权文案',`<input class="ipt" value="${esc(p.copy||'')}" oninput="setProp('${id}','copy',this.value)">`);case'faq_accordion':case'testimonial_slider':case'selling_points':case'spec_table':case'related_products':case'rich_text':{let h=F('区块标题（≤100 字）',`<input class="ipt" value="${esc(p.title||'')}" oninput="setProp('${id}','title',this.value)">`);if(b.type==='testimonial_slider')h+=F('展示条数：'+(p.n||3),`<input type="range" min="2" max="5" value="${p.n||3}" oninput="this.closest('.fi').querySelector('label').textContent='展示条数：'+this.value;setProp('${id}','n',+this.value)">`);if(b.type==='rich_text')h+=F('正文（≤2000 字）',` PH2 `);if(b.type==='faq_accordion')h+=F('FAQ 项',`<div class="text3" style="line-height:2.2">${['多久可以收到货？','支持哪些支付方式？','可以退货吗？'].map(q=>'▾ '+q).join('<br>')}</div><button class="btn sm" style="margin-top:8px" onclick="toast('演示原型：FAQ 项维护','info')">管理 FAQ 项</button>`);return h;}
+default:return'<p class="text3" style="line-height:2">该区块暂无可配业务属性。<br>可切换「样式」「文案」页签进行配置。</p>';}}
+function styleForm(b){const p=(b&&b.props)||{},id=b?b.uid:'';return`<div class="fi"><label>上下间距：<b id="rg-l">${p.pad!=null?p.pad:12}px</b></label><input type="range" min="0" max="40" value="${p.pad!=null?p.pad:12}" oninput="this.closest('.fi').querySelector('b').textContent=this.value+'px';setStyleProp('${id}','pad',+this.value)"></div>
   <div class="fi"><label>区块背景色</label><div style="display:flex;gap:8px;align-items:center"><input type="color" value="${p.bg&&p.bg[0]==='#'?p.bg:'#ffffff'}" onchange="setStyleProp('${id}','bg',this.value)"><input class="ipt" value="${esc(p.bg||'#ffffff')}" oninput="setStyleProp('${id}','bg',this.value)"></div></div>
   <div class="fi"><label>圆角风格</label><select class="ipt" onchange="setStyleProp('${id}','radius',this.value)"><option ${p.radius==='0px'?'selected':''}>0px</option><option ${!p.radius||p.radius==='8px'?'selected':''}>8px</option><option ${p.radius==='16px'?'selected':''}>16px</option></select></div>
   <div class="fi"><label>通栏展示 <span class="text3">去除左右留白</span></label><div class="sw ${p.full?'on':''}" onclick="this.classList.toggle('on');setStyleProp('${id}','full',this.classList.contains('on'))"></div></div>
-  <div class="alert info" style="margin-top:6px"><span class="ic">ℹ️</span><div>样式项由区块定义决定；修改后 2 秒内自动保存至草稿，装修预览与线上一致。</div></div>`;
-}
-/* ---------- 文案表单 ---------- */
-function copyForm(b,page){
-  const locked=LOCKED[state.sel];
-  const lang=state.copyLang,lk=lang.split(' ')[1];
-  const fallback=(lk==='pl'||lk==='vi');
-  const keys=locked?['btn.add_to_cart','btn.buy_now','pdp.in_stock','pdp.only_left']:(COPYKEYS[b.type]||['block.title']);
-  const defVal=k=>{const ik=state.i18nKeys.find(x=>x.k===k);return ik?(ik[lk]||ik.en):'';};
-  return `<div class="fi"><label>当前语言</label><select class="ipt" onchange="state.copyLang=this.value;document.getElementById('cfg').innerHTML=cfgBody('${page}')">${LANGS.map(l=>`<option ${l===lang?'selected':''}>${l}</option>`).join('')}</select></div>
+  <div class="alert info" style="margin-top:6px"><span class="ic">ℹ️</span><div>样式项由区块定义决定；修改后 2 秒内自动保存至草稿，装修预览与线上一致。</div></div>`;}
+function copyForm(b,page){const locked=LOCKED[state.sel];const lang=state.copyLang,lk=lang.split(' ')[1];const fallback=(lk==='pl'||lk==='vi');const keys=locked?['btn.add_to_cart','btn.buy_now','pdp.in_stock','pdp.only_left']:(COPYKEYS[b.type]||['block.title']);const defVal=k=>{const ik=state.i18nKeys.find(x=>x.k===k);return ik?(ik[lk]||ik.en):'';};return`<div class="fi"><label>当前语言</label><select class="ipt" onchange="state.copyLang=this.value;document.getElementById('cfg').innerHTML=cfgBody('${page}')">${LANGS.map(l=>`<option ${l===lang?'selected':''}>${l}</option>`).join('')}</select></div>
   ${fallback?'<div class="alert warning"><span class="ic">⚠️</span><div>该语言暂无完整语言包，未覆盖文案将<b>使用英语兜底</b>，字段旁标记「待翻译」。</div></div>':''}
   ${keys.map(k=>{
     const ov=(b&&b.props.copy&&b.props.copy[lk]&&b.props.copy[lk][k])||((locked&&state.pdpCopy&&state.pdpCopy[lk]&&state.pdpCopy[lk][k])||'');
     const d=defVal(k);
-    return `<div class="fi"><label>${k} ${ov?'<span class="tag green" style="height:18px;font-size:11px">已自定义</span>':(fallback&&d?'<span class="tag orange" style="height:18px;font-size:11px">待翻译</span>':'<span class="tag gray" style="height:18px;font-size:11px">平台默认</span>')}</label>
-    <div style="display:flex;gap:6px">
-      <input class="ipt" value="${esc(ov)}" placeholder="${esc(d)||'平台默认文案'}" oninput="setCopy('${k}',this.value)">
-      ${ov?`<button class="btn sm" onclick="resetCopy('${k}')">恢复默认</button>`:''}
-    </div>
-    ${d?`<div class="text3" style="margin-top:5px">平台默认：${esc(d)}</div>`:''}</div>`;
+    return `<div class="fi"><label>${k}${ov?'<span class="tag green" style="height:18px;font-size:11px">已自定义</span>':(fallback&&d?'<span class="tag orange" style="height:18px;font-size:11px">待翻译</span>':'<span class="tag gray" style="height:18px;font-size:11px">平台默认</span>')}</label><div style="display:flex;gap:6px"><input class="ipt"value="${esc(ov)}"placeholder="${esc(d)||'平台默认文案'}"oninput="setCopy('${k}',this.value)">${ov?`<button class="btn sm" onclick="resetCopy('${k}')">恢复默认</button>`:''}</div>${d?`<div class="text3" style="margin-top:5px">平台默认：${esc(d)}</div>`:''}</div>`;
   }).join('')}
-  <div class="text3" style="line-height:2">未覆盖时展示平台默认文案；单值 ≤200 字。渲染优先级：商户覆盖 ＞ 平台默认 ＞ 英语兜底。</div>`;
-}
-function setCopy(k,v){
-  const b=findSel(),lk=state.copyLang.split(' ')[1];
-  if(LOCKED[state.sel]){ state.pdpCopy=state.pdpCopy||{}; state.pdpCopy[lk]=state.pdpCopy[lk]||{}; state.pdpCopy[lk][k]=v; }
-  else if(b){ b.props.copy=b.props.copy||{}; b.props.copy[lk]=b.props.copy[lk]||{}; b.props.copy[lk][k]=v; }
-  markSaved();
-}
-function resetCopy(k){
-  const lk=state.copyLang.split(' ')[1],b=findSel();
-  if(LOCKED[state.sel]&&state.pdpCopy&&state.pdpCopy[lk])delete state.pdpCopy[lk][k];
-  else if(b&&b.props.copy&&b.props.copy[lk])delete b.props.copy[lk][k];
-  markSaved();render();
-}
-/* ---------- 主题表单 ---------- */
-function themeForm(){
-  const t=state.theme;
-  return `<div style="font-weight:600;margin-bottom:14px">🖌️ 站点主题（写入草稿，随发布进入线上版本）</div>
+  <div class="text3" style="line-height:2">未覆盖时展示平台默认文案；单值 ≤200 字。渲染优先级：商户覆盖 ＞ 平台默认 ＞ 英语兜底。</div>`;}
+function setCopy(k,v){const b=findSel(),lk=state.copyLang.split(' ')[1];if(LOCKED[state.sel]){state.pdpCopy=state.pdpCopy||{};state.pdpCopy[lk]=state.pdpCopy[lk]||{};state.pdpCopy[lk][k]=v;}
+else if(b){b.props.copy=b.props.copy||{};b.props.copy[lk]=b.props.copy[lk]||{};b.props.copy[lk][k]=v;}
+markSaved();}
+function resetCopy(k){const lk=state.copyLang.split(' ')[1],b=findSel();if(LOCKED[state.sel]&&state.pdpCopy&&state.pdpCopy[lk])delete state.pdpCopy[lk][k];else if(b&&b.props.copy&&b.props.copy[lk])delete b.props.copy[lk][k];markSaved();render();}
+function themeForm(){const t=state.theme;return`<div style="font-weight:600;margin-bottom:14px">🖌️ 站点主题（写入草稿，随发布进入线上版本）</div>
   <div class="fi"><label><span class="req">*</span>主色</label><div style="display:flex;gap:8px;align-items:center"><input type="color" value="${t.main}" onchange="setTheme('main',this.value)"><input class="ipt" value="${t.main}" oninput="setThemeDeb(this.value)"></div></div>
   <div class="fi"><label>辅色</label><div style="display:flex;gap:8px;align-items:center"><input type="color" value="${t.sub}" onchange="setTheme('sub',this.value)"><span class="text3">用于渐变与次级按钮</span></div></div>
   <div class="fi"><label><span class="req">*</span>字体（来源于平台白名单）</label><select class="ipt" onchange="setTheme('font',this.value)">${['默认字体（PingFang SC）','Noto Sans Thai','Roboto','Inter','Montserrat'].map(f=>`<option ${f===t.font?'selected':''}>${f}</option>`).join('')}</select></div>
   <div class="fi"><label>圆角（默认 8px）</label><div style="display:flex;gap:8px"><input class="ipt" value="${esc(t.radius)}" oninput="state.theme.radius=this.value"><span class="text3">区块圆角风格</span></div></div>
   <button class="btn" onclick="askConfirm('恢复主题','将恢复为<b>模板默认主题</b>，是否继续？','恢复默认',()=>{state.theme={main:'#722ed1',sub:'#1677ff',font:'默认字体（PingFang SC）',radius:'8px'};toast('已恢复模板默认主题');render();},true)">↩️ 恢复模板默认</button>
-  <div class="alert info" style="margin-top:14px"><span class="ic">ℹ️</span><div>色值非法将阻止保存；修改主题不自动发布。</div></div>`;
-}
-let themeTimer=null;
-function setThemeDeb(v){ clearTimeout(themeTimer); themeTimer=setTimeout(()=>setTheme('main',v),500); }
-function setTheme(k,v){ if(k==='main'&&!/^#[0-9a-fA-F]{6}$/.test(v)){toast('请输入合法颜色值','error');return;} state.theme[k]=v; markSaved(); render(); }
-</script>
-<script data-page-node-id="Afk1XEDYszUZgsn69G78D9" data-pnid-children="HMEkvxhZusptX6mhLX7QXz">
-/* ================= 页面装修 · 商品详情页 ================= */
-const ZONES=[['top','首屏上方'],['mid','主图下方'],['bottom','详情描述下方']];
-PAGES['site/editor/product']=()=>{
-  return edToolbar('product')+`<div class="ed-body">
+  <div class="alert info" style="margin-top:14px"><span class="ic">ℹ️</span><div>色值非法将阻止保存；修改主题不自动发布。</div></div>`;}
+let themeTimer=null;function setThemeDeb(v){clearTimeout(themeTimer);themeTimer=setTimeout(()=>setTheme('main',v),500);}
+function setTheme(k,v){if(k==='main'&&!/^#[0-9a-fA-F]{6}$/.test(v)){toast('请输入合法颜色值','error');return;}state.theme[k]=v;markSaved();render();}</script>
+<script data-page-node-id="Afk1XEDYszUZgsn69G78D9" data-pnid-children="HMEkvxhZusptX6mhLX7QXz">const ZONES=[['top','首屏上方'],['mid','主图下方'],['bottom','详情描述下方']];PAGES['site/editor/product']=()=>{return edToolbar('product')+`<div class="ed-body">
     <div class="ed-panel ed-left"><div class="ed-p-h">🧩 区块面板<span class="text3">拖入装饰区</span></div><div class="scroll">${leftChips('product')}
       <div class="cat-t" style="color:var(--text3)">— 转化类（锁定）—</div>
-      <div class="chips">${state.comps.filter(c=>c.lock).map(c=>`<div class="chip dis" style="opacity:.45;cursor:not-allowed" title="锁定转化区块不可拖入装饰区域"><span class="ci">${ICONS[c.key]}</span><span>${c.name}<small>🔒 锁定</small></span></div>`).join('')}</div>
+      <div class="chips">${state.comps.filter(c=>c.lock).map(c=>`<div class="chip dis"style="opacity:.45;cursor:not-allowed"title="锁定转化区块不可拖入装饰区域"><span class="ci">${ICONS[c.key]}</span><span>${c.name}<small>🔒 锁定</small></span></div>`).join('')}</div>
     </div></div>
     <div class="ed-panel ed-canvas">
       <div class="phone"><div class="ph-status"><span>9:41</span><span>📶 🔋</span></div>
@@ -1137,125 +341,52 @@ PAGES['site/editor/product']=()=>{
       </div>
     </div>
     <div class="ed-panel ed-right"><div class="ed-p-h">${cfgTabsHead()}</div><div class="scroll" id="cfg">${cfgBody('product')}</div></div>
-  </div>`;
-};
-function pdCanvasInner(){
-  return pdZone('top','首屏上方')
-    +`<div class="locked-wrap">
+  </div>`;};function pdCanvasInner(){return pdZone('top','首屏上方')
++`<div class="locked-wrap">
         <div class="locked-note">🔒 锁定购买区域 · 平台固定，不可删除或调整顺序</div>
         ${lockedBlk('L-gallery',pdpGallery('edit'))}
         ${lockedBlk('L-info',pdpInfo('edit'))}
         ${lockedBlk('L-buy',pdpBuyBar('edit'))}
       </div>`
-    +pdZone('mid','主图下方')
-    +lockedBlk('L-desc',pdpDesc('edit'))
-    +pdZone('bottom','详情描述下方');
-}
-function lockedBlk(id,inner){
-  return `<div class="cblock ${state.sel===id?'sel':''}" onclick="selLocked('${id}')"><div class="lock-badge">🔒 平台锁定</div>${inner}</div>`;
-}
-function selLocked(id){ state.sel=id; state.cfgTab='style'; render(); }
-function pdZone(z,name){
-  const arr=state.pdp[z];
-  return `<div class="zone" ondragover="canvasOver(event)" ondrop="event.preventDefault();clearInd();if(drag)dropInsert(state.pdp['${z}'],'product','${z}')">
++pdZone('mid','主图下方')
++lockedBlk('L-desc',pdpDesc('edit'))
++pdZone('bottom','详情描述下方');}
+function lockedBlk(id,inner){return`<div class="cblock ${state.sel===id?'sel':''}" onclick="selLocked('${id}')"><div class="lock-badge">🔒 平台锁定</div>${inner}</div>`;}
+function selLocked(id){state.sel=id;state.cfgTab='style';render();}
+function pdZone(z,name){const arr=state.pdp[z];return`<div class="zone" ondragover="canvasOver(event)" ondrop="event.preventDefault();clearInd();if(drag)dropInsert(state.pdp['${z}'],'product','${z}')">
     <span class="z-t">${name} · 装饰区（${arr.length}/20）</span>
     ${arr.map((b,i)=>pdBlock(b,z,i)).join('')||'<div class="z-empty">拖入区块增强转化</div>'}
-  </div>`;
-}
-function pdBlock(b,z,i){
-  const c=comp(b.type);
-  return `<div class="cblock ${state.sel===b.uid?'sel':''}" draggable="true" ondragstart="blkDrag(event,'${b.uid}','${z}')" ondragover="blkOver(event,${i})" ondragleave="event.currentTarget.classList.remove('db','da')" ondrop="event.preventDefault();event.stopPropagation();clearInd();if(drag)dropInsert(state.pdp['${z}'],'product','${z}')" onclick="selectBlk('${b.uid}')">
+  </div>`;}
+function pdBlock(b,z,i){const c=comp(b.type);return`<div class="cblock ${state.sel===b.uid?'sel':''}" draggable="true" ondragstart="blkDrag(event,'${b.uid}','${z}')" ondragover="blkOver(event,${i})" ondragleave="event.currentTarget.classList.remove('db','da')" ondrop="event.preventDefault();event.stopPropagation();clearInd();if(drag)dropInsert(state.pdp['${z}'],'product','${z}')" onclick="selectBlk('${b.uid}')">
     <div class="btools"><span title="上移" onclick="event.stopPropagation();movePdBlk('${z}','${b.uid}',-1)">↑</span><span title="下移" onclick="event.stopPropagation();movePdBlk('${z}','${b.uid}',1)">↓</span><span title="删除" onclick="event.stopPropagation();delPdBlk('${z}','${b.uid}')">🗑</span></div>
     ${(!c||!c.on)?'<div class="lock-badge warn">⚠️ 已停用区块</div>':''}
     ${h5Block(b,'edit')}
-  </div>`;
-}
-function movePdBlk(z,u,d){
-  const arr=state.pdp[z],i=arr.findIndex(b=>b.uid===u),j=i+d;
-  if(j<0||j>=arr.length)return;
-  arr.splice(j,0,arr.splice(i,1)[0]); state.unsaved=true; render();
-}
-function delPdBlk(z,u){
-  askConfirm('删除区块','确定删除该区块？','删除',()=>{
-    state.pdp[z]=state.pdp[z].filter(b=>b.uid!==u);
-    if(state.sel===u)state.sel='';
-    state.unsaved=true; render();
-  },true);
-}
-</script>
-<script data-page-node-id="Mf3E9rors4H4ccOcB2mf5g" data-pnid-children="AnQSkGkKFYdMTuQ6hzlc55">
-/* ================= 官方模板库 ================= */
-PAGES['site/templates']=()=>{
-  const s=curSite();
-  return `
+  </div>`;}
+function movePdBlk(z,u,d){const arr=state.pdp[z],i=arr.findIndex(b=>b.uid===u),j=i+d;if(j<0||j>=arr.length)return;arr.splice(j,0,arr.splice(i,1)[0]);state.unsaved=true;render();}
+function delPdBlk(z,u){askConfirm('删除区块','确定删除该区块？','删除',()=>{state.pdp[z]=state.pdp[z].filter(b=>b.uid!==u);if(state.sel===u)state.sel='';state.unsaved=true;render();},true);}</script>
+<script data-page-node-id="Mf3E9rors4H4ccOcB2mf5g" data-pnid-children="AnQSkGkKFYdMTuQ6hzlc55">PAGES['site/templates']=()=>{const s=curSite();return`
   <div class="page-h"><div><h2>官方模板库</h2><p>预览官方模板效果 · 复制为<b>当前站点（${esc(s.name)}）</b>的首页与商品详情页草稿</p></div></div>
   <div class="alert info"><span class="ic">ℹ️</span><div>复制不会自动发布，已发布线上版本不受影响；同一站点连续复制以<b>最后一次为准</b>。目标：复制 → 修改 → 发布 ≤ 30 分钟。</div></div>
   <div class="tpl-grid">
-    ${state.templates.map(t=>`
-    <div class="tpl-card">
-      <div class="tpl-cover" style="background:${t.cover}">
-        <div class="tf"><i class="h" style="width:55%"></i><i class="m"></i><i class="b" style="width:100%"></i><i class="m" style="width:85%"></i><i class="b" style="width:80%"></i><i class="m"></i></div>
-        <span class="tag" style="position:absolute;top:10px;left:10px;background:rgba(255,255,255,.9);border:none">${t.blocks} 个区块</span>
-      </div>
-      <div class="tpl-body">
-        <h4>${t.name}</h4>
-        <p>${t.desc}</p>
-        <div style="margin:8px 0">${t.markets.map(m=>`<span class="tag blue">${m}</span>`).join(' ')}</div>
-        <div class="tpl-foot">
-          <span class="text3">含 5 语言包</span>
-          <span><button class="btn sm" onclick="tplPreview('${t.id}')">👁 预览</button>
-          <button class="btn sm primary" onclick="copyTpl('${t.id}')">复制为我的站点</button></span>
-        </div>
-      </div>
-    </div>`).join('')}
-  </div>`;
-};
-function tplPreview(id){
-  const t=state.templates.find(x=>x.id===id);
-  const blocks=t.home.map(k=>({uid:'tp-'+k,type:k,props:JSON.parse(JSON.stringify(DEFPROPS[k]||{}))}));
-  modal(mHead('模板预览 · '+t.name)+`
+    ${state.templates.map(t=>`<div class="tpl-card"><div class="tpl-cover"style="background:${t.cover}"><div class="tf"><i class="h"style="width:55%"></i><i class="m"></i><i class="b"style="width:100%"></i><i class="m"style="width:85%"></i><i class="b"style="width:80%"></i><i class="m"></i></div><span class="tag"style="position:absolute;top:10px;left:10px;background:rgba(255,255,255,.9);border:none">${t.blocks}个区块</span></div><div class="tpl-body"><h4>${t.name}</h4><p>${t.desc}</p><div style="margin:8px 0">${t.markets.map(m=>`<span class="tag blue">${m}</span>`).join(' ')}</div><div class="tpl-foot"><span class="text3">含 5 语言包</span><span><button class="btn sm"onclick="tplPreview('${t.id}')">👁 预览</button><button class="btn sm primary"onclick="copyTpl('${t.id}')">复制为我的站点</button></span></div></div></div>`).join('')}
+  </div>`;};function tplPreview(id){const t=state.templates.find(x=>x.id===id);const blocks=t.home.map(k=>({uid:'tp-'+k,type:k,props:JSON.parse(JSON.stringify(DEFPROPS[k]||{}))}));modal(mHead('模板预览 · '+t.name)+`
   <div class="modal-b" style="padding:16px 24px;display:flex;justify-content:center;background:#f0f2f5">
     <div class="phone" style="height:640px"><div class="ph-status"><span>9:41</span><span>📶 🔋</span></div>
       <div class="ph-scr">${blocks.map(b=>h5Block(b,'pv')).join('')}</div>
     </div>
-  </div>`+mFoot(`<button class="btn" onclick="mClose()">关闭</button><button class="btn primary" onclick="mClose();copyTpl('${t.id}')">复制为我的站点</button>`),480);
-}
-function copyTpl(id){
-  const t=state.templates.find(x=>x.id===id),s=curSite();
-  askConfirm('复制模板',`将用模板「<b>${t.name}</b>」替换当前站点「${esc(s.name)}」的<b>首页与商品详情页草稿</b>，是否继续？<br><span class="text3">不自动发布；若当前草稿有未保存修改将被覆盖。</span>`,'确认复制',()=>{
-    state.homeDraft=t.home.map(k=>mkBlock(k));
-    state.pdp={top:t.top.map(k=>mkBlock(k)),mid:t.mid.map(k=>mkBlock(k)),bottom:t.bottom.map(k=>mkBlock(k))};
-    state.sel='';state.unsaved=true;
-    toast('模板已复制，可开始装修');
-    go('#/site/editor/home');
-  });
-}
-/* ================= 发布历史 ================= */
-PAGES['site/publish-history']=()=>{
-  const s=curSite(),st=stTag(s.status);
-  return `
+  </div>`+mFoot(`<button class="btn" onclick="mClose()">关闭</button><button class="btn primary" onclick="mClose();copyTpl('${t.id}')">复制为我的站点</button>`),480);}
+function copyTpl(id){const t=state.templates.find(x=>x.id===id),s=curSite();askConfirm('复制模板',`将用模板「<b>${t.name}</b>」替换当前站点「${esc(s.name)}」的<b>首页与商品详情页草稿</b>，是否继续？<br><span class="text3">不自动发布；若当前草稿有未保存修改将被覆盖。</span>`,'确认复制',()=>{state.homeDraft=t.home.map(k=>mkBlock(k));state.pdp={top:t.top.map(k=>mkBlock(k)),mid:t.mid.map(k=>mkBlock(k)),bottom:t.bottom.map(k=>mkBlock(k))};state.sel='';state.unsaved=true;toast('模板已复制，可开始装修');go('#/site/editor/home');});}
+PAGES['site/publish-history']=()=>{const s=curSite(),st=stTag(s.status);return`
   <div class="page-h"><div><h2>发布历史</h2><p>当前站点：${esc(s.name)} · 保留最近 20 条线上版本 · 买家端仅读取已发布版本</p></div>
   <div><button class="btn primary" onclick="publish()">🚀 发布上线</button></div></div>
   ${s.status==='dirty'?'<div class="alert warning"><span class="ic">✏️</span><div>当前站点<b>有未发布更改</b>（草稿与线上版本不一致）。</div></div>':''}
   <div class="card"><div class="card-b">
     <table class="tbl"><thead><tr><th>版本号</th><th>发布时间</th><th>发布人</th><th>页面范围</th><th style="width:170px">操作</th></tr></thead><tbody>
-    ${state.history.map(h=>`
-      <tr>
-        <td><span class="tag purple">${h.v}</span>${h.cur?' <span class="tag blue">线上版本</span>':''}</td>
-        <td>${h.time}</td><td>${h.by}</td><td>${h.scope}</td>
-        <td class="ops">
-          <button class="btn sm" onclick="histDetail('${h.v}')">查看摘要</button>
-          ${h.cur?'<button class="btn sm" disabled>当前版本</button>':`<button class="btn sm danger" onclick="rollback('${h.v}')">回滚</button>`}
-        </td>
-      </tr>`).join('')}
+    ${state.history.map(h=>`<tr><td><span class="tag purple">${h.v}</span>${h.cur?' <span class="tag blue">线上版本</span>':''}</td><td>${h.time}</td><td>${h.by}</td><td>${h.scope}</td><td class="ops"><button class="btn sm"onclick="histDetail('${h.v}')">查看摘要</button>${h.cur?'<button class="btn sm" disabled>当前版本</button>':`<button class="btn sm danger" onclick="rollback('${h.v}')">回滚</button>`}</td></tr>`).join('')}
     </tbody></table>
     <div class="pager"><span>共 ${state.history.length} 条 · 上限 20 条</span><span class="pg">‹</span><span class="pg cur">1</span><span class="pg">›</span></div>
   </div></div>
-  <div class="text3" style="margin-top:12px">回滚后独立站应在 5 分钟内展示回滚内容；发布、回滚、模板复制均记入审计日志（保留 180 天）。</div>`;
-};
-function histDetail(v){
-  const h=state.history.find(x=>x.v===v);
-  modal(mHead('版本摘要 · '+v)+`
+  <div class="text3" style="margin-top:12px">回滚后独立站应在 5 分钟内展示回滚内容；发布、回滚、模板复制均记入审计日志（保留 180 天）。</div>`;};function histDetail(v){const h=state.history.find(x=>x.v===v);modal(mHead('版本摘要 · '+v)+`
   <div class="modal-b" style="padding-top:14px">
     <div class="kv"><b>发布时间</b>${h.time}</div>
     <div class="kv"><b>发布人</b>${h.by}</div>
@@ -1264,22 +395,9 @@ function histDetail(v){
     <div class="kv"><b>详情页装饰区块</b>首屏上方 ${state.pdp.top.length} · 主图下方 ${state.pdp.mid.length} · 详情下方 ${state.pdp.bottom.length}</div>
     <div class="kv"><b>主题主色</b><span style="display:inline-block;width:14px;height:14px;border-radius:3px;background:${state.theme.main};vertical-align:-2px;margin-right:6px"></span>${state.theme.main} · 圆角 ${state.theme.radius}</div>
     <div class="kv"><b>配置大小</b>约 ${(state.homeDraft.length*2.4+38).toFixed(1)} KB / 512 KB</div>
-  </div>`+mFoot(`<button class="btn" onclick="mClose()">关闭</button>${h.cur?'':`<button class="btn danger solid" onclick="mClose();rollback('${v}')">回滚到此版本</button>`}`),480);
-}
-function rollback(v){
-  const h=state.history.find(x=>x.v===v);
-  askConfirm('回滚版本',`将恢复至 <b>${h.time}</b> 的版本，当前线上内容将被替换，是否继续？<br><span class="text3">回滚后独立站 5 分钟内生效。</span>`,'确认回滚',()=>{
-    state.history.forEach(x=>x.cur=x.v===v);
-    curSite().status='latest';
-    toast('已回滚至选定版本（'+v+'）');render();
-  },true);
-}
-</script>
-<script data-page-node-id="ERYLEp345JLuHGfY7bUqXy" data-pnid-children="UrWzAnUsDVthl6EgwqFdHO">
-/* ================= 独立站 H5 · 首页预览 ================= */
-PAGES['preview/home']=()=>{
-  const s=curSite();
-  return `
+  </div>`+mFoot(`<button class="btn" onclick="mClose()">关闭</button>${h.cur?'':`<button class="btn danger solid"onclick="mClose();rollback('${v}')">回滚到此版本</button>`}`),480);}
+function rollback(v){const h=state.history.find(x=>x.v===v);askConfirm('回滚版本',`将恢复至 <b>${h.time}</b> 的版本，当前线上内容将被替换，是否继续？<br><span class="text3">回滚后独立站 5 分钟内生效。</span>`,'确认回滚',()=>{state.history.forEach(x=>x.cur=x.v===v);curSite().status='latest';toast('已回滚至选定版本（'+v+'）');render();},true);}</script>
+<script data-page-node-id="ERYLEp345JLuHGfY7bUqXy" data-pnid-children="UrWzAnUsDVthl6EgwqFdHO">PAGES['preview/home']=()=>{const s=curSite();return`
   <div class="page-h"><div><h2>独立站 H5 · 首页</h2><p>站点：${esc(s.name)} · ${s.domain||'临时预览域名 preview-s001.shopform.com'} · 移动优先</p></div>
   <div><button class="btn" onclick="copyLink()">🔗 复制预览链接</button><button class="btn" onclick="go('#/preview/product')">查看商品详情页 →</button></div></div>
   <div class="alert info"><span class="ic">👁️</span><div>当前为<b>草稿预览模式</b>（预览令牌 24 小时内有效，仅用于查看草稿效果，不可作为正式推广链接）。买家正式访问读取已发布线上版本。</div></div>
@@ -1288,17 +406,8 @@ PAGES['preview/home']=()=>{
       ${state.homeDraft.map(b=>h5Block(b,'pv')).join('')}
       ${state.homeDraft.length?'':'<div class="empty"><div class="box">📱</div>暂无内容<div class="text3" style="margin-top:6px">前往页面装修拖入第一个区块</div></div>'}
     </div>
-  </div></div>`;
-};
-function copyLink(){
-  const link='https://'+(curSite().domain||'preview-s001.shopform.com')+'/?_preview='+Math.random().toString(36).slice(2,10);
-  if(navigator.clipboard)navigator.clipboard.writeText(link).catch(()=>{});
-  toast('预览链接已复制（24 小时内有效）');
-}
-/* ================= 独立站 H5 · 商品详情页预览 ================= */
-PAGES['preview/product']=()=>{
-  const s=curSite(),P=state.product;
-  return `
+  </div></div>`;};function copyLink(){const link='https://'+(curSite().domain||'preview-s001.shopform.com')+'/?_preview='+Math.random().toString(36).slice(2,10);if(navigator.clipboard)navigator.clipboard.writeText(link).catch(()=>{});toast('预览链接已复制（24 小时内有效）');}
+PAGES['preview/product']=()=>{const s=curSite(),P=state.product;return`
   <div class="page-h"><div><h2>独立站 H5 · 商品详情页</h2><p>站点：${esc(s.name)} · 预览商品 #P10086（真实数据注入锁定区域）</p></div>
   <div><button class="btn" onclick="go('#/preview/home')">← 返回首页</button></div></div>
   <div class="alert info"><span class="ic">ℹ️</span><div>站点级仅一套详情页模板，所有商品共用；不同商品通过 <b>商品 ID</b> 注入不同数据（/products/{商品ID}）。</div></div>
@@ -1314,10 +423,6 @@ PAGES['preview/product']=()=>{
       ${pdpDesc('pv')}
       ${state.pdp.bottom.map(b=>h5Block(b,'pv')).join('')}
     </div>
-  </div></div>`;
-};
-/* ================= 初始化 ================= */
-render();
-</script>
+  </div></div>`;};render();</script>
 </body>
 </html>
